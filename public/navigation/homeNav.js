@@ -48,7 +48,7 @@ document.write(`
 var spliter = String(window.location);
 spliter = spliter.split('/')
 while(true){
-  if (spliter[spliter.length-1] != "ethantwu.com"){
+  if (spliter[spliter.length-1] != "www.ethantwu.com" ||spliter[spliter.length-1] != "ethantwu.com" ){
     spliter.pop();
   } else {
     break;
