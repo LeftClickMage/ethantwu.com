@@ -65,7 +65,9 @@ const outer = document.querySelectorAll('.repathIMG');
 for(let i = 0; i<outer.length; i++){
 
   var src=outer[i].src;
-  src= src.replace("file://", "");
+  if (src.startsWith("file://")){
+    src= src.replace("file://", "");
+  }
   outer[i].setAttribute("src", path+src);
 
   }
@@ -73,7 +75,9 @@ const inner = document.querySelectorAll('.repathHREF');
 for(let i = 0; i<inner.length; i++){
 
    var href=inner[i].getAttribute('href');
+   if(href.startsWith("file://")){
     href= href.replace("file://", "");
+   }
     inner[i].setAttribute("href", path+href);
 
   }
