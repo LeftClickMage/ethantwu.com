@@ -1,0 +1,2764 @@
+<!-- Proudly written by ethan twu FROM SCRATCH, using no libraries, and just pure J.S.! If you use this code, make sure to give credit to me! -->
+
+
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ethan Twu - Parkour Ninja</title>  
+    <meta name="description" content="Wordle, but minecraft style!">
+<meta name="keywords" content="Ethan Twu, Ethan Twu Millburn NJ, LeftClickMage, YukiThePomsky, MLightning, FairOPShotgun, parkour ninja, parkour ninja minigame">
+
+    <link rel="icon" href="https://i.ibb.co/0tvbVJL/Screenshot-2022-06-05-10-03-13-PM-removebg-preview.png"/>
+    <style>
+        @keyframes shrinkButton {
+            from {width:325px; height:55px; color:white;}
+            to {width:300px; height:50px; color:black;}
+        }
+        @keyframes expandButton {
+            from {width:300px; height:50px; color:black;}
+            to {width:325px; height:55px; color:white;}
+        }
+        @keyframes solidBackground{
+            from{background-color:rgba(255,255,255,.7);}
+            to{background-color:rgba(255,255,255,1);}
+        }
+        @keyframes lightBackground{
+            from{background-color:rgba(255,255,255,1);}
+            to{background-color:rgba(255,255,255,.7);}
+        }
+            @keyframes titleAnimation {
+    0% {
+        font-size:70px;
+    }
+
+    50% {
+        font-size:80px;
+    }
+
+    100% {
+        font-size:70px;
+    }
+}
+@keyframes rotate45 {
+            from {transform: rotate(0deg);}
+            to {transform: rotate(45deg);}
+        }
+        @keyframes rotate-45 {
+            from {transform: rotate(45deg);}
+            to {transform: rotate(0deg);}
+        }
+        @keyframes expandDiv {
+            from {width:0px; height:0px;}
+            to {width:500px; height:500px;}
+        }
+        @keyframes expandSelectorDiv {
+            from {width:0px; height:0px;}
+            to {width:100%; height:100%;}
+        }
+        @keyframes enlargeInput {
+            from {width:225px; height:15px;}
+            to {width:300px; height:20px;}
+        }
+        @keyframes delargeInput {
+            from {width:300px; height:20px;}
+            to {width:225px; height:15px;}
+        }
+        @keyframes fadeIn {
+            from {opacity:0;}
+            to {opacity:1;}
+        }
+        @keyframes fullscreen {
+            from {width:165px; height:50px;}
+            to {width:100vw; height:100vh;}
+        }
+       
+        @keyframes greyToWhite {
+            from {color:grey;}
+            to {color:white;}
+        }
+        @keyframes whiteToGrey {
+            from {color:white;}
+            to {color:grey;}
+        }
+        body{
+            margin:0;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -webkit-touch-callout : none;
+            -moz-user-select: none;
+            -o-user-select: none;
+            user-select: none; 
+        }
+        canvas {
+            background-color:#ADD8E6;
+            //#7b8993
+        }
+        #closeButtonDiv{
+            position:absolute;
+            top:10px;
+            right:10px;
+        }
+        #small{
+            width:50px;
+            height:50px;
+            animation-name:rotate-45;
+            transform: rotate(0deg);
+            animation-duration:.5s;
+        }
+        #small:hover{
+            cursor:pointer;
+            transform: rotate(45deg);
+            animation-name:rotate45;
+            animation-duration:.5s;
+        }
+        #smalls{
+            width:20px;
+            height:20px;
+            animation-name:rotate-45;
+            transform: rotate(0deg);
+            animation-duration:.5s;
+        }
+        #smalls:hover{
+            cursor:pointer;
+            transform: rotate(45deg);
+            animation-name:rotate45;
+            animation-duration:.5s;
+        }
+        #fscButton{
+
+            margin:0;
+            width:300px;
+            position: absolute;
+            top: 60%;
+            left: 50%;
+            -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+            padding:6px;
+            font-size:30px;
+            margin-top:20px;
+        }
+#headerText{
+            margin-left:20px;
+            color:white;
+        }
+#profileDiv{
+            -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+            margin:0;
+            position: absolute; 
+            top: 50%;
+            left: 50%;
+            background:black;
+            animation-name:expandDiv;
+            animation-duration:1s;
+            width:500px;
+            height:500px;
+            border:10px solid #87CEEB;
+           border-radius:12px;
+           padding:20px;
+        }
+
+.fadeIn{
+            animation-name:fadeIn;
+            animation-duration:2s;
+        }
+
+
+        #startButton {
+            position:absolute;
+            top:37%;
+            left:50%;
+            width:300px;
+            height:50px;
+            -ms-transform:translate(-50%,-50%);
+            transform:translate(-50%,-50%);
+            font-size:40px;
+            opacity:1;
+            background-color:#ADD8E6;
+            animation-name:shrinkButton;
+            animation-duration:1s;
+            outline:none;
+            border:none;
+            border-radius:10px;
+        }
+        #startButton:hover{
+            color:white;
+            animation-name:expandButton;
+            animation-duration:1s;
+            width:165px;
+            height:55px;
+            cursor:pointer;
+            outline:none;
+            border:none;
+            border-radius:10px;
+            width:325px;
+            height:55px;
+        }
+        #insaneButton {
+            position:absolute;
+            top:46%;
+            left:50%;
+            width:300px;
+            height:50px;
+            -ms-transform:translate(-50%,-50%);
+            transform:translate(-50%,-50%);
+            font-size:40px;
+            opacity:1;
+            background-color:red;
+            animation-name:shrinkButton;
+            animation-duration:1s;
+            outline:none;
+            border:none;
+            border-radius:10px;
+        }
+        #insaneButton:hover{
+            color:white;
+            animation-name:expandButton;
+            animation-duration:1s;
+            width:165px;
+            height:55px;
+            cursor:pointer;
+            outline:none;
+            border:none;
+            border-radius:10px;
+            width:325px;
+            height:55px;
+        }
+        #clearButton {
+            position:absolute;
+            top:55%;
+            left:50%;
+            width:300px;
+            height:50px;
+            -ms-transform:translate(-50%,-50%);
+            transform:translate(-50%,-50%);
+            font-size:40px;
+            opacity:1;
+            background-color:black;
+            animation-name:shrinkButton;
+            animation-duration:1s;
+            outline:none;
+            border:none;
+            border-radius:10px;
+        }
+        #clearButton:hover{
+            color:white;
+            animation-name:expandButton;
+            animation-duration:1s;
+            width:165px;
+            height:55px;
+            cursor:pointer;
+            outline:none;
+            border:none;
+            border-radius:10px;
+            width:325px;
+            height:55px;
+        }
+        #startText {
+            position:absolute;
+            top:60%;
+            left:50%;
+            -ms-transform:translate(-50%,-50%);
+            transform:translate(-50%,-50%);
+            font-size:20px;
+            opacity:1;
+            text-align:center;
+        }
+#muteSound{
+
+            font-size:20px;
+            color:white;
+            position:absolute;
+            top:0;
+            right:1%;
+            background-color:black;
+            border-radius:10px;
+            padding:10px;
+        }
+        #muteSound:hover{
+            cursor:pointer;
+        }
+        #muteMusic{
+
+            font-size:20px;
+            color:white;
+            position:absolute;
+            top:10%;
+            right:1%;
+            background-color:black;
+            border-radius:10px;
+            padding:10px;
+        }
+        #muteMusic:hover{
+            cursor:pointer;
+        }
+        #darkMode{
+
+            font-size:50px;
+            color:white;
+            position:absolute;
+            left:3%;
+            top:1%;
+            background-color:black;
+            border-radius:10px;
+            padding:10px;
+        }
+        #darkMode:hover{
+            cursor:pointer;
+        }
+        #sbackground{
+            background-image: url("https://i.ibb.co/v3y7489/Screenshot-2022-06-10-8-32-48-AM.png"); 
+            background-position:center; 
+            background-size:100%;
+        }
+        #p2 {
+            position:absolute; left:50%; -ms-transform:translate(-50%,0%); transform:translate(-50%,0%);
+        }
+        button:focus{
+            outline: none;
+            box-shadow: none;
+
+        }
+        #skinScroller:hover{
+            cursor:pointer;
+        }
+        #bottomLeft {
+            position:absolute;
+            bottom:1%;
+            right:2.5%;
+            background-color: rgba(255,255,255,0.7);
+            animation-name:lightBackground;
+            animation-duration:1s;
+        }
+        #bottomLeft:hover {
+
+            background-color: rgba(255,255,255,1);
+            animation-name:solidBackground;
+            animation-duration:1s;
+        }
+    </style>
+</head>
+
+
+<body>
+    
+    
+    <div style="position:absolute; width:100vw;height:100vh; background-color:white;" id = "div">
+
+
+    </div>
+    <h1 style = "color:white; font-size:8vw;animation-name:titleAnimation; animation-duration:7s; animation-iteration-count:infinite; position:absolute;top:19%; left:50%;-ms-transform: translate(-50%, -50%); transform: translate(-50%, -50%);text-outline:white; text-shadow: 0 0 12px #0000FF, 0 0 6px #FFFFFF;" id = "startTitle">Parkour Ninja</h2>
+<button onclick = "startGame()" id ="startButton">Normal Mode</button>
+<button onclick = "startInsane()" id ="insaneButton">Fakie Mode</button>
+<button onclick = "startClear()" id ="clearButton">Unfair Mode</button>
+<p id = "startText">Press W, Space, or Up Arrow to Jump!<br>Checkpoints every 3 levels!</p>
+<img src = "https://i.ibb.co/0tvbVJL/Screenshot-2022-06-05-10-03-13-PM-removebg-preview.png" style="position:absolute;top:75%;left:50%;-ms-transform:translate(-50%,-50%);transform:translate(-50%,-50%); height:100px;" id = "img">
+<p style="position:absolute;top:62%;left:58%;-ms-transform:translate(-50%,-50%);transform:translate(-50%,-50%); font-size:100px; text-shadow:0 0 12px gold, 0 0 6px #FFFFFF; opacity:0.7;" id = "skinScroller" onclick = "skinScroller()"><b>></b></p>
+<p id = "imgText" style="position:absolute;top:83%;left:50%;-ms-transform:translate(-50%,-50%);transform:translate(-50%,-50%); font-size:50px;"><b>Choose a skin</b></p>
+
+
+<p id = "p2">You are playing <b>Parkour Ninja (2.6.7) by Ethan Twu</b> on <b>ethantwu.com!</b></p>
+<h2 id = "bottomLeft"><b>Music by Hilton Seibert</b></h2>
+   
+<canvas id = "canva"></canvas>
+</body>
+<script>
+console.log(localStorage.getItem('mode'));
+
+    function sleep(ms) {
+  return new Promise(
+    resolve => setTimeout(resolve, ms)
+  );
+}
+
+
+async function openFSCPopups(){
+    var div = document.createElement("div");
+    div.id = "profileDiv";
+    div.setAttribute("style", "border:10px solid #FFD580;")
+    document.body.appendChild(div);
+    var headerText = document.createElement("h1");
+    headerText.innerHTML = "Fakie blocks will drop you! GL!";
+    headerText.id = "headerText";
+    headerText.setAttribute("style", "margin-top:50px; text-align:center;");
+    var headerText1 = document.createElement("h1");
+    headerText1.innerHTML = "Just send a screen shot with proof it is you, to admin@fairopshotgun.xyz";
+    headerText1.id = "headerText1";
+    headerText1.setAttribute("style", "margin-top:50px; color:white; text-align:center;");
+    var headerText2 = document.createElement("h1");
+    headerText2.innerHTML = "If you beat fakie mode, you can request a custom skin!";
+    headerText2.id = "headerText2";
+    headerText2.setAttribute("style", "margin-top:50px; color:white; text-align:center;");
+    var div2 = document.createElement("div");
+    var imgs = document.createElement("img");
+    imgs.setAttribute("src", "https://i.ibb.co/fFknzFb/Screenshot-2022-06-07-10-28-57-PM.png");
+    imgs.setAttribute("style", "width:300px; text-align:center; margin-top:50px;");
+    div2.id = "closeButtonDiv";
+    var closeButton = document.createElement("img");
+    closeButton.setAttribute("src", "https://library.kissclipart.com/20191026/ppq/kissclipart-close-icon-cross-icon-delete-icon-873686c9a26fc318.png");
+    closeButton.id = "small";
+    closeButton.setAttribute("onclick", "javascript: closePopups()");
+    div2.appendChild(closeButton);
+    var fscButton = document.createElement("button");
+    fscButton.id = "fscButton";
+    fscButton.innerHTML = "Main Website!";
+    var a = document.createElement("a");
+    a.setAttribute("href", "https://fairopshotgun.xyz");
+    await sleep(1000);
+    div.appendChild(headerText);
+    div.appendChild(imgs);
+    div.appendChild(div2);
+    a.classList.add("fadeIn");
+    headerText2.classList.add("fadeIn");
+    fscButton.classList.add("fadeIn");
+    headerText.classList.add("fadeIn");
+    div2.classList.add("fadeIn");
+    headerText1.classList.add("fadeIn");
+    await sleep(1000);
+    fscButton.classList.remove("fadeIn");
+    fscButton.classList.remove("fadeIn");
+    headerText.classList.remove("fadeIn");
+    headerText1.classList.remove("fadeIn");
+    div2.classList.remove("fadeIn");
+   
+
+}
+function closePopups(){
+    document.body.removeChild(document.getElementById('profileDiv'));
+      insane();
+}
+
+
+
+
+
+
+
+async function openFSCPopup(){
+    var div = document.createElement("div");
+    div.id = "profileDiv";
+    document.body.appendChild(div);
+    var headerText = document.createElement("h1");
+    headerText.innerHTML = "New UNFAIR MODE!";
+    headerText.id = "headerText";
+    headerText.setAttribute("style", "margin-top:50px; text-align:center;");
+    var headerText1 = document.createElement("h1");
+    headerText1.innerHTML = "Just send a screen shot with proof it is you, to admin@fairopshotgun.xyz";
+    headerText1.id = "headerText1";
+    headerText1.setAttribute("style", "margin-top:50px; color:white; text-align:center;");
+    var headerText2 = document.createElement("h1");
+    headerText2.innerHTML = "If you beat fakie mode, you can request a custom skin!";
+    headerText2.id = "headerText2";
+    headerText2.setAttribute("style", "margin-top:50px; color:white; text-align:center;");
+    var div2 = document.createElement("div");
+    div2.id = "closeButtonDiv";
+    var closeButton = document.createElement("img");
+    closeButton.setAttribute("src", "https://library.kissclipart.com/20191026/ppq/kissclipart-close-icon-cross-icon-delete-icon-873686c9a26fc318.png");
+    closeButton.id = "small";
+    closeButton.setAttribute("onclick", "javascript: closePopup()");
+    div2.appendChild(closeButton);
+    var fscButton = document.createElement("button");
+    fscButton.id = "fscButton";
+    fscButton.innerHTML = "Main Website!";
+    var a = document.createElement("a");
+    a.setAttribute("href", "https://fairopshotgun.xyz");
+    await sleep(1000);
+    div.appendChild(headerText);
+    div.appendChild(headerText2);
+    div.appendChild(headerText1);
+    div.appendChild(div2);
+    a.classList.add("fadeIn");
+    headerText2.classList.add("fadeIn");
+    fscButton.classList.add("fadeIn");
+    headerText.classList.add("fadeIn");
+    div2.classList.add("fadeIn");
+    headerText1.classList.add("fadeIn");
+    await sleep(1000);
+    fscButton.classList.remove("fadeIn");
+    fscButton.classList.remove("fadeIn");
+    headerText.classList.remove("fadeIn");
+    headerText1.classList.remove("fadeIn");
+    div2.classList.remove("fadeIn");
+   
+
+}
+openFSCPopup();
+function closePopup(){
+    document.body.removeChild(document.getElementById('profileDiv'));
+}
+
+
+    var audio = new Audio('sounds/pkbackground.mp3')
+audio.addEventListener('timeupdate', function(){
+            var buffer = 1;
+            if(this.currentTime > this.duration - buffer){
+                this.currentTime = 0
+                this.play()
+            }}, false);
+
+    var skinNum = 1;
+
+
+var audioPlaying = true;
+var sound = true;
+var smokeColor = "grey";
+var hairX;
+var hairY;
+var cloudColor = "white";
+var rgbRed = 0;
+var down = false;
+var level = "red";
+var cloudOpacity = 1;
+var previousPlat=0;
+var previousPlatY=window.innerHeight-50;
+var previousPlatWidth=200;
+var previousBackgroundX;
+var previousBackgroundWidth;
+var previousScenicX;
+var previousScenicWidth;
+var previousStarX;
+var previousCloudX;
+var previousHouseX;
+const canvas = document.querySelector("canvas");
+canvas.width = window.innerWidth;
+var offset = 0;
+canvas.height = window.innerHeight-1;
+const ctx = canvas.getContext('2d');
+var gravity = 1;
+var cloudOffSet = 0;
+var prevDevil;
+
+
+function darkMode(){
+    canvas.setAttribute("style", "background-color:#242B4B;");
+    document.getElementById('darkMode').innerHTML = "Light Mode";
+    document.getElementById('darkMode').setAttribute("onclick", "lightMode()");
+    document.getElementById('p2').setAttribute("style", "color:white;");
+    planets.forEach(planet=>{
+        planet.color = "#FEFCD7";
+    })
+}
+function lightMode(){
+    canvas.setAttribute("style", "background-color:#ADD8E6;");
+    document.getElementById('darkMode').innerHTML = "Dark Mode";
+    document.getElementById('darkMode').setAttribute("onclick", "darkMode()");
+    document.getElementById('p2').setAttribute("style", "color:black;");
+    planets.forEach(planet=>{
+        planet.color = "#ffffbf";
+    })
+}
+
+
+
+class Player {
+    constructor({type = 0}){
+        this.position = {
+            x:100,
+            y:window.innerHeight-200,
+        }
+        this.original = {
+            x:100,
+            y:window.innerHeight-200,
+        }
+        this.velocity = {
+            x: 0,
+            y: 1,
+        }
+        this.width = 50;
+        this.height = 50;
+        this.airborne = true;
+        this.type = 0;
+    }
+    create(){
+        if (this.type == 0){
+            //hair
+        hairX = this.position.x-12;
+        hairY = this.position.y-8;
+        ctx.fillStyle = "#654321";
+        ctx.fillRect(hairX, hairY, this.width+7, 8);
+        //body
+        ctx.fillStyle = "blue";
+        ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
+        //head band
+        ctx.fillStyle = "#D3D3D3";
+        ctx.fillRect(this.position.x, this.position.y+4, this.width, 8);
+        //Eye
+        ctx.fillStyle="white";
+        ctx.fillRect(this.position.x+32, this.position.y+18, 12, 12);
+        ctx.fillStyle="black";
+        ctx.fillRect(this.position.x+36, this.position.y+22, 4, 4);
+        //Mouth
+        ctx.fillStyle="#EBB5B8";
+        ctx.fillRect(this.position.x+30, this.position.y+40, 20, 5);
+        } else if (this.type == 1){
+
+
+
+
+            //horns
+        ctx.fillStyle = "red";
+        ctx.fillRect(this.position.x+40, this.position.y-15, 5, 15);
+        ctx.fillStyle = "black";
+        ctx.fillRect(this.position.x+35, this.position.y-20, 5, 5);
+        ctx.fillRect(this.position.x+30, this.position.y-25, 5, 5);
+        //body
+        ctx.fillStyle = "black";
+        ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
+        
+        //Eye
+        ctx.fillStyle="white";
+        ctx.fillRect(this.position.x+32, this.position.y+18, 12, 12);
+        ctx.fillStyle="black";
+        ctx.fillRect(this.position.x+36, this.position.y+22, 4, 4);
+
+        //Mouth
+        ctx.fillStyle="red";
+        ctx.fillRect(this.position.x+35, this.position.y+35,  15, 5);
+        ctx.fillRect(this.position.x+30, this.position.y+40, 5, 5);
+        // angry lines
+        ctx.fillRect(this.position.x+42, this.position.y+13, 5, 5);
+        ctx.fillRect(this.position.x+37, this.position.y+8, 5, 5);
+        } else if (this.type == 2){
+            //bear 
+
+            //horns
+        ctx.fillStyle = "#C4A484"; 
+        ctx.fillRect(this.position.x+10, this.position.y-15, 15, 15);
+        ctx.fillStyle = "gold";
+        ctx.fillRect(this.position.x+15, this.position.y-5, 5, 5);
+        //body
+        ctx.fillStyle = "#C4A484";
+        ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
+        
+        //Eye
+        ctx.fillStyle="white";
+        ctx.fillRect(this.position.x+32, this.position.y+18, 12, 12);
+        ctx.fillStyle="black";
+        ctx.fillRect(this.position.x+36, this.position.y+22, 4, 4);
+        //Mouth
+        ctx.fillStyle="red";
+        ctx.fillRect(this.position.x+30, this.position.y+40, 20, 5);
+        
+        } else if (this.type == 3){
+            //Seibert 
+//body
+        ctx.fillStyle = "#FFDBAC";
+        ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
+        
+        
+        //Eye brow
+        ctx.fillStyle="black";
+        ctx.fillRect(this.position.x+32, this.position.y+12, 12, 3);
+        //eye
+        ctx.fillStyle="white";
+        ctx.fillRect(this.position.x+32, this.position.y+18, 12, 12);
+        ctx.fillStyle="black";
+        ctx.fillRect(this.position.x+36, this.position.y+22, 4, 4);
+        //Mouth
+        ctx.fillStyle="red";
+        ctx.fillRect(this.position.x+35, this.position.y+40, 15, 5);
+        ctx.fillStyle="black";
+        
+        ctx.fillRect(this.position.x+35, this.position.y+35, 15, 5);
+        ctx.fillRect(this.position.x+30, this.position.y+35, 5, 5);
+        ctx.fillRect(this.position.x+30, this.position.y+40, 5, 5);
+        ctx.globalAlpha = .5;
+        ctx.fillRect(this.position.x, this.position.y+45, 50, 5);
+        ctx.fillRect(this.position.x, this.position.y+40, 30, 5);
+        ctx.globalAlpha = 1;
+        //hair
+        ctx.fillRect(this.position.x, this.position.y-5, 50, 10);
+        ctx.fillRect(this.position.x, this.position.y-5, 5, 35);
+        ctx.fillRect(this.position.x+5, this.position.y-5, 5, 30);
+        ctx.fillRect(this.position.x+10, this.position.y-5, 5, 25);
+        ctx.fillRect(this.position.x+15, this.position.y-5, 6, 20);
+        ctx.fillRect(this.position.x+20, this.position.y-5, 8, 15);
+        ctx.fillRect(this.position.x+25, this.position.y-5, 10, 10);
+        ctx.fillRect(this.position.x+25, this.position.y-2.5, 20, 10);
+        //bag
+        ctx.fillStyle="#1F51FF";
+        ctx.fillRect(this.position.x-30, this.position.y-10, 30, 55);
+        ctx.fillStyle="#624a2e";
+        ctx.fillRect(this.position.x-25, this.position.y-5, 25, 50);
+        ctx.fillStyle="orange";
+        ctx.beginPath();
+        ctx.arc(this.position.x-15, this.position.y-25, 15, 0, 2 * Math.PI);
+        ctx.fill();
+        ctx.fillStyle="white";
+        ctx.fillRect(this.position.x-17.5, this.position.y-27.5, 7.5,7.5);
+        ctx.fillStyle = "grey";
+        ctx.fillRect(this.position.x-30, this.position.y-20, 30,10);
+        ctx.fillStyle = "black";
+        ctx.fillRect(this.position.x-30, this.position.y-25, 5,15);
+        ctx.fillRect(this.position.x-5, this.position.y-25, 5,15);
+
+        
+        //ADD ANTENNA!!!
+        ctx.fillRect(this.position.x-40, this.position.y+10, 10,5);
+        ctx.fillRect(this.position.x-40, this.position.y-90, 5,100);
+
+
+        ctx.fillRect(this.position.x-40, this.position.y-100, 5,5);
+        ctx.globalAlpha = 
+        ctx.fillStyle="rgb(" + rgbRed +",0,0)";
+        ctx.fillRect(this.position.x-42.5, this.position.y-110, 10, 20);
+        ctx.fillStyle="black";
+        ctx.fillRect(this.position.x-42.5, this.position.y-90, 10, 2.5);
+        }
+    }
+    update(){
+        this.position.x += this.velocity.x;
+        this.position.y += this.velocity.y;
+        this.create();
+        if (this.position.y + this.height + this.velocity.y <= canvas.height){
+            this.velocity.y += gravity;
+            this.airborne = true;
+        } else {
+            player.velocity.y = 0;
+            player.velocity.x = -10;
+            console.log("touched ground");
+        }
+        
+    }
+
+}
+
+class Platform {
+    constructor({x,y, text = "",width = 200,color="red", type="platform",fakie = false, opacity=1}){
+        this.position = {
+            x:x,
+            y:y,
+        }
+        this.original = {
+            x:x,
+            y:y,
+        }
+        this.fakie =fakie;
+        this.width = width;
+        this.height = 30;
+        this.color = color;
+        previousPlat = x;
+        previousPlatWidth = width;
+        previousPlatY = y;
+        this.text = text;
+        this.type = type;
+        this.opacity = opacity;
+    }
+    
+    create(){
+        
+        if (this.type == "platform"){
+            if (this.width !== 500 && this.position.x > 500){
+                ctx.globalAlpha = this.opacity;
+            }
+            //snow
+        ctx.fillStyle = "white";
+        if (this.fakie){
+        ctx.fillRect(this.position.x, this.position.y-10, 100, this.height);
+        //actual platform
+        ctx.fillStyle = this.color;
+        ctx.fillRect(this.position.x, this.position.y, 100, this.height);
+        this.width = 0;
+        } else {
+            ctx.fillRect(this.position.x, this.position.y-10, this.width, this.height);
+        //actual platform
+        ctx.fillStyle = this.color;
+        ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
+        ctx.globalAlpha = 1;
+        }
+
+        
+        ctx.font = "30px Arial";
+        ctx.fillText(this.text, this.position.x+40, this.position.y-10);
+        } else if (this.type == "victory"){
+            ctx.fillStyle= this.color;
+            ctx.fillRect(this.position.x, this.position.y, this.width, 330);
+            ctx.fillStyle = "gold";
+            ctx.beginPath();
+            ctx.moveTo(this.position.x+20, this.position.y);
+            ctx.lineTo(this.position.x-80, this.position.y);
+            ctx.lineTo(this.position.x+20, this.position.y-100);
+            ctx.fill();
+            ctx.closePath();
+        }
+        
+    }
+}
+
+
+
+class Background {
+    constructor({x, y, width, color}){
+        this.position = {
+            x:x,
+            y:y,
+        }
+        this.original = {
+            x:x,
+            y:y,
+        }
+        previousBackgroundX = x;
+        previousBackgroundWidth = width;
+        this.width = width;
+        this.height = 100000;
+        this.color = color;
+    }
+    create(){
+        //Building
+        ctx.fillStyle="black";
+        ctx.fillRect(this.position.x-5,this.position.y-10,this.width+10,this.height);
+        ctx.fillStyle= this.color;
+        ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
+        //Antenna
+        if (this.position.y < window.innerHeight-250){
+            ctx.fillStyle="#FFD580";
+            ctx.fillRect(this.position.x+(this.width/2)-10,this.position.y-100,20,15);
+            ctx.fillStyle="rgb(" + rgbRed +",0,0)";
+            ctx.fillRect(this.position.x+(this.width/2)-5,this.position.y-95,10,10);
+            ctx.fillStyle="black";
+            ctx.fillRect(this.position.x+(this.width/2)-5,this.position.y-85,10,85);
+        }
+        
+        
+    }
+}
+
+class Cloud {
+    constructor({x, y}){
+        this.position = {
+            x:x,
+            y:y,
+        }
+        this.original = {
+            x:x,
+            y:y,
+        }
+        this.width = 50;
+        this.height = 50;
+        previousCloudX = x;
+    }
+    create(){
+        ctx.fillStyle = cloudColor;
+        ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
+        ctx.fillRect(this.position.x+20, this.position.y-20, this.width, this.height);
+        ctx.fillRect(this.position.x+40, this.position.y+20, this.width, this.height);
+        ctx.fillRect(this.position.x+60, this.position.y+20, this.width, this.height);
+        ctx.fillRect(this.position.x+40, this.position.y-20, this.width, this.height);
+        ctx.fillRect(this.position.x+80, this.position.y-10, this.width, this.height);
+        ctx.fillRect(this.position.x+80, this.position.y+20, this.width, this.height);
+        ctx.fillRect(this.position.x+80, this.position.y+30, this.width, this.height);
+        ctx.fillRect(this.position.x+30, this.position.y-30, this.width, this.height);
+        ctx.fillRect(this.position.x+100, this.position.y, this.width, this.height);
+    }
+}
+
+class House {
+    constructor({x, color}){
+        this.position = {
+            x:x,
+            y: window.innerHeight-200,
+        }
+        this.original = {
+            x:x,
+            y: window.innerHeight-200,
+        }
+        this.width = 200;
+        this.height = 200;
+        previousHouseX = x;
+        this.color = color;
+    }
+    create(){
+        //shadow
+        ctx.fillStyle = "black";
+        ctx.fillRect(this.position.x-5, this.position.y-5, this.width+10, this.height+10);
+        ctx.beginPath();
+        ctx.moveTo(this.position.x-55, this.position.y);
+        ctx.lineTo(this.position.x+this.width/2, this.position.y-105);
+        ctx.lineTo(this.position.x+this.width+55,this.position.y);
+        ctx.fill()
+        ctx.closePath();
+        ctx.fillRect(this.position.x+25, this.position.y-135, 60, 110);
+        //house
+        ctx.fillStyle = this.color;
+        ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
+        ctx.beginPath();
+        ctx.fillStyle = "#D3D3D3";
+        ctx.moveTo(this.position.x-50, this.position.y);
+        ctx.lineTo(this.position.x+this.width/2, this.position.y-100);
+        ctx.lineTo(this.position.x+this.width+50,this.position.y);
+        ctx.fill()
+        ctx.closePath();
+        ctx.fillStyle = smokeColor;
+        
+        var opacity;
+        if(cloudOffSet > 150){
+            cloudOpacity = 1;
+            cloudOffSet = 0;
+        }
+        if (cloudOpacity<0){
+            opacity = 0;
+        } else opacity = cloudOpacity
+        ctx.globalAlpha = opacity;
+        ctx.fillRect(this.position.x+45, this.position.y-150-cloudOffSet, 20,20);
+        if (cloudOpacity<-0.15){
+            opacity = 0;
+        } else {
+            opacity = cloudOpacity+.2;
+        }
+        ctx.globalAlpha = opacity;
+        ctx.fillRect(this.position.x+40, this.position.y-110-cloudOffSet, 20,20);
+        if (cloudOpacity<-0.3){
+            opacity = 0;
+        } else {
+            opacity = cloudOpacity+.35;
+        }
+        ctx.globalAlpha = opacity;
+        ctx.fillRect(this.position.x+50, this.position.y-70-cloudOffSet, 20,20);
+        ctx.globalAlpha = 1;
+        ctx.fillStyle = "#8b0000";
+        ctx.fillRect(this.position.x+30, this.position.y-130, 50, 100);
+
+        
+
+
+        
+    }
+}
+
+class Stars {
+    constructor({x,y, color = "#ADD8E6"}){
+        this.position = {
+            x:x,
+            y:y,
+        }
+        this.original = {
+            x:x,
+            y:y,
+        }
+        this.width = 4;
+        this.height = 4;
+        previousStarX = x;
+        this.color = color;
+        
+    }
+    create(){
+        ctx.fillStyle = this.color;
+        ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
+    }
+}
+
+
+class Planet {
+    constructor({color, glow = false}){
+        this.position = {
+            x:window.innerWidth-300,
+            y:100,
+        }
+        this.original = {
+            x:window.innerWidth-300,
+            y:100,
+        }
+        this.width = 200;
+        this.height = 200;
+        this.color = color;
+        this.glow = glow;
+    }
+    create(){
+        
+        if (this.glow){
+ctx.fillStyle = "white";
+        ctx.fillRect(this.position.x-10, this.position.y-10,this.width+20, this.height+20);
+        }
+        ctx.fillStyle = this.color;
+        ctx.fillRect(this.position.x, this.position.y,this.width, this.height);
+    }
+}
+
+
+class Mountain {
+    constructor({x,width, color}){
+        this.position = {
+            x:x,
+        }
+        this.original = {
+            x:x,
+        }
+        this.color = color;
+        this.width = width;
+        this.height = width*2/3;
+    }
+    create(){
+        for (let i = 1; i < this.width/50; i++){
+            ctx.fillStyle = this.color;
+            ctx.fillRect(this.position.x+i*50, window.innerHeight-50, 50,50);
+        }
+        for (let i = 2; i < this.width/50-1; i++){
+            ctx.fillStyle = this.color;
+            ctx.fillRect(this.position.x+i*50, window.innerHeight-100, 50,50);
+        }
+        for (let i = 3; i < this.width/50-2; i++){
+            ctx.fillStyle = this.color;
+            ctx.fillRect(this.position.x+i*50, window.innerHeight-150, 50,50);
+        }
+        for (let i = 4; i < this.width/50-3; i++){
+            ctx.fillStyle = this.color;
+            ctx.fillRect(this.position.x+i*50, window.innerHeight-200, 50,50);
+        }
+        for (let i = 5; i < this.width/50-4; i++){
+            ctx.fillStyle = this.color;
+            ctx.fillRect(this.position.x+i*50, window.innerHeight-250, 50,50);
+        }
+        for (let i = 6; i < this.width/50-5; i++){
+            ctx.fillStyle = this.color;
+            ctx.fillRect(this.position.x+i*50, window.innerHeight-300, 50,50);
+        }
+        for (let i = 7; i < this.width/50-6; i++){
+            ctx.fillStyle = this.color;
+            ctx.fillRect(this.position.x+i*50, window.innerHeight-350, 50,50);
+        }
+        for (let i = 8; i < this.width/50-7; i++){
+            ctx.fillStyle = this.color;
+            ctx.fillRect(this.position.x+i*50, window.innerHeight-400, 50,50);
+        }
+    }
+}
+
+
+class Devil {
+    constructor({x,y}){
+        this.position = {
+            x:x,
+            y:y,
+        }
+        this.original = {
+            x:x,
+            y:y,
+        }
+        prevDevil = x;
+        this.width = 50;
+        this.height = 50;
+        this.devilY = 0;
+        this.devilDown = true;
+        
+    }
+    create(){
+        //horns
+        ctx.fillStyle = "red";
+        ctx.fillRect(this.position.x+5, this.position.y-15, 5, 15);
+        ctx.fillRect(this.position.x+40, this.position.y-15, 5, 15);
+        ctx.fillStyle = "black";
+        ctx.fillRect(this.position.x+35, this.position.y-20, 5, 5);
+        ctx.fillRect(this.position.x+30, this.position.y-25, 5, 5);
+        ctx.fillRect(this.position.x+10, this.position.y-20, 5, 5);
+        ctx.fillRect(this.position.x+15, this.position.y-25, 5, 5);
+        //body
+        ctx.fillStyle = "black";
+        ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
+        
+        //Eye
+        ctx.fillStyle="white";
+        ctx.fillRect(this.position.x+32, this.position.y+18, 12, 12);
+        ctx.fillStyle="black";
+        ctx.fillRect(this.position.x+36, this.position.y+22, 4, 4);
+        ctx.fillStyle="white";
+        ctx.fillRect(this.position.x+6, this.position.y+18, 12, 12);
+        ctx.fillStyle="black";
+        ctx.fillRect(this.position.x+10, this.position.y+22, 4, 4);
+        //Mouth
+        ctx.fillStyle="red";
+        ctx.fillRect(this.position.x+10, this.position.y+35, 30, 5);
+        ctx.fillRect(this.position.x+5, this.position.y+40, 5, 5);
+        ctx.fillRect(this.position.x+40, this.position.y+40, 5, 5);
+        // angry lines
+        ctx.fillRect(this.position.x+18, this.position.y+13, 5, 5);
+        ctx.fillRect(this.position.x+13, this.position.y+8, 5, 5);
+        ctx.fillRect(this.position.x+27, this.position.y+13, 5, 5);
+        ctx.fillRect(this.position.x+32, this.position.y+8, 5, 5);
+        //trident hilt
+        ctx.fillStyle = "gold";
+        ctx.fillRect(this.position.x-10, this.position.y-10, 5, 20);
+        ctx.fillRect(this.position.x-5, this.position.y, 5, 25);
+        ctx.fillRect(this.position.x, this.position.y+15, 5, 25);
+        ctx.fillRect(this.position.x+5, this.position.y+30, 5, 25);
+        ctx.fillRect(this.position.x+10, this.position.y+45, 5, 25);
+        //trident spikes
+        ctx.fillStyle = "red";
+        ctx.fillRect(this.position.x-15, this.position.y-25, 5, 15);
+        ctx.fillRect(this.position.x-25, this.position.y-40, 5, 5);
+        ctx.fillRect(this.position.x-20, this.position.y-40, 5, 20);
+
+        
+        ctx.fillRect(this.position.x-10, this.position.y-15, 5, 5);
+        ctx.fillRect(this.position.x-5, this.position.y-15, 5, 5);
+        ctx.fillRect(this.position.x-5, this.position.y-20, 5, 5);
+        ctx.fillRect(this.position.x, this.position.y-20, 5, 5);
+
+        ctx.fillRect(this.position.x, this.position.y-30, 5, 15);
+        ctx.fillRect(this.position.x-5, this.position.y-40, 5, 15);
+
+        ctx.fillRect(this.position.x-15, this.position.y-10, 5, 5);
+        ctx.fillRect(this.position.x-20, this.position.y-10, 5, 5);
+        ctx.fillRect(this.position.x-20, this.position.y-5, 5, 5);
+        ctx.fillRect(this.position.x-25, this.position.y-5, 5, 5);
+        ctx.fillRect(this.position.x-30, this.position.y-15, 5, 15);
+        ctx.fillRect(this.position.x-35, this.position.y-25, 5, 15);
+    }
+}
+
+//wayne was here, ethan code is pretty cool i guess 69
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const insanePlatforms = [
+    // LVL 1
+    new Platform({x: 100, y: window.innerHeight-50, color: "green", text:"SPAWN"}),
+    new Platform({x: 400, y: previousPlatY-50, fakie:true}), 
+    new Platform({x:previousPlat+previousPlatWidth-50, y:previousPlatY-100, width:100, fakie:true}), 
+    new Platform({x:previousPlat+previousPlatWidth, y:previousPlatY-100, width:100}), 
+    new Platform({x:previousPlat+previousPlatWidth+150, y:previousPlatY, fakie:true}), 
+    new Platform({x:previousPlat+previousPlatWidth-50, y:previousPlatY-100,fakie:true}),
+    new Platform({x:previousPlat+ 275, y:window.innerHeight-50, width:500}),
+    // LVL 2
+    new Platform({x:previousPlat+previousPlatWidth, y:window.innerHeight-50, width:500, color:"grey", text:"CHECKPOINT!"}),
+    new Platform({x:previousPlat+previousPlatWidth+140, y:previousPlatY-90, color:"grey",fakie:true}),
+    new Platform({x:previousPlat+150, y:previousPlatY-100, color:"grey",fakie:true}),
+    new Platform({x:previousPlat+150, y:previousPlatY-100, color:"grey",fakie:true}),
+    new Platform({x:previousPlat+150, y:previousPlatY-100, color:"grey",fakie:true}),
+    new Platform({x:previousPlat+200, y:previousPlatY+100, color:"grey",fakie:true}),
+    new Platform({x:previousPlat+200, y:previousPlatY+100, color:"grey",fakie:true}),
+    new Platform({x:previousPlat+180, y:previousPlatY, color:"grey"}),
+    new Platform({x:previousPlat+previousPlatWidth+220, y:window.innerHeight-50, width:100, color:"grey", fakie:true}),
+    new Platform({x:previousPlat+previousPlatWidth, y:window.innerHeight-50, width:400, color:"grey"}),
+    //LVL 3
+    new Platform({x:previousPlat+previousPlatWidth, y:window.innerHeight-50, width:500, color:"#800080", text:"CHECKPOINT!"}),
+    new Platform({x:previousPlat + previousPlatWidth+100, y:previousPlatY, width:10, color:"#800080"}),
+    new Platform({x:previousPlat + previousPlatWidth+100, y:previousPlatY, width:10, color:"#800080"}),
+    new Platform({x:previousPlat + previousPlatWidth+100, y:previousPlatY-100, width:10, color:"#800080",fakie:true}),
+    new Platform({x:previousPlat + previousPlatWidth+100, y:previousPlatY-100, width:10, color:"#800080",fakie:true}),
+    new Platform({x:previousPlat + previousPlatWidth+150, y:previousPlatY, width:10, color:"#800080"}),
+    new Platform({x:previousPlat + previousPlatWidth+50, y:previousPlatY+150, width:10, color:"#800080",fakie:true}),
+    new Platform({x:previousPlat + previousPlatWidth+50, y:previousPlatY-250, width:10, color:"#800080", fakie:true}),
+    new Platform({x:previousPlat + previousPlatWidth+222, y:previousPlatY+300, width:100,color:"#800080"}),
+    new Platform({x:previousPlat + previousPlatWidth, y:previousPlatY,color:"#800080", fakie:true}),
+    new Platform({x:previousPlat + previousPlatWidth-100, y:previousPlatY, width:100, color:"#800080"}),
+    new Platform({x:previousPlat + previousPlatWidth, y:previousPlatY, color:"#800080", fakie:true}),
+    new Platform({x:previousPlat+previousPlatWidth-50, y:previousPlatY-100, width:100, color:"#800080"}),
+    new Platform({x:previousPlat+previousPlatWidth+50, y:window.innerHeight-50, width:100, color:"#800080",fakie:true}),
+    new Platform({x:previousPlat+previousPlatWidth, y:window.innerHeight-50, width:400, color:"#800080"}),
+    //LVL 4
+    new Platform({x:previousPlat+previousPlatWidth, y:window.innerHeight-50, width:400, color:"green", text:"VICTORY SOON!"}),
+    new Platform({x:previousPlat+previousPlatWidth, y:window.innerHeight-50, width:100, color:"green", fakie:true}),
+    new Platform({x:previousPlat+previousPlatWidth+80, y: previousPlatY-50, width:100, color:"green"}),
+    new Platform({x:previousPlat+previousPlatWidth+80, y: previousPlatY-50, width:100, color:"green",fakie:true}),
+    new Platform({x:previousPlat+previousPlatWidth+100, y: previousPlatY, width:10, color:"green"}),
+    new Platform({x:previousPlat + previousPlatWidth+100, y:previousPlatY-100, width:30, color:"green", fakie:true}),
+    new Platform({x:previousPlat + previousPlatWidth+170, y:previousPlatY, width:10, color:"green"}),
+
+]
+const insaneVictory = new Platform({x:previousPlat + previousPlatWidth+180, y:window.innerHeight-310, width:20, color:"grey", text:"VICTORY!", type:"victory"});
+const mountains = [new Mountain({x: 300, width: 800, color:"#ac9653"}),new Mountain({x: 0, width: 500, color:"#C2B280"}),new Mountain({x: 800, width: 600, color:"#C2B280"}),new Mountain({x: 1300, width: 500, color:"#C2B280"}),new Mountain({x: 1700, width: 700, color:"#C2B280"}),new Background({x:0, y:window.innerHeight-10, width:100000000, color:"#cf1020"})];
+const devils = [new Devil({x:300, y:200}),new Devil({x:prevDevil+600, y:200}),new Devil({x:prevDevil+600, y:200}),new Devil({x:prevDevil+600, y:200}),new Devil({x:prevDevil+600, y:200}),new Devil({x:prevDevil+600, y:200}),new Devil({x:prevDevil+600, y:200}),new Devil({x:prevDevil+600, y:200}),new Devil({x:prevDevil+600, y:200}),new Devil({x:prevDevil+600, y:200}),new Devil({x:prevDevil+600, y:200}),new Devil({x:prevDevil+600, y:200}),new Devil({x:prevDevil+600, y:200}),new Devil({x:prevDevil+600, y:200}),new Devil({x:prevDevil+600, y:200}),new Devil({x:prevDevil+600, y:200}),new Devil({x:prevDevil+600, y:200}),new Devil({x:prevDevil+600, y:200}),new Devil({x:prevDevil+600, y:200}),new Devil({x:prevDevil+600, y:200}),new Devil({x:prevDevil+600, y:200}),new Devil({x:prevDevil+600, y:200}),new Devil({x:prevDevil+600, y:200}),new Devil({x:prevDevil+600, y:200}),new Devil({x:prevDevil+600, y:200}),new Devil({x:prevDevil+600, y:200}),new Devil({x:prevDevil+600, y:200}),new Devil({x:prevDevil+600, y:200}),new Devil({x:prevDevil+600, y:200}),new Devil({x:prevDevil+600, y:200}),new Devil({x:prevDevil+600, y:200}),new Devil({x:prevDevil+600, y:200}),new Devil({x:prevDevil+600, y:200}),new Devil({x:prevDevil+600, y:200}),new Devil({x:prevDevil+600, y:200}),new Devil({x:prevDevil+600, y:200}),new Devil({x:prevDevil+600, y:200}),new Devil({x:prevDevil+600, y:200}),new Devil({x:prevDevil+600, y:200}),new Devil({x:prevDevil+600, y:200}),new Devil({x:prevDevil+600, y:200}),new Devil({x:prevDevil+600, y:200}),new Devil({x:prevDevil+600, y:200}),new Devil({x:prevDevil+600, y:200}),new Devil({x:prevDevil+600, y:200}),new Devil({x:prevDevil+600, y:200}),new Devil({x:prevDevil+600, y:200}),new Devil({x:prevDevil+600, y:200}),new Devil({x:prevDevil+600, y:200}),new Devil({x:prevDevil+600, y:200}),new Devil({x:prevDevil+600, y:200}),new Devil({x:prevDevil+600, y:200}),new Devil({x:prevDevil+600, y:200}),new Devil({x:prevDevil+600, y:200}),new Devil({x:prevDevil+600, y:200}),];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function insane(){
+    
+    if (rgbRed<255 && down == false){
+rgbRed+=5;
+    } else if (down == true && rgbRed >0){
+        rgbRed -=5;
+        if (rgbRed<=0){
+            down = false;
+        }
+    } else {
+        rgbRed -=5;
+        down = true;
+    }
+    devils.forEach(devil =>{
+        devil.devilY += 1
+    if (devil.devilY <= 61 && devil.devilDown == true){
+        devil.position.y += 1;
+    } else {
+        devil.position.y -= 6;
+        devil.devilY -=7;
+        if (devil.devilY<2){
+            devil.devilDown = true;
+        } else {
+            devil.devilDown = false;
+        }
+        
+    }
+    })
+    
+     
+     
+    requestAnimationFrame(insane);
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    
+    
+    planets.forEach(planet=>{
+         planet.create();
+     })
+    mountains.forEach(mountain=>{
+        mountain.create();
+    })
+    
+    clouds.forEach(cloud => {
+        cloud.create();
+    })
+    
+    insanePlatforms.forEach(platform => {
+        platform.create();
+    })
+    devils.forEach(devil => {
+        devil.create();
+    })
+    insaneVictory.create();
+    
+    if (offset < 0 && player.velocity.x === -10 && level == "red"){
+        offset = 0;
+
+
+        planets.forEach(planet=>{
+                planet.position.x = planet.original.x;
+                planet.create();
+            })
+            mountains.forEach(mountain=>{
+        mountain.position.x = mountain.original.x;
+        mountain.create();
+    })
+        clouds.forEach(cloud=>{
+            cloud.position.x=cloud.original.x;
+            cloud.create();
+        })
+       
+    insanePlatforms.forEach(platform => {
+        platform.position.x=platform.original.x;
+        platform.create();
+    })
+    devils.forEach(devil=>{
+        devil.position.x = devil.original.x;
+        devil.create();
+    })
+    insaneVictory.position.x=insaneVictory.original.x;
+        insaneVictory.create();
+
+    player.position.x= player.original.x;
+    player.position.y = player.original.y;
+    player.velocity.x = 5;
+
+    } else if (offset == 300 && player.velocity.x === -10 && level == "grey"){
+        offset = 300;
+    player.position.y=player.original.y;
+    player.position.x = player.original.x;
+    player.velocity.x = 5;
+    } else if (offset == 800 && player.velocity.x === -10 && level == "black"){
+        offset = 800;
+    player.position.y=player.original.y;
+    player.position.x = player.original.x;
+    player.velocity.x = 5;
+    }
+    // else if (offset == 2950 && player.velocity.x === -10 && level == "pink"){
+    //     offset = 2950;
+    // player.position.y=player.original.y;
+    // player.position.x = player.original.x;
+    // player.velocity.x = 5;
+    // }
+   if (player.velocity.x === -10){
+    //     if (offset > 3000){
+    //         level = "pink";
+    //         offset -=15;
+
+    //          planets.forEach(planet=>{
+    //             planet.position.x += .05*15;
+    //             planet.create();
+    //         })
+    //         mountains.forEach(mountain=>{
+    //     mountain.position.x += .1 * 15;
+    //     mountain.create();
+    // })
+    //          clouds.forEach(cloud=>{
+    //         cloud.position.x+=.8*15;
+    //         cloud.create();
+    //          });
+    
+    // insanePlatforms.forEach(platform => {
+    //     platform.position.x+=5*15;
+    //     platform.create();
+    // })
+    // devils.forEach(devil=>{
+    //     devil.position.x+=5*15;
+    //     devil.create();        
+    // })
+    // insaneVictory.position.x+=5*15;
+    // insaneVictory.create();
+             
+        
+    //     }else if (offset > 2950){
+    //         level = "pink";
+    //         offset -=2;
+            
+      
+    //          planets.forEach(planet=>{
+    //             planet.position.x += .05*2;
+    //             planet.create();
+    //         })
+    //         mountains.forEach(mountain=>{
+    //     mountain.position.x += .1 * 2;
+    //     mountain.create();
+    // })
+    //          clouds.forEach(cloud=>{
+    //         cloud.position.x+=.8*2;
+    //         cloud.create();
+    //     })
+ 
+    // insanePlatforms.forEach(platform => {
+    //     platform.position.x+=5*2;
+    //     platform.create();
+    // })
+    // devils.forEach(devil=>{
+    //     devil.position.x+=5*2;
+    //     devil.create();        
+    // })
+    // insaneVictory.position.x+=5*2;
+    //     insaneVictory.create();
+    //  } else 
+    if (offset > 850){
+            level = "black";
+            offset -=15;
+
+ 
+             planets.forEach(planet=>{
+                planet.position.x += .05*15;
+                planet.create();
+            })
+            mountains.forEach(mountain=>{
+        mountain.position.x += .1 * 15;
+        mountain.create();
+    })
+             clouds.forEach(cloud=>{
+            cloud.position.x+=.8*15;
+            cloud.create();
+             });
+   
+    insanePlatforms.forEach(platform => {
+        platform.position.x+=5*15;
+        platform.create();
+    })
+    devils.forEach(devil=>{
+        devil.position.x+=5*15;
+        devil.create();        
+    })
+    insaneVictory.position.x+=5*15;
+        insaneVictory.create();
+             
+        
+        }else if (offset > 800){
+            level = "black";
+            offset -=2;
+
+             planets.forEach(planet=>{
+                planet.position.x += .05*2;
+                planet.create();
+            })
+            mountains.forEach(mountain=>{
+        mountain.position.x += .1 * 2;
+        mountain.create();
+    })
+             clouds.forEach(cloud=>{
+            cloud.position.x+=.8*2;
+            cloud.create();
+        })
+        
+
+    insanePlatforms.forEach(platform => {
+        platform.position.x+=5*2;
+        platform.create();
+    })
+    devils.forEach(devil=>{
+        devil.position.x+=5*2;
+        devil.create();        
+    })
+    insaneVictory.position.x+=5*2;
+        insaneVictory.create();
+     }else if (offset > 330){
+            level = "grey";
+            offset -=15;
+
+             planets.forEach(planet=>{
+                planet.position.x += .05*15;
+                planet.create();
+            })
+            mountains.forEach(mountain=>{
+        mountain.position.x += .1 * 15;
+        mountain.create();
+    })
+             clouds.forEach(cloud=>{
+            cloud.position.x+=.8*15;
+            cloud.create();
+             });
+   
+    insanePlatforms.forEach(platform => {
+        platform.position.x+=5*15;
+        platform.create();
+    })
+    devils.forEach(devil=>{
+        devil.position.x+=5*15;
+        devil.create();        
+    })
+    insaneVictory.position.x+=5*15;
+        insaneVictory.create();
+    
+             
+        }else if (offset > 300){
+            level = "grey";
+            offset -=2;
+
+             planets.forEach(planet=>{
+                planet.position.x += .05*2;
+                planet.create();
+            })
+            mountains.forEach(mountain=>{
+        mountain.position.x += .1 * 2;
+        mountain.create();
+    })
+             clouds.forEach(cloud=>{
+            cloud.position.x+=.8*2;
+            cloud.create();
+        })
+
+    insanePlatforms.forEach(platform => {
+        platform.position.x+=5*2;
+        platform.create();
+
+    })
+    devils.forEach(devil=>{
+        devil.position.x+=5*2;
+        devil.create();        
+    })
+    insaneVictory.position.x+=5*2;
+        insaneVictory.create();
+     } else {
+            offset-=15;
+
+             planets.forEach(planet=>{
+                planet.position.x += .05*15;
+                planet.create();
+            })
+            mountains.forEach(mountain=>{
+        mountain.position.x += .1 * 15;
+        mountain.create();
+    })
+        clouds.forEach(cloud=>{
+            cloud.position.x+=.8*15;
+            cloud.create();
+        })
+
+    insanePlatforms.forEach(platform => {
+        platform.position.x+=5*15;
+        platform.create();
+    })
+    devils.forEach(devil=>{
+        devil.position.x+=5*15;
+        devil.create();        
+    })
+    victory.position.x+=5*15;
+        victory.create();
+
+       }
+   }
+        
+    
+    
+    if (player.position.x > 500){
+        player.velocity.x = 0;
+            offset+=1;
+
+             planets.forEach(planet=>{
+                planet.position.x -= .05;
+                planet.create();
+            })
+            mountains.forEach(mountain=>{
+        mountain.position.x -= .1;
+        mountain.create();
+    })
+        clouds.forEach(cloud=>{
+            cloud.position.x-=.8;
+            cloud.create();
+        })
+
+    insanePlatforms.forEach(platform => {
+        platform.position.x-=5
+        platform.create();
+    })
+    devils.forEach(devil=>{
+        devil.position.x-=5;
+        devil.create();        
+    })
+    insaneVictory.position.x-=5;
+        insaneVictory.create();
+
+
+    }
+    
+        if (keys.jump.pressed && !player.airborne){
+            if (sound){
+                let jump = new Audio("sounds/jump.mp3");
+                jump.play();
+            }
+            player.airborne = true;
+            player.velocity.y -= 15;
+        }
+       
+        
+    
+
+    player.update();
+     if (player.position.x+player.width-40 >= insaneVictory.position.x){
+         player.velocity.y = 0;
+         player.velocity.x = 0;
+         player.position.x = 499;
+         gravity = 0;
+         hairX += .01;
+         win();
+   }
+   insanePlatforms.forEach(platform=>{
+       if (player.position.y + player.height <= platform.position.y && player.position.y + player.height +player.velocity.y >= platform.position.y && player.position.x + player.width >= platform.position.x && player.position.x <= platform.position.x+platform.width){
+       player.velocity.y = 0;
+       player.airborne = false;
+   } 
+   })
+   
+
+console.log(offset);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const platforms = [
+    // LVL 1
+    new Platform({x: 100, y: window.innerHeight-50, color: "green", text:"SPAWN"}),
+    new Platform({x: 300, y: previousPlatY-50}), 
+    new Platform({x:575, y:previousPlatY-100}), 
+    new Platform({x:850, y:previousPlatY-100}), 
+    new Platform({x:1125, y:previousPlatY-100}), 
+    new Platform({x:1400, y:previousPlatY-100}),
+    new Platform({x:previousPlat+ 450, y:window.innerHeight-50, width:500}),
+    //LVL 2
+    new Platform({x:previousPlat + previousPlatWidth, y:previousPlatY, width:500, color:"grey", text:"CHECKPOINT IN 2 LEVELS"}),
+    new Platform({x:previousPlat + previousPlatWidth + 75, y:previousPlatY-100, color:"grey"}),
+    new Platform({x:previousPlat + previousPlatWidth+75, y:previousPlatY-100, color:"grey", width:100}),
+    new Platform({x:previousPlat + previousPlatWidth+200, y:previousPlatY+200, color:"grey"}),
+    new Platform({x:previousPlat + previousPlatWidth+80, y:previousPlatY-100, color:"grey"}),
+    new Platform({x:previousPlat + previousPlatWidth+80, y:previousPlatY-100, color:"grey"}),
+    new Platform({x:previousPlat + previousPlatWidth+80, y:previousPlatY-100, color:"grey"}),
+    new Platform({x:previousPlat + previousPlatWidth+200, y:previousPlatY+200, color:"grey"}),
+    new Platform({x:previousPlat+ previousPlatWidth+160, y:window.innerHeight-50, width:500, color:"grey"}),
+    //LVL 3
+    new Platform({x:previousPlat + previousPlatWidth, y:previousPlatY, width:500, color:"#800080", text:"CHECKPOINT IN 1 LEVEL"}),
+    new Platform({x:previousPlat + previousPlatWidth+ 85, y:previousPlatY-100,color:"#800080", text:"Hold"}),
+    new Platform({x:previousPlat+20, y:previousPlatY-100,color:"#800080", text:"Jump"}),
+    new Platform({x:previousPlat+70, y:previousPlatY-100,color:"#800080"}),
+    new Platform({x:previousPlat + previousPlatWidth+250, y:previousPlatY+250,color:"#800080"}),
+    new Platform({x:previousPlat+ previousPlatWidth+160, y:window.innerHeight-50, width:0, color:"#800080"}),
+    new Platform({x:previousPlat + previousPlatWidth-50, y:previousPlatY-100,color:"#800080"}),
+    new Platform({x:previousPlat+20, y:previousPlatY-100,color:"#800080"}),
+    new Platform({x:previousPlat+70, y:previousPlatY-100,color:"#800080"}),
+    new Platform({x:previousPlat + previousPlatWidth+250, y:previousPlatY+250,color:"#800080"}),
+    new Platform({x:previousPlat+ previousPlatWidth+160, y:window.innerHeight-50, width:500, color:"#800080"}),
+    //LVL 4
+    new Platform({x:previousPlat + previousPlatWidth, y:previousPlatY, width:500, color:"green", text:"CHECKPOINT!"}),
+    new Platform({x:previousPlat + previousPlatWidth+90, y:previousPlatY-100, width:50, color:"green"}),
+    new Platform({x:previousPlat + previousPlatWidth+125, y:previousPlatY-100, width:50, color:"green"}),
+    new Platform({x:previousPlat + 90, y:previousPlatY-100, color:"green", width:50}),
+    new Platform({x:previousPlat + previousPlatWidth+255, y:previousPlatY+250,color:"green"}), //+250 + 255
+    new Platform({x:previousPlat + previousPlatWidth +10, y:previousPlatY+25, color:"green", width:50}),
+    new Platform({x:previousPlat + previousPlatWidth +185, y:previousPlatY-25, color:"green",fakie:true}),
+    new Platform({x:previousPlat + previousPlatWidth, y:previousPlatY+25, color:"green", width:50, fakie:true}),
+    new Platform({x:previousPlat + previousPlatWidth +145, y:previousPlatY-25, color:"green"}),
+    new Platform({x:previousPlat + previousPlatWidth +10, y:previousPlatY+25, color:"green", width:50}),
+    new Platform({x:previousPlat + previousPlatWidth +80, y:previousPlatY-25, width:25, color:"green"}),
+    new Platform({x:previousPlat + previousPlatWidth+90, y:previousPlatY-100, width:50, color:"green"}),
+    new Platform({x:previousPlat + previousPlatWidth+125, y:previousPlatY-100, width:50, color:"green"}),
+    new Platform({x:previousPlat + 90, y:previousPlatY-100, color:"green", width:50}),
+    new Platform({x:previousPlat + previousPlatWidth+255, y:previousPlatY+250,color:"green"}),
+    new Platform({x:previousPlat+ previousPlatWidth+160, y:window.innerHeight-50, width:500, color:"green"}),
+    //LVL 5
+    new Platform({x:previousPlat + previousPlatWidth, y:previousPlatY, width:500, color:"black", text:"CHECKPOINT!"}),
+    new Platform({x:previousPlat + previousPlatWidth+100, y:previousPlatY, width:10, color:"black", text:"Hold Jump"}),
+    new Platform({x:previousPlat + previousPlatWidth+100, y:previousPlatY, width:10, color:"black"}),
+    new Platform({x:previousPlat + previousPlatWidth+100, y:previousPlatY-100, width:10, color:"black"}),
+    new Platform({x:previousPlat + previousPlatWidth+100, y:previousPlatY-100, width:10, color:"black"}),
+    new Platform({x:previousPlat + previousPlatWidth+150, y:previousPlatY, width:10, color:"black"}),
+    new Platform({x:previousPlat + previousPlatWidth+50, y:previousPlatY-100, width:10, color:"black", fakie:true}),
+    new Platform({x:previousPlat + previousPlatWidth+50, y:previousPlatY+300, width:10, color:"black"}),
+    new Platform({x:previousPlat + previousPlatWidth+145, y:previousPlatY-100, width:100, color:"black"}),
+    new Platform({x:previousPlat + previousPlatWidth+200, y:previousPlatY, width:100, color:"black"}),
+    new Platform({x:previousPlat + previousPlatWidth+200, y:previousPlatY, width:100, color:"black"}),
+    new Platform({x:previousPlat+ previousPlatWidth+160, y:window.innerHeight-50, width:500, color:"black"}),
+    // LVL 6
+    new Platform({x:previousPlat + previousPlatWidth, y:previousPlatY, width:500, color:"pink", text:"CHECKPOINT!"}),
+    new Platform({x:previousPlat + previousPlatWidth-40, y:previousPlatY-100, width:100, color:"pink", fakie:true}),
+    new Platform({x:previousPlat + previousPlatWidth+50, y:previousPlatY-100, width:100, color:"pink"}),
+    new Platform({x:previousPlat + previousPlatWidth+330, y:previousPlatY-100, width:100, color:"pink"}),
+    new Platform({x:previousPlat+previousPlatWidth-300, y:previousPlatY, color:"pink",fakie:true}),
+    new Platform({x:previousPlat + previousPlatWidth+350, y:previousPlatY+250,color:"pink"}),
+    new Platform({x:previousPlat + previousPlatWidth+200, y:previousPlatY, width:100, color:"pink"}),
+    new Platform({x:previousPlat + previousPlatWidth-60, y:previousPlatY-100, width:100, color:"pink"}),
+    new Platform({x:previousPlat + previousPlatWidth, y:previousPlatY-100, width:200, color:"pink"}),
+    new Platform({x:previousPlat + previousPlatWidth, width:300, y:previousPlatY,color:"pink"}), // y+250 x+250
+    
+
+    ]
+const victory = new Platform({x:previousPlat + previousPlatWidth+200, y:window.innerHeight-310, width:20, color:"grey", text:"VICTORY!", type:"victory"});
+
+
+
+const stars = [new Stars({x:Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)}),new Stars({x:previousStarX + Math.floor(Math.random()*100)+10, y:Math.floor(Math.random()*window.innerHeight)})]
+
+
+const planets = [new Planet({color:"#ffffbf"})]
+const backgroundPlatforms = [new House({x:250,color:"#cea970"}),new House({x:previousHouseX+1500,color:"#FF5CCD"}),new House({x:previousHouseX+1200,color:"#ADD8E6"}),new House({x:previousHouseX+1800,color:"#cea970"}),new House({x:250,color:"#ADD8E6"}),new House({x:previousHouseX+1500,color:"#90ee90"}),new House({x:previousHouseX+1200,color:"#ADD8E6"}),new House({x:previousHouseX+1800,color:"#FF5CCD"}),new House({x:250,color:"#cea970"}),new House({x:previousHouseX+1500,color:"#FF5CCD"}),new House({x:previousHouseX+1200,color:"#ADD8E6"}),new House({x:previousHouseX+1800,color:"#cea970"}),new House({x:250,color:"#ADD8E6"}),new House({x:previousHouseX+1500,color:"#90ee90"}),new House({x:previousHouseX+1200,color:"#ADD8E6"}),new House({x:previousHouseX+1800,color:"#FF5CCD"}),new House({x:previousHouseX+1800,color:"#cea970"}),new House({x:250,color:"#ADD8E6"}),new House({x:previousHouseX+1500,color:"#90ee90"}),new House({x:previousHouseX+1200,color:"#ADD8E6"}),new House({x:previousHouseX+1800,color:"#FF5CCD"}), new Background({x:100, y:window.innerHeight-10, width:100000000, color:"#cf1020"}),new House({x:250,color:"#ADD8E6"}),new House({x:previousHouseX+1500,color:"#90ee90"}),new House({x:previousHouseX+1200,color:"#ADD8E6"}),new House({x:previousHouseX+1800,color:"#FF5CCD"}),new House({x:250,color:"#cea970"}),new House({x:previousHouseX+1500,color:"#FF5CCD"}),new House({x:previousHouseX+1200,color:"#ADD8E6"}),new House({x:previousHouseX+1800,color:"#cea970"}),new House({x:250,color:"#ADD8E6"}),new House({x:previousHouseX+1500,color:"#90ee90"}),new House({x:previousHouseX+1200,color:"#ADD8E6"}),new House({x:previousHouseX+1800,color:"#FF5CCD"}),new House({x:previousHouseX+1800,color:"#cea970"}),new House({x:250,color:"#ADD8E6"}),new House({x:previousHouseX+1500,color:"#90ee90"}),new House({x:previousHouseX+1200,color:"#ADD8E6"}),new House({x:previousHouseX+1800,color:"#FF5CCD"}), new Background({x:100, y:window.innerHeight-10, width:100000000, color:"#cf1020"}),new House({x:250,color:"#ADD8E6"}),new House({x:previousHouseX+1500,color:"#90ee90"}),new House({x:previousHouseX+1200,color:"#ADD8E6"}),new House({x:previousHouseX+1800,color:"#FF5CCD"}),new House({x:250,color:"#cea970"}),new House({x:previousHouseX+1500,color:"#FF5CCD"}),new House({x:previousHouseX+1200,color:"#ADD8E6"}),new House({x:previousHouseX+1800,color:"#cea970"}),new House({x:250,color:"#ADD8E6"}),new House({x:previousHouseX+1500,color:"#90ee90"}),new House({x:previousHouseX+1200,color:"#ADD8E6"}),new House({x:previousHouseX+1800,color:"#FF5CCD"}),new House({x:previousHouseX+1800,color:"#cea970"}),new House({x:250,color:"#ADD8E6"}),new House({x:previousHouseX+1500,color:"#90ee90"}),new House({x:previousHouseX+1200,color:"#ADD8E6"}),new House({x:previousHouseX+1800,color:"#FF5CCD"}), new Background({x:100, y:window.innerHeight-10, width:100000000, color:"#cf1020"})];
+
+const scenicPlatforms = [new Background({x: 200, y:window.innerHeight-200, width:90, color: "#ece9f5"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-250, width:100, color: "#fffff4"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-251, width:80, color: "#ece9f5"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-200, width:90, color: "#ffecec"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-251, width:110, color: "#d6f9d6"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-200, width:90, color: "#efefef"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-200, width:100, color: "#fffff4"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-150, width:80, color: "#ffecec"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-251, width:90, color: "#efefef"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-300, width:110, color: "#d6f9d6"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-250, width:100, color: "#fffff4"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-251, width:80, color: "#ece9f5"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-200, width:90, color: "#ffecec"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-251, width:110, color: "#d6f9d6"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-200, width:90, color: "#efefef"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-200, width:100, color: "#fffff4"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-150, width:80, color: "#ffecec"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-251, width:90, color: "#efefef"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-300, width:110, color: "#d6f9d6"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-250, width:100, color: "#fffff4"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-251, width:80, color: "#ece9f5"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-200, width:90, color: "#ffecec"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-251, width:110, color: "#d6f9d6"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-200, width:90, color: "#efefef"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-200, width:100, color: "#fffff4"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-150, width:80, color: "#ffecec"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-251, width:90, color: "#efefef"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-300, width:110, color: "#d6f9d6"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-250, width:100, color: "#fffff4"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-251, width:80, color: "#ece9f5"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-200, width:90, color: "#ffecec"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-251, width:110, color: "#d6f9d6"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-200, width:90, color: "#efefef"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-200, width:100, color: "#fffff4"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-150, width:80, color: "#ffecec"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-251, width:90, color: "#efefef"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-300, width:110, color: "#d6f9d6"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-250, width:100, color: "#fffff4"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-251, width:80, color: "#ece9f5"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-200, width:90, color: "#ffecec"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-251, width:110, color: "#d6f9d6"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-200, width:90, color: "#efefef"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-200, width:100, color: "#fffff4"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-150, width:80, color: "#ffecec"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-251, width:90, color: "#efefef"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-300, width:110, color: "#d6f9d6"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-250, width:100, color: "#fffff4"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-251, width:80, color: "#ece9f5"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-200, width:90, color: "#ffecec"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-251, width:110, color: "#d6f9d6"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-200, width:90, color: "#efefef"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-200, width:100, color: "#fffff4"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-150, width:80, color: "#ffecec"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-251, width:90, color: "#efefef"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-300, width:110, color: "#d6f9d6"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-300, width:110, color: "#d6f9d6"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-250, width:100, color: "#fffff4"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-251, width:80, color: "#ece9f5"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-200, width:90, color: "#ffecec"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-251, width:110, color: "#d6f9d6"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-200, width:90, color: "#efefef"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-200, width:100, color: "#fffff4"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-150, width:80, color: "#ffecec"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-251, width:90, color: "#efefef"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-300, width:110, color: "#d6f9d6"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-250, width:100, color: "#fffff4"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-251, width:80, color: "#ece9f5"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-200, width:90, color: "#ffecec"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-251, width:110, color: "#d6f9d6"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-200, width:90, color: "#efefef"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-200, width:100, color: "#fffff4"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-150, width:80, color: "#ffecec"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-251, width:90, color: "#efefef"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-300, width:110, color: "#d6f9d6"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-250, width:100, color: "#fffff4"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-251, width:80, color: "#ece9f5"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-200, width:90, color: "#ffecec"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-251, width:110, color: "#d6f9d6"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-200, width:90, color: "#efefef"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-200, width:100, color: "#fffff4"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-150, width:80, color: "#ffecec"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-251, width:90, color: "#efefef"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-300, width:110, color: "#d6f9d6"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-250, width:100, color: "#fffff4"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-251, width:80, color: "#ece9f5"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-200, width:90, color: "#ffecec"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-251, width:110, color: "#d6f9d6"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-200, width:90, color: "#efefef"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-200, width:100, color: "#fffff4"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-150, width:80, color: "#ffecec"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-251, width:90, color: "#efefef"}),new Background({x: previousBackgroundX+previousBackgroundWidth, y:window.innerHeight-300, width:110, color: "#d6f9d6"})]
+
+const clouds = [new Cloud({x:100, y:100}), new Cloud({x:700, y:300}), new Cloud({x:1200, y:250}), new Cloud({x:1800, y:450}), new Cloud({x:2300, y:230}),new Cloud({x:previousCloudX+550, y:100}), new Cloud({x:previousCloudX+550, y:300}), new Cloud({x:previousCloudX+550, y:250}), new Cloud({x:previousCloudX+550, y:450}), new Cloud({x:previousCloudX+550, y:230}), new Cloud({x:previousCloudX+550, y:450}), new Cloud({x:previousCloudX+550, y:300}), new Cloud({x:previousCloudX+550, y:450}), new Cloud({x:previousCloudX+550, y:230}),new Cloud({x:previousCloudX+550, y:450}), new Cloud({x:previousCloudX+550, y:300}), new Cloud({x:previousCloudX+550, y:450}), new Cloud({x:previousCloudX+550, y:230}),new Cloud({x:previousCloudX+550, y:450}), new Cloud({x:previousCloudX+550, y:300}), new Cloud({x:previousCloudX+550, y:450}), new Cloud({x:previousCloudX+550, y:230})];
+const player = new Player({type:skinNum});
+const keys = {
+    jump: {
+        pressed: false
+    }
+};
+
+player.create();
+
+
+function animate(){
+    if (rgbRed<255 && down == false){
+rgbRed+=5;
+    } else if (down == true && rgbRed >0){
+        rgbRed -=5;
+        if (rgbRed<=0){
+            down = false;
+        }
+    } else {
+        rgbRed -=5;
+        down = true;
+    }
+     
+     
+        cloudOpacity-=.01;
+
+    cloudOffSet+=1;
+
+    requestAnimationFrame(animate);
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    
+    stars.forEach(star => {
+        star.create();
+    })
+    planets.forEach(planet=>{
+         planet.create();
+     })
+    
+    
+    clouds.forEach(cloud => {
+        cloud.create();
+    })
+    scenicPlatforms.forEach(scenicPlatform=>{
+        scenicPlatform.create();
+    })
+    backgroundPlatforms.forEach(backgroundPlatform => {
+    backgroundPlatform.create();
+})
+    platforms.forEach(platform => {
+        platform.create();
+    })
+    victory.create();
+    
+    if (offset < 0 && player.velocity.x === -10 && level == "red"){
+        offset = 0;
+
+        stars.forEach(star=>{
+            star.position.x=star.original.x;
+            star.create();
+        })
+        planets.forEach(planet=>{
+                planet.position.x = planet.original.x;
+                planet.create();
+            })
+        clouds.forEach(cloud=>{
+            cloud.position.x=cloud.original.x;
+            cloud.create();
+        })
+        scenicPlatforms.forEach(scenicPlatform=>{
+            scenicPlatform.position.x=scenicPlatform.original.x;
+        scenicPlatform.create();
+    })
+    backgroundPlatforms.forEach(backgroundPlatform => {
+        backgroundPlatform.position.x=backgroundPlatform.original.x;
+    backgroundPlatform.create();
+})
+    platforms.forEach(platform => {
+        platform.position.x=platform.original.x;
+        platform.create();
+    })
+    victory.position.x=victory.original.x;
+        victory.create();
+    player.position.x= player.original.x;
+    player.position.y = player.original.y;
+    player.velocity.x = 5;
+
+    } else if (offset == 1600 && player.velocity.x === -10 && level == "grey"){
+        offset = 1600;
+    player.position.y=player.original.y;
+    player.position.x = player.original.x;
+    player.velocity.x = 5;
+    } else if (offset == 2400 && player.velocity.x === -10 && level == "black"){
+        offset = 2400;
+    player.position.y=player.original.y;
+    player.position.x = player.original.x;
+    player.velocity.x = 5;
+    } else if (offset == 2950 && player.velocity.x === -10 && level == "pink"){
+        offset = 2950;
+    player.position.y=player.original.y;
+    player.position.x = player.original.x;
+    player.velocity.x = 5;
+    }
+   if (player.velocity.x === -10){
+        if (offset > 3000){
+            level = "pink";
+            offset -=15;
+
+            stars.forEach(star=>{
+            star.position.x+=.03*15;
+            star.create();
+             });
+             planets.forEach(planet=>{
+                planet.position.x += .05*15;
+                planet.create();
+            })
+             clouds.forEach(cloud=>{
+            cloud.position.x+=.8*15;
+            cloud.create();
+             });
+             scenicPlatforms.forEach(scenicPlatform=>{
+            scenicPlatform.position.x+=1.6*15;
+        scenicPlatform.create();
+    })
+    backgroundPlatforms.forEach(backgroundPlatform => {
+        backgroundPlatform.position.x+=3*15;
+    backgroundPlatform.create();
+})
+    platforms.forEach(platform => {
+        platform.position.x+=5*15;
+        platform.create();
+    })
+    victory.position.x+=5*15;
+    victory.create();
+             
+        
+        }else if (offset > 2950){
+            level = "pink";
+            offset -=2;
+            
+            stars.forEach(star=>{
+            star.position.x+=.03*2;
+            star.create();
+             });
+             planets.forEach(planet=>{
+                planet.position.x += .05*2;
+                planet.create();
+            })
+             clouds.forEach(cloud=>{
+            cloud.position.x+=.8*2;
+            cloud.create();
+        })
+        
+        scenicPlatforms.forEach(scenicPlatform=>{
+            scenicPlatform.position.x+=1.6*2;
+        scenicPlatform.create();
+    })
+    backgroundPlatforms.forEach(backgroundPlatform => {
+        backgroundPlatform.position.x+=3*2;
+    backgroundPlatform.create();
+})
+    platforms.forEach(platform => {
+        platform.position.x+=5*2;
+        platform.create();
+    })
+    victory.position.x+=5*2;
+        victory.create();
+     } else if (offset > 2500){
+            level = "black";
+            offset -=15;
+
+            stars.forEach(star=>{
+            star.position.x+=.03*15;
+            star.create();
+             });
+             planets.forEach(planet=>{
+                planet.position.x += .05*15;
+                planet.create();
+            })
+             clouds.forEach(cloud=>{
+            cloud.position.x+=.8*15;
+            cloud.create();
+             });
+             scenicPlatforms.forEach(scenicPlatform=>{
+            scenicPlatform.position.x+=1.6*15;
+        scenicPlatform.create();
+    })
+    backgroundPlatforms.forEach(backgroundPlatform => {
+        backgroundPlatform.position.x+=3*15;
+    backgroundPlatform.create();
+})
+    platforms.forEach(platform => {
+        platform.position.x+=5*15;
+        platform.create();
+    })
+    victory.position.x+=5*15;
+        victory.create();
+             
+        
+        }else if (offset > 2400){
+            level = "black";
+            offset -=2;
+            
+            stars.forEach(star=>{
+            star.position.x+=.03*2;
+            star.create();
+             });
+             planets.forEach(planet=>{
+                planet.position.x += .05*2;
+                planet.create();
+            })
+             clouds.forEach(cloud=>{
+            cloud.position.x+=.8*2;
+            cloud.create();
+        })
+        
+        scenicPlatforms.forEach(scenicPlatform=>{
+            scenicPlatform.position.x+=1.6*2;
+        scenicPlatform.create();
+    })
+    backgroundPlatforms.forEach(backgroundPlatform => {
+        backgroundPlatform.position.x+=3*2;
+    backgroundPlatform.create();
+})
+    platforms.forEach(platform => {
+        platform.position.x+=5*2;
+        platform.create();
+    })
+    victory.position.x+=5*2;
+        victory.create();
+     }else if (offset > 1700){
+            level = "grey";
+            offset -=15;
+            stars.forEach(star=>{
+            star.position.x+=.03*15;
+            star.create();
+             });
+             planets.forEach(planet=>{
+                planet.position.x += .05*15;
+                planet.create();
+            })
+             clouds.forEach(cloud=>{
+            cloud.position.x+=.8*15;
+            cloud.create();
+             });
+             scenicPlatforms.forEach(scenicPlatform=>{
+            scenicPlatform.position.x+=1.6*15;
+        scenicPlatform.create();
+    })
+    backgroundPlatforms.forEach(backgroundPlatform => {
+        backgroundPlatform.position.x+=3*15;
+    backgroundPlatform.create();
+})
+    platforms.forEach(platform => {
+        platform.position.x+=5*15;
+        platform.create();
+    })
+    victory.position.x+=5*15;
+        victory.create();
+    
+             
+        }else if (offset > 1600){
+            level = "grey";
+            offset -=2;
+            stars.forEach(star=>{
+            star.position.x+=.03*2;
+            star.create();
+             });
+             planets.forEach(planet=>{
+                planet.position.x += .05*2;
+                planet.create();
+            })
+             clouds.forEach(cloud=>{
+            cloud.position.x+=.8*2;
+            cloud.create();
+        })
+        
+        scenicPlatforms.forEach(scenicPlatform=>{
+            scenicPlatform.position.x+=1.6*2;
+        scenicPlatform.create();
+    })
+    backgroundPlatforms.forEach(backgroundPlatform => {
+        backgroundPlatform.position.x+=3*2;
+    backgroundPlatform.create();
+})
+    platforms.forEach(platform => {
+        platform.position.x+=5*2;
+        platform.create();
+
+    })
+    victory.position.x+=5*2;
+        victory.create();
+     } else {
+            offset-=15;
+            stars.forEach(star=>{
+            star.position.x+=.03*15;
+            star.create();
+             });
+             planets.forEach(planet=>{
+                planet.position.x += .05*15;
+                planet.create();
+            })
+        clouds.forEach(cloud=>{
+            cloud.position.x+=.8*15;
+            cloud.create();
+        })
+        scenicPlatforms.forEach(scenicPlatform=>{
+            scenicPlatform.position.x+=1.6*15;
+        scenicPlatform.create();
+    })
+    backgroundPlatforms.forEach(backgroundPlatform => {
+        backgroundPlatform.position.x+=3*15;
+    backgroundPlatform.create();
+})
+    platforms.forEach(platform => {
+        platform.position.x+=5*15;
+        platform.create();
+    })
+    victory.position.x+=5*15;
+        victory.create();
+
+       }
+   }
+        
+    
+    
+    if (player.position.x > 500){
+        player.velocity.x = 0;
+            offset+=1;
+        
+        stars.forEach(star=>{
+            star.position.x-=.03;
+            star.create();
+             });
+             planets.forEach(planet=>{
+                planet.position.x -= .05;
+                planet.create();
+            })
+        clouds.forEach(cloud=>{
+            cloud.position.x-=.8;
+            cloud.create();
+        })
+        scenicPlatforms.forEach(scenicPlatform=>{
+            scenicPlatform.position.x-=1.6
+        scenicPlatform.create();
+    })
+    backgroundPlatforms.forEach(backgroundPlatform => {
+        backgroundPlatform.position.x-=3
+    backgroundPlatform.create();
+})
+    platforms.forEach(platform => {
+        platform.position.x-=5
+        platform.create();
+    })
+    victory.position.x-=5;
+        victory.create();
+
+
+    }
+    
+        if (keys.jump.pressed && !player.airborne){
+            if (sound){
+                let jump = new Audio("sounds/jump.mp3");
+            jump.play();
+            }
+            player.airborne = true;
+            player.velocity.y -= 15;
+        }
+       
+        
+    
+
+    player.update();
+     if (player.position.x+player.width-40 >= victory.position.x){
+         player.velocity.y = 0;
+         player.velocity.x = 0;
+         player.position.x = 499;
+         gravity = 0;
+         hairX += .01;
+         win();
+   }
+   platforms.forEach(platform=>{
+       if (player.position.y + player.height <= platform.position.y && player.position.y + player.height +player.velocity.y >= platform.position.y && player.position.x + player.width >= platform.position.x && player.position.x <= platform.position.x+platform.width){
+       player.velocity.y = 0;
+       player.airborne = false;
+   } 
+   })
+   
+
+console.log(offset);
+}
+
+
+function clear(){
+    if (rgbRed<255 && down == false){
+rgbRed+=5;
+    } else if (down == true && rgbRed >0){
+        rgbRed -=5;
+        if (rgbRed<=0){
+            down = false;
+        }
+    } else {
+        rgbRed -=5;
+        down = true;
+    }
+     
+     
+        cloudOpacity-=.01;
+
+    cloudOffSet+=1;
+
+    requestAnimationFrame(animate);
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    
+    planets.forEach(planet=>{
+         planet.create();
+     })
+    
+    
+    clouds.forEach(cloud => {
+        cloud.create();
+    })
+    scenicPlatforms.forEach(scenicPlatform=>{
+        scenicPlatform.color = "white";
+        scenicPlatform.create();
+    })
+    backgroundPlatforms.forEach(backgroundPlatform => {
+    backgroundPlatform.create();
+})
+    platforms.forEach(platform => {
+        platform.color = "black";
+        platform.create();
+    })
+    victory.create();
+    
+    if (offset < 0 && player.velocity.x === -10 && level == "red"){
+        offset = 0;
+
+        planets.forEach(planet=>{
+                planet.position.x = planet.original.x;
+                planet.create();
+            })
+        clouds.forEach(cloud=>{
+            cloud.position.x=cloud.original.x;
+            cloud.create();
+        })
+        scenicPlatforms.forEach(scenicPlatform=>{
+            scenicPlatform.position.x=scenicPlatform.original.x;
+        scenicPlatform.create();
+    })
+    backgroundPlatforms.forEach(backgroundPlatform => {
+        backgroundPlatform.position.x=backgroundPlatform.original.x;
+    backgroundPlatform.create();
+})
+    platforms.forEach(platform => {
+        platform.position.x=platform.original.x;
+        platform.create();
+    })
+    victory.position.x=victory.original.x;
+        victory.create();
+    player.position.x= player.original.x;
+    player.position.y = player.original.y;
+    player.velocity.x = 5;
+
+    } else if (offset == 1600 && player.velocity.x === -10 && level == "grey"){
+        offset = 1600;
+    player.position.y=player.original.y;
+    player.position.x = player.original.x;
+    player.velocity.x = 5;
+    } else if (offset == 2400 && player.velocity.x === -10 && level == "black"){
+        offset = 2400;
+    player.position.y=player.original.y;
+    player.position.x = player.original.x;
+    player.velocity.x = 5;
+    } else if (offset == 2950 && player.velocity.x === -10 && level == "pink"){
+        offset = 2950;
+    player.position.y=player.original.y;
+    player.position.x = player.original.x;
+    player.velocity.x = 5;
+    }
+   if (player.velocity.x === -10){
+        if (offset > 3000){
+            level = "pink";
+            offset -=15;
+
+             planets.forEach(planet=>{
+                planet.position.x += .05*15;
+                planet.create();
+            })
+             clouds.forEach(cloud=>{
+            cloud.position.x+=.8*15;
+            cloud.create();
+             });
+             scenicPlatforms.forEach(scenicPlatform=>{
+            scenicPlatform.position.x+=1.6*15;
+        scenicPlatform.create();
+    })
+    backgroundPlatforms.forEach(backgroundPlatform => {
+        backgroundPlatform.position.x+=3*15;
+    backgroundPlatform.create();
+})
+    platforms.forEach(platform => {
+        platform.position.x+=5*15;
+        platform.create();
+    })
+    victory.position.x+=5*15;
+    victory.create();
+             
+        
+        }else if (offset > 2950){
+            level = "pink";
+            offset -=2;
+
+             planets.forEach(planet=>{
+                planet.position.x += .05*2;
+                planet.create();
+            })
+             clouds.forEach(cloud=>{
+            cloud.position.x+=.8*2;
+            cloud.create();
+        })
+        
+        scenicPlatforms.forEach(scenicPlatform=>{
+            scenicPlatform.position.x+=1.6*2;
+        scenicPlatform.create();
+    })
+    backgroundPlatforms.forEach(backgroundPlatform => {
+        backgroundPlatform.position.x+=3*2;
+    backgroundPlatform.create();
+})
+    platforms.forEach(platform => {
+        platform.position.x+=5*2;
+        platform.create();
+    })
+    victory.position.x+=5*2;
+        victory.create();
+     } else if (offset > 2500){
+            level = "black";
+            offset -=15;
+
+             planets.forEach(planet=>{
+                planet.position.x += .05*15;
+                planet.create();
+            })
+             clouds.forEach(cloud=>{
+            cloud.position.x+=.8*15;
+            cloud.create();
+             });
+             scenicPlatforms.forEach(scenicPlatform=>{
+            scenicPlatform.position.x+=1.6*15;
+        scenicPlatform.create();
+    })
+    backgroundPlatforms.forEach(backgroundPlatform => {
+        backgroundPlatform.position.x+=3*15;
+    backgroundPlatform.create();
+})
+    platforms.forEach(platform => {
+        platform.position.x+=5*15;
+        platform.create();
+    })
+    victory.position.x+=5*15;
+        victory.create();
+             
+        
+        }else if (offset > 2400){
+            level = "black";
+            offset -=2;
+      
+             planets.forEach(planet=>{
+                planet.position.x += .05*2;
+                planet.create();
+            })
+             clouds.forEach(cloud=>{
+            cloud.position.x+=.8*2;
+            cloud.create();
+        })
+        
+        scenicPlatforms.forEach(scenicPlatform=>{
+            scenicPlatform.position.x+=1.6*2;
+        scenicPlatform.create();
+    })
+    backgroundPlatforms.forEach(backgroundPlatform => {
+        backgroundPlatform.position.x+=3*2;
+    backgroundPlatform.create();
+})
+    platforms.forEach(platform => {
+        platform.position.x+=5*2;
+        platform.create();
+    })
+    victory.position.x+=5*2;
+        victory.create();
+     }else if (offset > 1700){
+            level = "grey";
+            offset -=15;
+      
+             planets.forEach(planet=>{
+                planet.position.x += .05*15;
+                planet.create();
+            })
+             clouds.forEach(cloud=>{
+            cloud.position.x+=.8*15;
+            cloud.create();
+             });
+             scenicPlatforms.forEach(scenicPlatform=>{
+            scenicPlatform.position.x+=1.6*15;
+        scenicPlatform.create();
+    })
+    backgroundPlatforms.forEach(backgroundPlatform => {
+        backgroundPlatform.position.x+=3*15;
+    backgroundPlatform.create();
+})
+    platforms.forEach(platform => {
+        platform.position.x+=5*15;
+        platform.create();
+    })
+    victory.position.x+=5*15;
+        victory.create();
+    
+             
+        }else if (offset > 1600){
+            level = "grey";
+            offset -=2;
+      
+             planets.forEach(planet=>{
+                planet.position.x += .05*2;
+                planet.create();
+            })
+             clouds.forEach(cloud=>{
+            cloud.position.x+=.8*2;
+            cloud.create();
+        })
+        
+        scenicPlatforms.forEach(scenicPlatform=>{
+            scenicPlatform.position.x+=1.6*2;
+        scenicPlatform.create();
+    })
+    backgroundPlatforms.forEach(backgroundPlatform => {
+        backgroundPlatform.position.x+=3*2;
+    backgroundPlatform.create();
+})
+    platforms.forEach(platform => {
+        platform.position.x+=5*2;
+        platform.create();
+
+    })
+    victory.position.x+=5*2;
+        victory.create();
+     } else {
+            offset-=15;
+   
+             planets.forEach(planet=>{
+                planet.position.x += .05*15;
+                planet.create();
+            })
+        clouds.forEach(cloud=>{
+            cloud.position.x+=.8*15;
+            cloud.create();
+        })
+        scenicPlatforms.forEach(scenicPlatform=>{
+            scenicPlatform.position.x+=1.6*15;
+        scenicPlatform.create();
+    })
+    backgroundPlatforms.forEach(backgroundPlatform => {
+        backgroundPlatform.position.x+=3*15;
+    backgroundPlatform.create();
+})
+    platforms.forEach(platform => {
+        platform.position.x+=5*15;
+        platform.create();
+    })
+    victory.position.x+=5*15;
+        victory.create();
+
+       }
+   }
+        
+    
+    
+    if (player.position.x > 500){
+        player.velocity.x = 0;
+            offset+=1;
+        
+
+             planets.forEach(planet=>{
+                planet.position.x -= .05;
+                planet.create();
+            })
+        clouds.forEach(cloud=>{
+            cloud.position.x-=.8;
+            cloud.create();
+        })
+        scenicPlatforms.forEach(scenicPlatform=>{
+            scenicPlatform.position.x-=1.6
+        scenicPlatform.create();
+    })
+    backgroundPlatforms.forEach(backgroundPlatform => {
+        backgroundPlatform.position.x-=3
+    backgroundPlatform.create();
+})
+    platforms.forEach(platform => {
+        platform.position.x-=5
+        platform.create();
+    })
+    victory.position.x-=5;
+        victory.create();
+
+
+    }
+    
+        if (keys.jump.pressed && !player.airborne){
+            if (sound){
+                let jump = new Audio("sounds/jump.mp3");
+            jump.play();
+            }
+            player.airborne = true;
+            player.velocity.y -= 15;
+        }
+       
+        
+    
+
+    player.update();
+     if (player.position.x+player.width-40 >= victory.position.x){
+         player.velocity.y = 0;
+         player.velocity.x = 0;
+         player.position.x = 499;
+         gravity = 0;
+         hairX += .01;
+         win();
+   }
+   platforms.forEach(platform=>{
+       if (player.position.y + player.height <= platform.position.y && player.position.y + player.height +player.velocity.y >= platform.position.y && player.position.x + player.width >= platform.position.x && player.position.x <= platform.position.x+platform.width){
+       player.velocity.y = 0;
+       player.airborne = false;
+   } 
+   })
+   
+
+console.log(offset);
+}
+
+
+
+window.addEventListener('keydown', (event) => {
+   if (event.key == "w" || event.key == " " || event.keyCode == 38){
+       keys.jump.pressed = true;
+    } 
+
+})
+
+window.addEventListener('keyup', (event) => {
+   if (event.key == "w" || event.key == " " || event.keyCode == 38){
+       keys.jump.pressed = false;
+    } 
+})
+
+function startGame(){
+    localStorage.setItem('mode','normal');
+console.log(localStorage.getItem('mode'));
+    document.body.removeChild(document.getElementById('div'));
+        document.body.removeChild(document.getElementById('startButton'));
+        document.body.removeChild(document.getElementById('insaneButton'));
+        document.body.removeChild(document.getElementById('clearButton'));
+document.body.removeChild(document.getElementById('startText'));
+document.body.removeChild(document.getElementById('startTitle'));
+document.body.removeChild(document.getElementById('imgText'));
+document.body.removeChild(document.getElementById('img'));
+document.body.removeChild(document.getElementById('skinScroller'));
+    player.velocity.x = 5;
+    audio.play();
+var darkMode = document.createElement("h1");
+darkMode.id = "darkMode";
+darkMode.innerHTML = "Dark Mode";
+darkMode.setAttribute("onclick", "darkMode()");
+document.body.appendChild(darkMode);
+
+
+var muteFX = document.createElement("h1");
+muteFX.id = "muteSound";
+muteFX.setAttribute("onclick", "muteFX()");
+muteFX.innerHTML = "Mute FX";
+document.body.appendChild(muteFX);
+
+
+var muteMusic = document.createElement("h1");
+muteMusic.id = "muteMusic";
+muteMusic.setAttribute("onclick", "muteSound()");
+muteMusic.innerHTML = "Mute Music";
+document.body.appendChild(muteMusic);
+
+    animate();
+}
+function startInsane(){
+    document.body.removeChild(document.getElementById('div'));
+        document.body.removeChild(document.getElementById('startButton'));
+        document.body.removeChild(document.getElementById('insaneButton'));
+        document.body.removeChild(document.getElementById('clearButton'));
+document.body.removeChild(document.getElementById('startText'));
+document.body.removeChild(document.getElementById('startTitle'));
+document.body.removeChild(document.getElementById('imgText'));
+document.body.removeChild(document.getElementById('skinScroller'));
+document.body.removeChild(document.getElementById('img'));
+canvas.setAttribute("style", "background-color:#940E1B;");
+document.getElementById("p2").setAttribute("style","color:white;");
+    player.velocity.x = 5;
+    audio.play();
+
+var muteFX = document.createElement("h1");
+muteFX.id = "muteSound";
+muteFX.setAttribute("onclick", "muteFX()");
+muteFX.innerHTML = "Mute FX";
+document.body.appendChild(muteFX);
+
+
+var muteMusic = document.createElement("h1");
+muteMusic.id = "muteMusic";
+muteMusic.setAttribute("onclick", "muteSound()");
+muteMusic.innerHTML = "Mute Music";
+document.body.appendChild(muteMusic);
+
+
+openFSCPopups();
+  
+    cloudColor = "#E71E02";
+    planets.forEach(planet => {
+        planet.color = "black";
+        planet.glow = true;
+    })
+    
+    
+}
+function startClear(){
+    
+    document.body.removeChild(document.getElementById('div'));
+        document.body.removeChild(document.getElementById('startButton'));
+        document.body.removeChild(document.getElementById('insaneButton'));
+        document.body.removeChild(document.getElementById('clearButton'));
+document.body.removeChild(document.getElementById('startText'));
+document.body.removeChild(document.getElementById('startTitle'));
+document.body.removeChild(document.getElementById('imgText'));
+document.body.removeChild(document.getElementById('skinScroller'));
+document.body.removeChild(document.getElementById('img'));
+canvas.setAttribute("style", "background-color:white;");
+document.getElementById("p2").setAttribute("style","color:black;");
+    player.velocity.x = 5;
+    audio.play();
+
+var muteFX = document.createElement("h1");
+muteFX.id = "muteSound";
+muteFX.setAttribute("onclick", "muteFX()");
+muteFX.innerHTML = "Mute FX";
+document.body.appendChild(muteFX);
+
+
+var muteMusic = document.createElement("h1");
+muteMusic.id = "muteMusic";
+muteMusic.setAttribute("onclick", "muteSound()");
+muteMusic.innerHTML = "Mute Music";
+document.body.appendChild(muteMusic);
+
+    clear();
+    planets.forEach(planet => {
+        planet.color = "yellow";
+        planet.glow = true;
+    })
+    stars.forEach(star=>{
+        star.color = "white";
+    })
+    platforms.forEach(platform=>{
+        platform.opacity=0;
+    })
+    
+}
+
+function win(){
+    var title = document.createElement("h1");
+    title.setAttribute("style", "position:absolute; top:50%; left:50%; font-size:70px;-ms-transform:translate(-50%, -50%); transform:translate(-50%,-50%); color:white; background-color:#242b4b;");
+    if (player.type !== 3){
+        title.innerHTML = "YOU WIN!";
+    } else {
+        title.innerHTML = "YOU ARE TRULY, A MR. SEIBERT!";
+    }
+    document.body.appendChild(title);
+    document.body.removeChild(document.body.getElementById('darkMode'));
+}
+
+function skinScroller(){
+    skinNum+=1;
+    if (skinNum == 0){
+        player.type=1;
+        document.getElementById('img').setAttribute("src", "https://i.ibb.co/D1bd5Gt/Screenshot-2022-06-09-8-29-31-AM-removebg-preview.png");
+        document.getElementById('imgText').innerHTML = "Devil Bomber";
+    } else if (skinNum == 1){
+        player.type=0;
+        document.getElementById('img').setAttribute("src", "https://i.ibb.co/0tvbVJL/Screenshot-2022-06-05-10-03-13-PM-removebg-preview.png");
+        document.getElementById('imgText').innerHTML = "Blue Ninja";
+    } else if (skinNum == 2){
+        player.type=2;
+        document.getElementById('img').setAttribute("src", "https://i.ibb.co/5WBs14Z/Screenshot-2022-06-09-9-27-56-AM-removebg-preview.png");
+        document.getElementById('imgText').innerHTML = "Gold Bear";
+    } else if (skinNum == 3){
+        player.type=3;
+        document.getElementById('img').setAttribute("src", "https://i.ibb.co/BCkD695/Screenshot-2022-06-10-8-22-35-AM.png");
+        document.getElementById('imgText').innerHTML = "Camper Seibert";
+        skinNum = -1;
+        // ctx.clearRect(0,0,canvas.width,canvas.height);
+        // player.create();
+        
+    } 
+}
+function muteFX(){
+    if (sound){
+        sound = false;
+        document.getElementById('muteSound').innerHTML = "Unmute FX";
+    } else if (!sound){
+        sound = true;
+        document.getElementById('muteSound').innerHTML = "Mute FX";
+    }
+}
+function muteSound(){
+    if (audioPlaying){
+        audioPlaying = false;
+        audio.pause();
+        document.getElementById('muteMusic').innerHTML = "Unmute Music";
+    } else if (!audioPlaying){
+        audioPlaying = true;
+        audio.play();
+        document.getElementById('muteMusic').innerHTML = "Mute Music";
+    }
+}
+
+</script>
+</html>

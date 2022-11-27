@@ -12,29 +12,79 @@
     <link rel="stylesheet" href="../public/fonts/ubuntu.css">
     <script src="../public/js/bootstrap.bundle.min.js"></script>
     <style>
-    html,body{
-      font-family:'Ubuntu', sans-serif;
-    }
+      html,body{
+       font-family:'Ubuntu', sans-serif;
+     }
+ 
+ .glow {
+  text-shadow: 0 0 8px #aeb9d9, 0 0 12px #aeb9d9, 0 0 6px #FFFFFF;
+ }
+ .darkBack{
+  background-color:	rgba(33, 37, 41, .7);
+  transition:background-color 200ms;
+ }
+ .darkBack:hover{
+  background-color:	rgba(33, 37, 41, 1);
+  transition: background-color 300ms;
+ }
 
-
-    .outline-text-emerald {
+ </style>
+ </head>
+ <body>
+     <object type="text/html" data="../public/backgrounds/homeBackground.html" class="position-fixed w-100 h-100 top-0" style="z-index:-1;"></object>
+ <script src="../public/navigation/homeNav.js"></script>
+ 
   
-  text-shadow: -.04em -.04em 0 #50C878, .04em -.04em 0 #50C878, -.04em .04em 0 #50C878, .04em .04em 0 #50C878;
-    }
-    .outline-text-white {
-  text-shadow: -.04em -.04em 0 #FFF, .04em -.04em 0 #FFF, -.04em .04em 0 #FFF, .04em .04em 0 #FFF;
-    }
-    
-    </style>
-  </head>
-  <body>
-<object type="text/html" data="../public/backgrounds/homeBackground.html" class="position-fixed w-100 h-100" style="z-index:-1;"></object>
-<script src="../public/navigation/homeNav.js"></script>
-
-
-
-      
+   <div class="d-flex align-items-center mt-5" style="height:45vh;">
+    <div class = "container-fluid text-center">
+      <h1 class="display-1 glow text-white">Minigames</h1>
+    </div>
+   </div>
      
-  </body>
+ 
+   <!-- <span class="badge bg-danger">NEW</span><b>  -->
+    <!-- <span class="badge bg-warning">BETA</span><b> -->
+ 
+  <div class="container-md darkBack border border-4 p-5 bg-opacity-50" role="button" onclick="window.open('parkourninja.html')">
+    <div class="row">
+      <div class="col-md-6 text-white">
+        <p><span class="badge bg-success">ALPHA</span><b> Parkour Ninja</b> is a slow but intense auto-scroller parkour game! Can you survive the toughest of the levels?<br><b>CLICK HERE!</b><br>New Music by Hilton Seibert!<br><br>Camper Seibert Skin!</p>
+      </div>            
+      <div class="col-md-6">
+        <img class = "img-fluid" src = "https://i.ibb.co/zSft3Gy/Screenshot-2022-06-10-9-43-47-AM.png">
+      </div>         
+    </div>
+  </div>
+
+  <div class="container-md darkBack border border-4 p-5 my-5 fadeHover" role="button" onclick="window.open('minecraftdle.html')">
+    <div class="row">
+      <div class="col-md-6 text-white">
+        <p><span class="badge bg-success">ALPHA</span><b> Minecraftdle</b> is a sequel to wordle, but the twist is that it only includes minecraft items.<br><br><br><b>CLICK HERE!</b></p>
+      </div>            
+      <div class="col-md-6">
+        <img class = "img-fluid" src = "https://i.ibb.co/zJ6htPS/Screenshot-2022-06-05-5-22-19-PM.png">
+      </div>         
+    </div>
+  </div>
+
+  <div class="container-md darkBack border border-4 p-5 my-5 fadeHover" role="button" onclick="">
+    <div class="row">
+      <div class="col-md-6 text-white">
+        <p><span class="badge bg-info">DEVELOPMENT</span><b> Parkour Race</b> is 2 player parkour minigame, that involves a race to victory! Show off your Parkour Ninja Skills! May the best Parkour Ninja win! <br><br><br></p>
+      </div>            
+      <div class="col-md-6">
+        <img class = "img-fluid" src = "https://i.ibb.co/frq8g1h/coming-soon-2579123-960-720.jpg">
+      </div>         
+    </div>
+  </div>
+
+   
+ <script>
+
+ </script>
+ </body>
+ 
+ </html>
+ 
 </html>
 
