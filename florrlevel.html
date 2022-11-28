@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" type="image/jpeg" href="public/logos/lcm-logo.png">
+    <title>Ethan Twu - Florr Level Calculator</title>
+    <meta name="description" content="Calculate everything about florr leveling!">
+    <meta name="keywords" content="Ethan Twu, Ethan Twu Millburn NJ, LeftClickMage, YukiThePomsky, MLightning, FairOPShotgun">
+    <link rel="stylesheet" href="public/css/bootstrap.min.css">
+    <link rel="stylesheet" href="public/fonts/ubuntu.css">
+    <script src="public/js/bootstrap.bundle.min.js"></script>
+    <style>
+
+    html,body{
+      font-family:'Ubuntu', sans-serif;
+      color:white;
+    }
+
+
+   
+    </style>
+  </head>
+  <body>
+    <script src="finishload.js"></script>
+<object type="text/html" data="public/backgrounds/homeBackground.html" class="position-fixed w-100 h-100" style="z-index:-1;"></object>
+<script src="public/navigation/homeNav.js"></script>
+
+<div class="d-flex align-items-center" style="min-height:40vh;">
+    <div class="container-md text-center mt-5">
+        <h1 class="display-2 mt-5"><span class="badge bg-info">Level Revamp</span> Florr Level Calculator</h1>
+    </div>
+</div>
+<div id="petalsNeeded" class="my-5 container-md text-center">
+<p>Amount of commons needed: <span id="common"></span></p>
+<p>Amount of unusuals needed: <span id="unusual"></span></p>
+<p>Amount of rares needed: <span id="rare"></span></p>
+<p>Amount of epics needed: <span id="epic"></span></p>
+<p>Amount of legendaries needed: <span id="leg"></span></p>
+<p>Amount of mythics needed: <span id="mythic"></span></p>
+</div>
+<div id="levelAmount" class="my-5 container-md text-center">
+<p>You will get to level: <span id="level"></span></p>
+</div>
+<div class="container text-center">
+    <button onclick="petalsNeeded()" class="btn btn-danger mx-2">Level --> Needed Petals</button>
+    <button onclick="petalsExp()" class="btn btn-danger mx-2">Amount of Petals --> Level</button>
+</div>
+<script>
+    var common = 1;
+var unusual = 5;
+var rare = 50;
+var epic = 500;
+var legendary = 10000;
+var mythic = 500000;
+var petalsNeededDiv = document.getElementById('petalsNeeded');
+document.body.removeChild(petalsNeededDiv);
+var levelAmount = document.getElementById('levelAmount');
+document.body.removeChild(levelAmount);
+function petalsNeeded(){
+    if(document.body.contains(levelAmount)){
+        document.body.removeChild(levelAmount);
+
+    }
+  document.body.appendChild(petalsNeededDiv);
+  var level = prompt("What level do you want to get to?");
+  var exp = 30*(Math.floor(level * Math.pow(1.05,level-1)));
+  document.getElementById('common').innerHTML = exp/common;
+  document.getElementById('unusual').innerHTML = exp/unusual;
+  document.getElementById('rare').innerHTML = exp/rare;
+  document.getElementById('epic').innerHTML = exp/epic;
+  document.getElementById('leg').innerHTML = exp/legendary;
+  document.getElementById('mythic').innerHTML = exp/mythic;
+  
+}
+
+function petalsExp(){
+    if(document.body.contains(petalsNeededDiv)){
+        document.body.removeChild(petalsNeededDiv);
+
+    }
+    var petalType = prompt("What rarity of petal will you be crafting? \n1: common\n2: unusual\n3: rare\n4: epic\n5: legendary\n6: mythic", "Enter your number here");
+    var amount = prompt("How many petals will you be crafting");
+    var exp;
+    if (petalType == 1){
+        exp = common*amount;
+    } else if (petalType == 2){
+    exp = amount*unusual;
+    } else if (petalType == 3){
+    exp = amount*rare;
+    } else if (petalType == 4){
+    exp = amount*epic;
+    } else if (petalType == 5){
+    exp = amount*legendary;
+    } else if (petalType == 6){
+    exp = amount*mythic;
+    
+    
+}
+var i = 1;
+    while(true){
+        var levelAttempt = exp/30;
+        levelAttempt /= i;
+        if (Math.pow(1.05,i-1) > levelAttempt){
+            break;
+        }
+        i++;
+    }
+    i--;
+    document.body.appendChild(levelAmount);
+    document.getElementById("level").innerHTML = i;
+    
+
+
+}
+</script>
+
+
+
+      
+     
+  </body>
+</html>
+
