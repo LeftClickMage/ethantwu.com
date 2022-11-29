@@ -64,7 +64,10 @@ function petalsNeeded(){
     }
   document.body.appendChild(petalsNeededDiv);
   var level = prompt("What level do you want to get to?");
-  var exp = 30*(Math.floor(level * Math.pow(1.05,level-1)));
+  var exp=0;
+  for(let i = 1;i<parseInt(level, 10);i++){
+    exp += 30*(Math.floor(i * Math.pow(1.05,i-1)));
+  }
   document.getElementById('common').innerHTML = exp/common;
   document.getElementById('unusual').innerHTML = exp/unusual;
   document.getElementById('rare').innerHTML = exp/rare;
@@ -103,10 +106,11 @@ function petalsExp(){
     
 }
     var i = 1;
+    var exper = 0;
     while(true){
-        var levelAttempt = exp/30;
-        levelAttempt /= i;
-        if (Math.pow(1.05,i-1) > levelAttempt){
+        exper += 30*(Math.floor(i * Math.pow(1.05,i-1)));
+        var levelAttempt = exp;
+        if (exper > levelAttempt){
             break;
         }
         i++;
