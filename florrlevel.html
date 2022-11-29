@@ -38,16 +38,20 @@
 <p>Amount of epics needed: <span id="epic"></span></p>
 <p>Amount of legendaries needed: <span id="leg"></span></p>
 <p>Amount of mythics needed: <span id="mythic"></span></p>
-<p class="text-info">Shameless plug: <a href="https://youtube.com/@mlightning" class="text-danger">MLightning</a> (Florr.io Youtube Channel)</p>
+<p class="text-info">Shameless plug: <a href="https://youtube.com/@mlightning" target ="_blank" class="text-danger">MLightning</a> (Florr.io Youtube Channel)</p>
 </div>
 <div id="levelAmount" class="my-5 container-md text-center">
 <p>You will get to level: <span id="level"></span></p>
-<p class="text-info">Shameless plug: <a href="https://youtube.com/@mlightning" class="text-danger">MLightning</a> (Florr.io Youtube Channel)</p>
-
+<p class="text-info">Shameless plug: <a href="https://youtube.com/@mlightning" target ="_blank" class="text-danger">MLightning</a> (Florr.io Youtube Channel)</p>
 </div>
+<div id="levelAmountFromExp" class="my-5 container-md text-center">
+    <p>You will get to level: <span id="levelfe"></span></p>
+    <p class="text-info">Shameless plug: <a href="https://youtube.com/@mlightning" target ="_blank" class="text-danger">MLightning</a> (Florr.io Youtube Channel)</p>
+    </div>
 <div class="container text-center">
     <button onclick="petalsNeeded()" class="btn btn-danger mx-2 my-2">Level --> Needed Petals</button>
     <button onclick="petalsExp()" class="btn btn-danger mx-2 my-2">Amount of Petals --> Level</button>
+    <button onclick="expToLevel()" class="btn btn-danger mx-2 my-2">Amount of EXP --> Level</button>
 </div>
 <script>
     var common = 1;
@@ -60,10 +64,15 @@ var petalsNeededDiv = document.getElementById('petalsNeeded');
 document.body.removeChild(petalsNeededDiv);
 var levelAmount = document.getElementById('levelAmount');
 document.body.removeChild(levelAmount);
+var levelAmountFromExp = document.getElementById('levelAmountFromExp');
+document.body.removeChild(levelAmountFromExp);
 function petalsNeeded(){
     if(document.body.contains(levelAmount)){
         document.body.removeChild(levelAmount);
 
+    }
+    if(document.body.contains(levelAmountFromExp)){
+        document.body.removeChild(levelAmountFromExp);
     }
   document.body.appendChild(petalsNeededDiv);
   var level = prompt("What level do you want to get to?");
@@ -84,6 +93,9 @@ function petalsExp(){
     if(document.body.contains(petalsNeededDiv)){
         document.body.removeChild(petalsNeededDiv);
 
+    }
+    if(document.body.contains(levelAmountFromExp)){
+        document.body.removeChild(levelAmountFromExp);
     }
     var petalType = prompt("What rarity of petal will you be crafting? \n1: common\n2: unusual\n3: rare\n4: epic\n5: legendary\n6: mythic", "Enter your number here");
     
@@ -129,6 +141,36 @@ function petalsExp(){
     alert("Please pick from the choices!");
 }
     }
+
+    function expToLevel() {
+        if(document.body.contains(petalsNeededDiv)){
+        document.body.removeChild(petalsNeededDiv);
+
+    }
+    if(document.body.contains(levelAmount)){
+        document.body.removeChild(levelAmount);
+
+    }
+    var exp = prompt("How much EXP are you spending?");
+        exp = parseInt(exp, 10);
+    if(Number.isFinite(exp)){
+    var i = 1;
+    var exper = 0;
+    while(true){
+        exper += 30*(Math.floor(i * Math.pow(1.05,i-1)));
+        var levelAttempt = exp;
+        if (exper > levelAttempt){
+            break;
+        }
+        i++;
+    }
+    document.body.appendChild(levelAmountFromExp);
+    document.getElementById("levelfe").innerHTML = i;
+    
+    } else{
+        alert("Please enter a number!");
+    }
+}
    
 </script>
 
