@@ -43,8 +43,8 @@
 <p>You will get to level: <span id="level"></span></p>
 </div>
 <div class="container text-center">
-    <button onclick="petalsNeeded()" class="btn btn-danger mx-2">Level --> Needed Petals</button>
-    <button onclick="petalsExp()" class="btn btn-danger mx-2">Amount of Petals --> Level</button>
+    <button onclick="petalsNeeded()" class="btn btn-danger mx-2 my-2">Level --> Needed Petals</button>
+    <button onclick="petalsExp()" class="btn btn-danger mx-2 my-2">Amount of Petals --> Level</button>
 </div>
 <script>
     var common = 1;
@@ -80,7 +80,12 @@ function petalsExp(){
 
     }
     var petalType = prompt("What rarity of petal will you be crafting? \n1: common\n2: unusual\n3: rare\n4: epic\n5: legendary\n6: mythic", "Enter your number here");
-    var amount = prompt("How many petals will you be crafting");
+    
+    if (petalType >=1 && petalType <=6){
+        
+        var amount = prompt("How many petals will you be crafting");
+        amount = parseInt(amount, 10);
+    if(Number.isFinite(amount)){
     var exp;
     if (petalType == 1){
         exp = common*amount;
@@ -110,9 +115,15 @@ var i = 1;
     document.body.appendChild(levelAmount);
     document.getElementById("level").innerHTML = i;
     
+    } else {
+        alert("Please enter a number!");
+    }
 
-
+} else {
+    alert("Please pick from the choices!");
 }
+    }
+   
 </script>
 
 
