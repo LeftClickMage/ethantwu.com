@@ -75,11 +75,19 @@ function petalsNeeded(){
         document.body.removeChild(levelAmountFromExp);
     }
   document.body.appendChild(petalsNeededDiv);
+  var levelC = prompt("What level are you right now?");
+  var expC=0;
+  for(let u = 1;u<parseInt(levelC, 10);u++){
+    expC += 30*(Math.floor(u * Math.pow(1.05,u-1)));
+  }
+  console.log(expC);
+
   var level = prompt("What level do you want to get to?");
   var exp=0;
   for(let i = 1;i<parseInt(level, 10);i++){
     exp += 30*(Math.floor(i * Math.pow(1.05,i-1)));
   }
+  exp-=expC;
   document.getElementById('common').innerHTML = exp/common;
   document.getElementById('unusual').innerHTML = exp/unusual;
   document.getElementById('rare').innerHTML = exp/rare;
@@ -122,6 +130,12 @@ function petalsExp(){
 }
     var i = 1;
     var exper = 0;
+    var levelC = prompt("What level are you right now?");
+  var expC=0;
+  for(let z = 1;z<parseInt(levelC, 10);z++){
+    expC += 30*(Math.floor(z * Math.pow(1.05,z-1)));
+  }
+  exp+=expC;
     while(true){
         exper += 30*(Math.floor(i * Math.pow(1.05,i-1)));
         var levelAttempt = exp;
@@ -130,6 +144,7 @@ function petalsExp(){
         }
         i++;
     }
+
     document.body.appendChild(levelAmount);
     document.getElementById("level").innerHTML = i;
     
@@ -155,6 +170,13 @@ function petalsExp(){
         exp = parseInt(exp, 10);
     if(Number.isFinite(exp)){
     var i = 1;
+    var levelC = prompt("What level are you right now?");
+  var expC=0;
+  for(let c = 1;c<parseInt(levelC, 10);c++){
+    expC += 30*(Math.floor(c * Math.pow(1.05,c-1)));
+  }
+  console.log(expC)
+  exp+=expC;
     var exper = 0;
     while(true){
         exper += 30*(Math.floor(i * Math.pow(1.05,i-1)));
