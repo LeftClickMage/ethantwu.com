@@ -49,13 +49,13 @@
     <p class="text-info">Shameless plug: <a href="https://youtube.com/@mlightning" target ="_blank" class="text-danger">MLightning</a> (Florr.io Youtube Channel)</p>
     </div>
 <div class="container text-center">
-    <button onclick="petalsNeeded()" class="btn btn-danger mx-2 my-2">Level --> Needed Petals</button>
-    <button onclick="petalsExp()" class="btn btn-danger mx-2 my-2">Amount of Petals --> Level</button>
-    <button onclick="expToLevel()" class="btn btn-danger mx-2 my-2">Amount of EXP --> Level</button>
     <button onclick="spToLevel()" class="btn btn-success mx-2 my-2">SP --> Needed Levels</button>
+
+    <button onclick="petalsNeeded()" class="btn btn-danger mx-2 my-2" disabled>Level --> Needed Petals</button>
+    <button onclick="petalsExp()" class="btn btn-danger mx-2 my-2" disabled>Amount of Petals --> Level</button>
+    <button onclick="expToLevel()" class="btn btn-danger mx-2 my-2" disabled>Amount of EXP --> Level</button>
 </div>
 <script>
-    
     var common = 1;
 var unusual = 5;
 var rare = 50;
@@ -211,10 +211,18 @@ function spToLevel(){
     var levelC = prompt("What level are you right now?");
     levelC = parseInt(levelC, 10);
   var spC=0;
+  var num = 0;
         while(true){
             levelC++;
             if(levelC%5==0){
-                spC+=3;
+                if (num % 2 == 0){
+                    spC+=3;
+                    num++;
+                } else {
+                    spC+=5;
+                    num++
+                }
+                
             } else {
                 spC+=1;
             }
