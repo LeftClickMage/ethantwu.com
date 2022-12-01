@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="icon" type="image/jpeg" href="public/logos/lcm-logo.png">
     <title>Ethan Twu - Florr Level Calculator</title>
-    <meta name="description" content="Calculate everything about florr leveling for the level revamp!">
+    <meta name="description" content="Calculate everything about florr leveling and SP for the level revamp in florr.io!">
     <meta name="keywords" content="Ethan Twu, Ethan Twu Millburn NJ, LeftClickMage, YukiThePomsky, MLightning, FairOPShotgun">
     <link rel="stylesheet" href="public/css/bootstrap.min.css">
     <link rel="stylesheet" href="public/fonts/ubuntu.css">
@@ -45,15 +45,17 @@
 <p class="text-info">Shameless plug: <a href="https://youtube.com/@mlightning" target ="_blank" class="text-danger">MLightning</a> (Florr.io Youtube Channel)</p>
 </div>
 <div id="levelAmountFromExp" class="my-5 container-md text-center">
-    <p>You will get to level: <span id="levelfe"></span></p>
+    <p>You need to be level: <span id="levelfe"></span>. Use "Level --> Needed Petals" next!</p>
     <p class="text-info">Shameless plug: <a href="https://youtube.com/@mlightning" target ="_blank" class="text-danger">MLightning</a> (Florr.io Youtube Channel)</p>
     </div>
 <div class="container text-center">
     <button onclick="petalsNeeded()" class="btn btn-danger mx-2 my-2">Level --> Needed Petals</button>
     <button onclick="petalsExp()" class="btn btn-danger mx-2 my-2">Amount of Petals --> Level</button>
     <button onclick="expToLevel()" class="btn btn-danger mx-2 my-2">Amount of EXP --> Level</button>
+    <button onclick="spToLevel()" class="btn btn-success mx-2 my-2">SP --> Needed Levels</button>
 </div>
 <script>
+    
     var common = 1;
 var unusual = 5;
 var rare = 50;
@@ -162,9 +164,8 @@ function petalsExp(){
         document.body.removeChild(petalsNeededDiv);
 
     }
-    if(document.body.contains(levelAmount)){
-        document.body.removeChild(levelAmount);
-
+    if(document.body.contains(levelAmountFromExp)){
+        document.body.removeChild(levelAmountFromExp);
     }
     var exp = prompt("How much EXP are you spending?");
         exp = parseInt(exp, 10);
@@ -186,8 +187,44 @@ function petalsExp(){
         }
         i++;
     }
+    document.body.appendChild(levelAmount);
+    document.getElementById("level").innerHTML = i;
+    
+    } else{
+        alert("Please enter a number!");
+    }
+}
+function spToLevel(){
+    //lvl-1+lvl/5*2
+    if(document.body.contains(petalsNeededDiv)){
+        document.body.removeChild(petalsNeededDiv);
+
+    }
+    if(document.body.contains(levelAmount)){
+        document.body.removeChild(levelAmount);
+
+    }
+    var exp = prompt("How many more Skill Points do you need?");
+        exp = parseInt(exp, 10);
+    if(Number.isFinite(exp)){
+    var i = 1;
+    var levelC = prompt("What level are you right now?");
+    levelC = parseInt(levelC, 10);
+  var spC=0;
+        while(true){
+            levelC++;
+            if(levelC%5==0){
+                spC+=3;
+            } else {
+                spC+=1;
+            }
+            if(spC >=exp){
+                break;
+            }
+        }
+  
     document.body.appendChild(levelAmountFromExp);
-    document.getElementById("levelfe").innerHTML = i;
+    document.getElementById("levelfe").innerHTML = levelC;
     
     } else{
         alert("Please enter a number!");
