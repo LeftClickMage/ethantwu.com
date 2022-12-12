@@ -1,5 +1,5 @@
-// var penguinPath = "file:///media/fuse/crostini_e202c9d5225290161ded36479c47b60d686ceb00_termina_penguin/ethantwu.com/";
-var penguinPath = "https://ethantwu.com/";
+var penguinPath = "file:///media/fuse/crostini_e202c9d5225290161ded36479c47b60d686ceb00_termina_penguin/ethantwu.com/";
+// var penguinPath = "https://ethantwu.com/";
 
 document.write(`
   <style>
@@ -41,6 +41,10 @@ document.write(`
             <a class="nav-link font-increase-2x hrefRepath" href="minigames/index.html" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Minigames" id="minigames">Minigames</a>
           </li>
          
+          
+        </ul>
+        <ul class="navbar-nav ms-auto me-1">
+          <a class="hrefRepath" href="media.html" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Social Media" ><button class="btn btn-danger fs-4">Media</button></a>
         </ul>
       </div>
 
