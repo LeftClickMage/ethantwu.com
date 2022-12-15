@@ -80,14 +80,14 @@ function petalsNeeded(){
   var levelC = prompt("What level are you right now?");
   var expC=0;
   for(let u = 1;u<parseInt(levelC, 10);u++){
-    expC += 25*(Math.floor(u * Math.pow(1.05,u-1)));
+    expC += 20*(Math.floor(u * Math.pow(1.05,u-1)));
   }
   console.log(expC);
 
   var level = prompt("What level do you want to get to?");
   var exp=0;
   for(let i = 1;i<parseInt(level, 10);i++){
-    exp += 25*(Math.floor(i * Math.pow(1.05,i-1)));
+    exp += 20*(Math.floor(i * Math.pow(1.05,i-1)));
   }
   exp-=expC;
   document.getElementById('common').innerHTML = exp/common;
@@ -135,11 +135,11 @@ function petalsExp(){
     var levelC = prompt("What level are you right now?");
   var expC=0;
   for(let z = 1;z<parseInt(levelC, 10);z++){
-    expC += 25*(Math.floor(z * Math.pow(1.05,z-1)));
+    expC += 20*(Math.floor(z * Math.pow(1.05,z-1)));
   }
   exp+=expC;
     while(true){
-        exper += 25*(Math.floor(i * Math.pow(1.05,i-1)));
+        exper += 20*(Math.floor(i * Math.pow(1.05,i-1)));
         var levelAttempt = exp;
         if (exper > levelAttempt){
             break;
@@ -174,13 +174,13 @@ function petalsExp(){
     var levelC = prompt("What level are you right now?");
   var expC=0;
   for(let c = 1;c<parseInt(levelC, 10);c++){
-    expC += 25*(Math.floor(c * Math.pow(1.05,c-1)));
+    expC += 20*(Math.floor(c * Math.pow(1.05,c-1)));
   }
   console.log(expC)
   exp+=expC;
     var exper = 0;
     while(true){
-        exper += 25*(Math.floor(i * Math.pow(1.05,i-1)));
+        exper += 20*(Math.floor(i * Math.pow(1.05,i-1)));
         var levelAttempt = exp;
         if (exper > levelAttempt){
             break;
