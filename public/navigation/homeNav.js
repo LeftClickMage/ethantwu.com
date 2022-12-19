@@ -40,10 +40,13 @@ document.write(`
           <li class="nav-item">
             <a class="nav-link font-increase-2x hrefRepath" href="minigames/index.html" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Minigames" id="minigames">Minigames</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link font-increase-2x hrefRepath" href="projects.html" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Projects" id="minigames">Projects</a>
+          </li>
          
           
         </ul>
-        <ul class="navbar-nav ms-auto me-1">
+        <ul class="navbar-nav ms-auto me-1 mb-3 mb-md-0">
           <a class="hrefRepath" href="media.html" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Social Media" ><button class="btn btn-danger fs-4">Media</button></a>
         </ul>
       </div>
