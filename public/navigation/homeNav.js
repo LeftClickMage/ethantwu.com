@@ -1,5 +1,5 @@
-// var penguinPath = "file:///media/fuse/crostini_e202c9d5225290161ded36479c47b60d686ceb00_termina_penguin/ethantwu.com/";
-var penguinPath = "https://ethantwu.com/";
+var penguinPath = "file:///media/fuse/crostini_e202c9d5225290161ded36479c47b60d686ceb00_termina_penguin/ethantwu.com/";
+// var penguinPath = "https://ethantwu.com/";
 
 document.write(`
   <style>
