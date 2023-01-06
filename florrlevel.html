@@ -210,18 +210,13 @@ function spToLevel(){
     var levelC = prompt("What level are you right now?");
     levelC = parseInt(levelC, 10);
   var spC=0;
-  var num = 0;
         while(true){
             levelC++;
-            if(levelC%5==0){
-                if (num % 2 == 0){
-                    spC+=3;
-                    num++;
-                } else {
-                    spC+=5;
-                    num++
-                }
+            if(levelC%10==0){
+               spC+=5;
                 
+            } else if(levelC%5==0){
+                spC+=3;
             } else {
                 spC+=1;
             }
