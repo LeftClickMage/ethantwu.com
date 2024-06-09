@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" type="image/jpeg" href="public/logos/lcm-logo.png">
+    <title>Puggy Recap</title>
+    <link rel="canonical" href="https://ethantwu.com/">
+    <link rel="stylesheet" href="public/css/bootstrap.min.css">
+    <link rel="stylesheet" href="public/fonts/ubuntu.css">
+    <script src="public/js/bootstrap.bundle.min.js"></script>
+    <style>
+
+    html,body{
+      font-family:'Ubuntu', sans-serif;
+    }
+
+
+    .outline-text-emerald {
+  
+  text-shadow: -.04em -.04em 0 #50C878, .04em -.04em 0 #50C878, -.04em .04em 0 #50C878, .04em .04em 0 #50C878;
+    }
+    .outline-text-white {
+  text-shadow: -.04em -.04em 0 #FFF, .04em -.04em 0 #FFF, -.04em .04em 0 #FFF, .04em .04em 0 #FFF;
+    }
+    
+    </style>
+  </head>
+  <body>
+    <div class="position-fixed w-100 h-100" style="background-color:black;" id = "block">
+        <div class="d-flex align-items-center" style="height:100vh;">
+            <div class="container text-center">
+                <p class="display-6 outline-text-white fw-bold">Insert Password</p>
+                <input type="password" name="password" placeholder="Password" id = "passField">
+                <br>
+                <button class="btn btn-primary fs-5 mt-3" onclick="checkPass()">Enter Recap</button>
+            </div>
+        </div>
+    </div>
+    <!-- Background -->
+    <object type="text/html" data="public/backgrounds/homeBackground.html" class="position-fixed w-100 h-100" style="z-index:-1;"></object>
+    <!-- Navigation Bar -->
+    <script src="public/navigation/homeNav.js"></script>
+      <div class="d-flex align-items-center mt-5" style="height:40vh;">
+        <div class="container text-center">
+          <p class="display-1 text-white outline-text-emerald text-center fw-bold mt-5">Puggy,</p>
+          <p class="display-6 outline-text-white fw-bold">to recap Puggy's amazing life.</p>
+          </div>
+      </div>
+      <div class="container text-center">
+        <p class="display-5 outline-text-white fw-bold">Puggy and Family:</p>
+        <img width="560" height="315" src = "https://i.ibb.co/s5R18fj/IMG-0151.jpg" class = "border border-white border-5">
+        <br>
+        <button class="btn btn-primary fs-5 mt-3 mb-5" onclick="window.open('https://youtu.be/vtqBmK_AQBs', '_blank')">Watch On Youtube</button>
+        <p class="display-5 outline-text-white fw-bold">Puggy's Lifestyle:</p>
+        <img width="560" height="315" src = "https://i.ibb.co/G7YLJL8/IMG-0152.jpg" class = "border border-white border-5">
+        <br>
+        <button class="btn btn-primary fs-5 mt-3 mb-5" onclick="window.open('https://youtu.be/247PfTePWPE', '_blank')">Watch On Youtube</button>
+        <p class="display-5 outline-text-white fw-bold">Puggy and Friends:</p>
+        <img width="560" height="315" src = "https://i.ibb.co/SNmbgZf/IMG-0153.jpg" class = "border border-white border-5">
+        <br>
+        <button class="btn btn-primary fs-5 mt-3 mb-5" onclick="window.open('https://youtu.be/FcCw2UPR3AI', '_blank')">Watch On Youtube</button>
+      </div>
+      <script>
+        function downtime(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+        async function checkPass() {
+            var passInput = document.getElementById('passField').value;
+            if (passInput == "Puggy") {
+                for(let i = 1; i > 0.01; i= i-0.05){
+                    document.getElementById('block').setAttribute("style", "opacity:" + i + "; background-color:black;");
+                    await downtime(20);
+                }
+                document.body.removeChild(document.getElementById('block'));
+            } else {
+                alert("Wrong Password");
+            }
+        }
+      </script>
+  </body>
+</html>
+
