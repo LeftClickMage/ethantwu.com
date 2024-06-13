@@ -1,5 +1,5 @@
-var penguinPath = "file:///C:/Users/ethan/ethantwu.com-1/";
-//var penguinPath = "https://ethantwu.com/";
+//var penguinPath = "file:///C:/Users/ethan/ethantwu.com-1/";
+var penguinPath = "https://ethantwu.com/";
 
 document.write(`
   <style>
