@@ -1,5 +1,5 @@
-//var penguinPath = "file:///media/fuse/crostini_e202c9d5225290161ded36479c47b60d686ceb00_termina_penguin/ethantwu.com/";
-var penguinPath = "https://ethantwu.com/";
+var penguinPath = "file:///C:/Users/ethan/ethantwu.com-1/";
+//var penguinPath = "https://ethantwu.com/";
 
 document.write(`
   <style>
@@ -26,24 +26,27 @@ document.write(`
     <a class="navbar-brand hrefRepath" href="index.html" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Home">
     <img src="public/logos/lcm-logo.png" width="70px" class="imgRepath">
     </a>
-    <a class="navbar-brand" href="https://smasher.ethantwu.com" data-bs-toggle="tooltip"  data-bs-container="body" data-bs-placement="bottom" data-bs-html ="true" title="<span class='badge bg-warning'>BETA</span> Smasher Minigame">
+    <!--<a class="navbar-brand" href="https://smasher.ethantwu.com" data-bs-toggle="tooltip"  data-bs-container="body" data-bs-placement="bottom" data-bs-html ="true" title="<span class='badge bg-warning'>BETA</span> Smasher Minigame">
       <img src="public/logos/smasher-logo.png" width="70px" class="imgRepath">
-      </a>
+      </a>-->
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapse" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
       </button>
       <div class="navbar-collapse collapse" id="collapse">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link font-increase-2x hrefRepath" href="fairopbot.html" data-bs-toggle="tooltip" data-bs-placement="bottom" title="FairOPBot" id="discordBot">Discord Bot</a>
+            <a class="nav-link font-increase-2x hrefRepath" href="classes/index.html" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ethan's Classes" id="classes">Classes</a>
           </li>
+          
           <li class="nav-item">
             <a class="nav-link font-increase-2x hrefRepath" href="minigames/index.html" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Minigames" id="minigames">Minigames</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link font-increase-2x hrefRepath" href="projects.html" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Projects" id="minigames">Projects</a>
+            <a class="nav-link font-increase-2x hrefRepath" href="projects.html" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Projects" id="projects">Projects</a>
           </li>
-         
+          <li class="nav-item">
+            <a class="nav-link font-increase-2x hrefRepath" href="fairopbot.html" data-bs-toggle="tooltip" data-bs-placement="bottom" title="FairOPBot" id="discordBot">Discord Bot</a>
+          </li>
           
         </ul>
         <ul class="navbar-nav ms-auto me-1 mb-3 mb-md-0">
@@ -67,12 +70,16 @@ for(let i =0; i<elements.length; i++){
 }
 
 
-  var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+  var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
   var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-    return new bootstrap.Tooltip(tooltipTriggerEl)
+    return new bootstrap.Tooltip(tooltipTriggerEl);
   })
   if(document.title == "Ethan Twu - FairOPBot"){
     document.getElementById('discordBot').classList.add("active");
   } else if(document.title == "Ethan Twu - Minigames"){
     document.getElementById('minigames').classList.add("active");
+  } else if(document.title == "Ethan Twu - Projects"){
+    document.getElementById('projects').classList.add("active");
+  } else if(document.title == "Ethan Twu - Classes"){
+    document.getElementById('classes').classList.add("active");
   }
