@@ -10,6 +10,7 @@
     <link rel="canonical" href="https://ethantwu.com/">
     <link rel="stylesheet" href="public/css/bootstrap.min.css">
     <link rel="stylesheet" href="public/fonts/ubuntu.css">
+    <link rel="stylesheet" href="public/slideAnimations.css">
     <script src="public/js/bootstrap.bundle.min.js"></script>
     <style>
 
@@ -21,6 +22,10 @@
     .outline-text-emerald {
   
   text-shadow: -.04em -.04em 0 #50C878, .04em -.04em 0 #50C878, -.04em .04em 0 #50C878, .04em .04em 0 #50C878;
+    }
+     .outline-text-red {
+  
+  text-shadow: -.04em -.04em 0 #FF0000, .04em -.04em 0 #FF0000, -.04em .04em 0 #FF0000, .04em .04em 0 #FF0000;
     }
     .outline-text-white {
   text-shadow: -.04em -.04em 0 #FFF, .04em -.04em 0 #FFF, -.04em .04em 0 #FFF, .04em .04em 0 #FFF;
@@ -37,19 +42,60 @@
     <object type="text/html" data="public/backgrounds/homeBackground.html" class="position-fixed w-100 h-100" style="z-index:-1;"></object>
     <!-- Navigation Bahhhr hhhh jjj hahs-->
     <script src="public/navigation/homeNav.js"></script>
+    <script src="public/downtime.js"></script>
 
       <div class="d-flex align-items-center" style="height:100vh;">
         <div class="container text-center" style="z-index:18;">
-          <p class="display-1 text-white outline-text-emerald text-center fw-bold mt-5 glow">Ethan Twu</p>
-            <p class="display-6 outline-text-white fw-bold">martial artist</p>
-            <p class="display-6 outline-text-white fw-bold">lifeguard</p>
-            <p class="display-6 outline-text-white fw-bold">developer</p>
-            <p class="display-6 outline-text-white fw-bold">entrepreneur</p>
-            <p class="display-6 outline-text-white fw-bold">film editor</p>
-            <p class="display-6 outline-text-white fw-bold">influencer</p>
-            <p class="display-6 outline-text-white fw-bold">teacher</p>
+          <p class="display-1 text-white text-center fw-bold mt-5 glow slide-in-top">Ethan Twu</p>
+            <p class="display-6 outline-text-white fw-bold slide-in-left slideTextMain" style="animation-delay: .7s; opacity:0;">a martial artist</p>
+            <p class="display-6 outline-text-white fw-bold slide-in-right slideTextMain" style="animation-delay: .75s; opacity:0;">a lifeguard</p>
+            <p class="display-6 outline-text-white fw-bold slide-in-left slideTextMain" style="animation-delay: .8s; opacity:0;">a developer</p>
+            <p class="display-6 outline-text-white fw-bold slide-in-right slideTextMain" style="animation-delay: .85s; opacity:0;">a entrepreneur</p>
+            <p class="display-6 outline-text-white fw-bold slide-in-left slideTextMain" style="animation-delay: .9s; opacity:0;">a film editor</p>
+            <p class="display-6 outline-text-white fw-bold slide-in-right slideTextMain" style="animation-delay: .95s; opacity:0;">a influencer</p>
+            <p class="display-6 outline-text-white fw-bold slide-in-left slideTextMain" style="animation-delay: 1s; opacity:0;">a teacher</p>
         </div>
       </div>
+
+
+
+<!-- NEWS -->
+    <div class="container-fluid text-center">
+    <p class="display-1 text-white outline-text-red text-center fw-bold">What's New?</p>
+    </div>
+
+
+      <div class="card container p-0 h-100" style="background-color: black;">
+        <img src="classes/photos/reubenTornadoKick.PNG" class="card-img-top img-fluid">
+        <div class="card-body d-flex flex-column text-white">
+          <h5 class="card-title mt-auto fw-bold">Taekwondo Lessons</h5>
+          <p class="card-text">Ethan started Taekwondo as a hobby but became passionate about the art. Now, he would love to teach it in a fun, safe, and interactive way!</p>
+          <a href="classes/taekwondo.html" class="btn btn-danger">Learn Taekwondo!</a> 
+        </div>
+      </div>
+
+        <div class="card container p-0 h-100 mt-5" style="background-color: black;">
+        <img src="classes/photos/reubenTornadoKick.PNG" class="card-img-top img-fluid">
+          <div class="card-body d-flex flex-column text-white">
+            <h5 class="card-title mt-auto fw-bold">SAT Math Tutoring</h5>
+            <p class="card-text">Ethan has experience tutoring for College Board and Schoolhouse.world, and would like to bring that same skillset to you with AFFORDABLE PRIVATE LESSONS!</p>
+            <a href="classes/satmath.html" class="btn btn-danger">Boost your Math Score!</a>
+          </div>
+          
+        </div>
+ 
+<script>
+async function removeOpacity(){
+   var description = document.querySelectorAll('.slideTextMain');
+   await downtime(1500);
+  description.forEach(async element => {
+    await downtime(100);
+      element.style.opacity = 1;
+   });
+}
+removeOpacity();
+
+</script>
   </body>
 </html>
 
