@@ -389,13 +389,13 @@ moveObj(){
         } else {
             this.player.play("idle", true);
         }
-        if(this.keyshiftLeft.isDown && this.keyP.isDown) {
-            player.speed = 600;
-            alert("Dev Speed On");
-        } else if(this.keyshiftLeft.isDown && this.keyO.isDown) {
-            player.speed = 120;
-            alert("Dev Speed Off");
-        } 
+        // if(this.keyshiftLeft.isDown && this.keyP.isDown) {
+        //     player.speed = 600;
+        //     alert("Dev Speed On");
+        // } else if(this.keyshiftLeft.isDown && this.keyO.isDown) {
+        //     player.speed = 120;
+        //     alert("Dev Speed Off");
+        // } 
     }
     updateBuildingIndex(){
         this.backBuildings.getChildren().forEach(function(house){
