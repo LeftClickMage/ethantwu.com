@@ -33,7 +33,7 @@ class hotbar extends Phaser.Scene {
         this.tree.setInteractive();
 
 
-        this.input.on("pointerdown", this.checkObject, this);
+        this.input.on("pointerup", this.checkObject, this);
         this.color = 0x000000;
         this.blue = 0x000080;
         this.red = 0x800000;
