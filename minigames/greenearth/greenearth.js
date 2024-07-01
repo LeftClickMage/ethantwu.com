@@ -234,7 +234,7 @@ class greenearth extends Phaser.Scene{
         this.hotbarScene.cancelPopup.setAlpha(1);
         this.target = new Object(this, object); 
         this.targetAcquired = true;
-        this.input.on("pointerup", this.putDownObj, this);
+        this.input.on("pointerdown", this.putDownObj, this);
         // testing.body.setImmovable(true);
         
     }
@@ -247,7 +247,7 @@ moveObj(){
         this.plots.setAlpha(0);
         this.hotbarScene.cancelPopup.setAlpha(0);
         this.target.destroy();
-        this.input.off("pointerup", this.putDownObj, this);
+        this.input.off("pointerdown", this.putDownObj, this);
         this.targetAcquired = false;
         this.hotbarScene.canPlaceOBJ = true;
         var placeSlot = targets[0];
