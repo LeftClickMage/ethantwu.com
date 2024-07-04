@@ -17,7 +17,7 @@ class greenearth extends Phaser.Scene{
         this.treePrice = 40;
         this.solarPanelEnergyOutput = 2;
 
-        this.energyValue = 100;
+        this.energyValue = 100*(this.startingWave+1);
         this.targetAcquired = false;
         this.canMoveDown = true;
         this.canMoveRight = true;
