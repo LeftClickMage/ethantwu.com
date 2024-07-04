@@ -1,4 +1,4 @@
-class Object extends Phaser.GameObjects.Sprite{
+class ObjectCreator extends Phaser.GameObjects.Sprite{
 
 constructor(scene, object){
     // var x = scene.game.input.mousePointer.x + this.player.x - config.width/2;
@@ -14,9 +14,7 @@ constructor(scene, object){
     scene.add.existing(this.setScale(3/scale));
     scene.physics.world.enableBody(this);
 }
-update(){
-   
-}
+
 
 
 }

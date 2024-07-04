@@ -48,14 +48,13 @@ class health extends Phaser.Scene {
             await downtime(650);
             this.heart5.setTexture("emptyHeart");
             
+
             await downtime(400);
-            this.gameOver();
+            this.mainGame.gameOver();
             
         } 
     }
-    async gameOver(){
-        this.mainGame.scene.launch("gameOverScreen");
-    }
+
 //     check(pointer, targets){
 //         this.target = targets[0];
        

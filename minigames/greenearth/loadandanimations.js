@@ -1,12 +1,21 @@
 class loadandanimations extends Phaser.Scene{
+    
     constructor(){
         super("loadandanimations");
+        this.startingScene = "titleScreen";
     }
     preload(){
+        this.load.image("thELevel1", "assets/townHallEnergyLevel1.png");
+        this.load.image("thELevel2", "assets/townHallEnergyLevel2.png");
+        this.load.image("thELevel3", "assets/townHallEnergyLevel3.png");
+        this.load.image("thELevel4", "assets/townHallEnergyLevel4.png");
+        this.load.image("thELevel5", "assets/townHallEnergyLevel5.png");
+        this.load.image("upgradeButton", "assets/upgrade.png");
         this.load.image("background", "assets/Grass.png");
         this.load.image("energy", "assets/energySymbol.png");
+        this.load.image("highestWave", "assets/highestWave.png");
         this.load.image("house", "assets/testhouse.png");
-        this.load.image("townHall", "assets/BlueHouse.png");
+        this.load.image("thELevel0", "assets/BlueHouse.png");
         this.load.image("treeBorder", "assets/TreeBorder.png");
         this.load.image("hotbarSlot", "assets/HotbarSlot.png");
         this.load.image("supportSlot", "assets/SupportSlot.png");
@@ -21,10 +30,20 @@ class loadandanimations extends Phaser.Scene{
         this.load.image("playAgain", "assets/playAgain.png");
         this.load.image("titleScreenBG", "assets/titleScreenBG.png");
         this.load.image("titleText", "assets/titleText.png");
+        this.load.image("leaf", "assets/leaf.png");
         this.load.image("startGame", "assets/startGame.png");
+        this.load.image("back", "assets/Back.png")
         this.load.spritesheet("loseHealth", "assets/LoseHealth.png", {
             frameWidth: 32,
             frameHeight: 32
+        });
+        this.load.spritesheet("factoryActive", "assets/factoryActive.png", {
+            frameWidth: 64,
+            frameHeight: 64
+        });
+        this.load.spritesheet("factoryIdle", "assets/factoryIdle.png", {
+            frameWidth: 64,
+            frameHeight: 64
         });
         this.load.spritesheet("explosionBaba", "assets/explosionBaba.PNG", {
             frameWidth: 32,
@@ -82,6 +101,18 @@ class loadandanimations extends Phaser.Scene{
             key: "walkDown",
             frames: this.anims.generateFrameNumbers("player"),
             frameRate: 10,
+            repeat: -1
+        });
+        this.anims.create({
+            key: "factoryActive",
+            frames: this.anims.generateFrameNumbers("factoryActive"),
+            frameRate: 10,
+            repeat: -1
+        });
+        this.anims.create({
+            key: "factoryIdle",
+            frames: this.anims.generateFrameNumbers("factoryIdle"),
+            frameRate: 5,
             repeat: -1
         });
         this.anims.create({
@@ -145,6 +176,6 @@ class loadandanimations extends Phaser.Scene{
             repeat: 0,
             hideOnComplete: true
         });
-        this.scene.start("titleScreen");
+        this.scene.start(this.startingScene);
     }
 }

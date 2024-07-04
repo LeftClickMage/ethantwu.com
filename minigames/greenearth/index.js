@@ -1,13 +1,20 @@
 var player = {
+    username: "Guest",
     mapSpeed: 0.8,
     speed: 120,
+    cash: 0,
+    uid: "",
+    houseLevel: 0,
+    highestWave: 0,
 }
 var enemy = {
-    speed: 80
+    speed: 200
 }
 var config = {
+
         width: window.innerWidth,
         height: window.innerHeight,
+    
         fps: {
             target:60,
             forceSetTimeOut: true
@@ -25,4 +32,5 @@ var config = {
         gamepad: true,
     },
 }
+
 var game = new Phaser.Game(config);

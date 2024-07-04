@@ -3,24 +3,33 @@ class greenearth extends Phaser.Scene{
         super("startGame");
     }
     create(){
-        this.waveNumber = 0;
+        startGame();
+        if(player.highestWave == 1 || player.highestWave == 2 || player.highestWave == 3 || player.highestWave == 4){
+            this.waveNumber = 0;
+            this.startingWave = 0;
+        } else {
+            this.waveNumber = Math.round(player.highestWave*2/3);
+            this.startingWave = Math.round(player.highestWave*2/3);
+        }
+        
         this.townHallHealth = 5;
         this.treeHealth = 4;
         this.treePrice = 40;
         this.solarPanelEnergyOutput = 2;
+
         this.energyValue = 100;
         this.targetAcquired = false;
         this.canMoveDown = true;
         this.canMoveRight = true;
         this.canMoveLeft = true;
         this.canMoveUp = true;
-        this.keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
-        this.keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
-        this.keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
-        this.keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
-        this.keyshiftLeft = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT);
-        this.keyP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
-        this.keyO = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.O);
+        this.keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A, false);
+        this.keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S, false);
+        this.keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D, false);
+        this.keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W, false);
+        this.keyshiftLeft = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT, false);
+        this.keyP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P, false);
+        this.keyO = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.O, false);
         
 
         this.leftBorder = this.add.tileSprite(0, 1500, 200, 1000, "treeBorder").setScale(3);
@@ -39,6 +48,12 @@ class greenearth extends Phaser.Scene{
         this.plots.add(new Plot(1365, 1935, this)); 
         this.plots.add(new Plot(1500, 1935, this)); 
         this.plots.add(new Plot(1635, 1935, this)); 
+        this.plots.add(new Plot(1365, 2070, this)); 
+        this.plots.add(new Plot(1500, 2070, this)); 
+        this.plots.add(new Plot(1635, 2070, this)); 
+        this.plots.add(new Plot(1365, 2205, this)); 
+        this.plots.add(new Plot(1500, 2205, this)); 
+        this.plots.add(new Plot(1635, 2205, this)); 
 
         this.plots.add(new Plot(1800, 1365, this)); 
         this.plots.add(new Plot(1800, 1500, this)); 
@@ -74,7 +89,7 @@ class greenearth extends Phaser.Scene{
         this.townHallY = 1500;
         
 
-        this.enemySpawn = this.physics.add.sprite(1500,2500, "enemySpawn").setScale(5);
+        
         this.backObjects = this.physics.add.group();
         
 
@@ -86,7 +101,7 @@ class greenearth extends Phaser.Scene{
         // testHouse.body.setOffset(0, 17);
         // testHouse.setImmovable(true);
 
-        this.townHall = this.physics.add.sprite(this.townHallX, this.townHallY, "townHall").setScale(3);
+        this.townHall = this.physics.add.sprite(this.townHallX, this.townHallY, "thELevel" + player.houseLevel).setScale(3);
         this.backBuildings.add(this.townHall);
         this.townHall.body.setSize(125, 97, true);
         this.townHall.body.setOffset(17.5, 32.5);
@@ -99,9 +114,12 @@ class greenearth extends Phaser.Scene{
         
 
         this.frontObjects = this.physics.add.group();
-
+        this.enemySpawn = this.physics.add.sprite(1500,2500, "factoryIdle").setScale(5);
+        this.enemySpawn.setImmovable();
+        this.enemySpawn.play("factoryIdle");
         
         this.frontBuildings = this.physics.add.group();
+        
         
         // testHouse = this.physics.add.sprite(200, 300, "house").setScale(6);
         // this.frontBuildings.add(testHouse);
@@ -109,17 +127,16 @@ class greenearth extends Phaser.Scene{
         // testHouse.body.setOffset(0, 17);
         // testHouse.setImmovable(true);
 
-        this.townHall1 = this.physics.add.sprite(this.townHallX, this.townHallY, "townHall").setScale(3);
+        this.townHall1 = this.physics.add.sprite(this.townHallX, this.townHallY, "thELevel" + player.houseLevel).setScale(3);
         this.frontBuildings.add(this.townHall1);
         this.townHall1.body.setSize(125, 97, true);
         this.townHall1.body.setOffset(17.5, 32.5);
         this.townHall1.setImmovable(true);
-
-
         this.physics.add.collider(this.player, this.backBuildings);
         this.physics.add.collider(this.player, this.frontBuildings);
         this.physics.add.collider(this.player, this.backObjects);
         this.physics.add.collider(this.player, this.frontObjects);
+        this.physics.add.collider(this.player, this.enemySpawn);
 
         this.cameras.main.setBounds(-175, -175, 3350, 3350);
         this.cameras.main.startFollow(this.player);     
@@ -133,18 +150,23 @@ class greenearth extends Phaser.Scene{
         
 
         this.scene.launch("minimapBorder");
+        this.minimapBorderScene = this.scene.get("minimapBorder");
         this.scene.launch("hotbar");
+        this.hotbarScene = this.scene.get("hotbar");
         this.scene.launch("resources");
         this.resources = this.scene.get("resources");
-        this.hotbarScene = this.scene.get("hotbar");
+        
         this.scene.launch("health");
+        this.healthScene = this.scene.get("health");
         this.scene.launch("waveTimer");
         this.waveTimerScene = this.scene.get("waveTimer");
+        // updateData();
 
         this.enemies = this.physics.add.group();
         this.physics.add.overlap(this.enemies, this.frontBuildings, this.dealDamage, null, this);
         this.physics.add.overlap(this.enemies, this.backBuildings, this.dealDamage, null, this);
         this.physics.add.overlap(this.enemies, this.backObjects, this.dealObjDamage, null, this);
+        
         
     }
     checkIfEnemiesAlive(){
@@ -161,6 +183,7 @@ class greenearth extends Phaser.Scene{
         this.waveTimerScene.inProgress = true;
         
         this.wave();
+            
 
         this.waveTimerScene.haventStarted = true;
         this.waveTimerScene.timeLeft = 25;
@@ -168,13 +191,15 @@ class greenearth extends Phaser.Scene{
         
     }
     async wave(){
+        this.enemySpawn.play("factoryActive");
         if(this.waveNumber == 1){
             var amount = 10;
           for(let i = 0; i < amount; i++){
             var enemy = this.physics.add.sprite(this.enemySpawn.x, this.enemySpawn.y, "CO2WalkDown").setScale(3);
             this.enemies.add(enemy);
          await downtime(1000);
-        }
+            }
+            this.enemySpawn.play("factoryIdle");
         } else {
             var amount = Math.round(15*this.waveNumber/2);
             for(let i = 0; i < amount; i++){
@@ -182,7 +207,9 @@ class greenearth extends Phaser.Scene{
             this.enemies.add(enemy);
          await downtime(1000);
         }
+        this.enemySpawn.play("factoryIdle");
         }
+        
     }
     spawnRandomEnemies(amount) {
         for(let i = 0; i < amount; i+=1){
@@ -232,7 +259,7 @@ class greenearth extends Phaser.Scene{
     createObject(object){
         this.showUnoccupiedPlots();
         this.hotbarScene.cancelPopup.setAlpha(1);
-        this.target = new Object(this, object); 
+        this.target = new ObjectCreator(this, object); 
         this.targetAcquired = true;
         this.input.on("pointerdown", this.putDownObj, this);
         // testing.body.setImmovable(true);
@@ -300,7 +327,39 @@ moveObj(){
         }
     
     }
- 
+    
+    calcCash(wave){
+        var amount = 0;
+        for(let i = this.startingWave+1; i <= wave; i++){
+            amount += i * 20;
+        }
+        player.cash += amount;
+        updateData();
+    }
+
+    gameOver(){
+        this.waveTimerScene.gameEnded = true;
+        this.waveTimerScene.timeLeft = -1;
+        this.hotbarScene.scene.stop();
+        this.healthScene.scene.stop();
+        this.minimapBorderScene.scene.stop();
+        this.waveTimerScene.scene.stop();
+        this.resources.scene.stop();
+        this.scene.start("gameOverScreen");
+    }
+    toTitleScreen(){
+        this.waveTimerScene.gameEnded = true;
+        this.waveTimerScene.timeLeft = -1;
+        this.calcCash(this.waveNumber-1);
+        this.hotbarScene.scene.stop();
+        this.healthScene.scene.stop();
+        this.minimapBorderScene.scene.stop();
+        this.waveTimerScene.scene.stop();
+        this.resources.scene.stop();
+        this.scene.start("titleScreen");
+    }
+    
+    
     playerMovement(){
         this.player.setVelocity(0);
         var moveLeft = false;
@@ -333,11 +392,12 @@ moveObj(){
         } else if (this.keyD.isDown && this.canMoveRight){
             moveRight = true;
         }
-         if(this.keyW.isDown && this.canMoveUp){
-                moveUp = true;
-            } else if(this.keyS.isDown && this.canMoveDown){
-                moveDown = true;
-            } 
+        if(this.keyW.isDown && this.canMoveUp){
+            moveUp = true;
+        } else if(this.keyS.isDown && this.canMoveDown){
+            moveDown = true;
+        } 
+            
         //general movement
 
             if(moveLeft){
@@ -436,6 +496,19 @@ moveObj(){
                 this.energyValue += this.solarPanelEnergyOutput/60;
             }
         }, this);
+        if(this.townHall.texture.key == "thELevel1"){
+            this.energyValue += 1/60;
+        }
+        if(this.townHall.texture.key == "thELevel2"){
+            this.energyValue += 2/60;
+        }
+        if(this.townHall.texture.key == "thELevel3"){
+            this.energyValue += 3/60;
+        }
+        if(this.townHall.texture.key == "thELevel4"){
+            this.energyValue += 4/60;
+        }
+        
     }
 
 
@@ -456,10 +529,10 @@ moveObj(){
         this.findNearestObject(object);
         this.enemy = object;
         this.enemy.setVelocity(0);
-        if(Math.abs(this.nearestObj.x - this.enemy.x)< 2){
+        if(Math.abs(this.nearestObj.x - this.enemy.x)< 4){
             this.enemy.x = this.nearestObj.x;
         }
-        if(Math.abs(this.nearestObj.y - this.enemy.y)< 2){
+        if(Math.abs(this.nearestObj.y - this.enemy.y)< 4){
             this.enemy.y = this.nearestObj.y;
         }
 
@@ -523,11 +596,14 @@ moveObj(){
         }
         this.backObjects.setDepth(0);
         this.backBuildings.setDepth(1);
-        this.player.setDepth(3);
         this.enemies.setDepth(2);
+        this.player.setDepth(3);
         this.frontObjects.setDepth(4);
         this.frontBuildings.setDepth(5);
-        
+        this.enemySpawn.setDepth(6);
 
+    
       }
 }
+
+
