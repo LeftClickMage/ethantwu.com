@@ -10,6 +10,7 @@ class titleScreen extends Phaser.Scene {
         this.houseLevel2Price = 600;
         this.houseLevel3Price = 1000;
         this.houseLevel4Price = 1500;
+        this.timeLogIn = 0;
 
         this.goGroupAlpha = 0;
         this.goGroup = this.physics.add.group();
@@ -17,9 +18,9 @@ class titleScreen extends Phaser.Scene {
         this.gobox =  this.add.tileSprite(0, 0, config.width, config.height, "titleScreenBG").setScale(2);
         this.goGroup.add(this.gobox);
 
-        this.gotext = this.add.sprite(config.width/2, config.height/2-160, "titleText").setScale(4.8);
+        this.gotext = this.add.sprite(config.width/2, 75+70, "titleText").setScale(4.8);
         this.goGroup.add(this.gotext);
-        this.playAgainButton = new Button(this, config.width/2, config.height/2-70, "startGame", 6, "down", ()=>{  
+        this.playAgainButton = new Button(this, config.width/2, 75+70+90, "startGame", 6, "down", ()=>{  
             if(!formOpen()){
                 this.scene.start("startGame");
             }
@@ -27,42 +28,46 @@ class titleScreen extends Phaser.Scene {
         });
         this.goGroup.add(this.playAgainButton);
 
-        this.versionText = new FancyText(this, 10, 10, false, "Version 1.1: LOG-IN AND UPGRADES", "25px", "white", "none");
+        this.playerUsername = new FancyText(this, config.width/2, 75, false, "", "40px", "white", "green");
+
+
+        this.versionText = new FancyText(this, 10, 10, false, "Version 1.1.1: LOG-IN AND UPGRADES | MINOR UI CHANGES", "25px", "white", "none");
         this.versionText.setInteractive();
         this.versionText.on("pointerdown", ()=>{
             window.open("updateLog.html");
         });
         
 
-        this.playerUsername = new FancyText(this, config.width/2, config.height/2-230, false, "", "40px", "white", "green");
         
-        this.upgradeSlotsY = config.height-190;
+        this.upgradeRectangleY = config.height-320;
+        this.upgradeSlotsY = this.upgradeRectangleY+160;
         this.upgradeSlots1X = config.width/2;
-        this.textY = this.upgradeSlotsY-170;
+        this.textY = this.upgradeSlotsY-120;
 
-        this.upgradesRectangle = this.add.rectangle(0, config.height/2, config.width, config.height/2, 0x000000).setOrigin(0).setAlpha(0.5);
-        this.upgradesRectangle = this.add.rectangle(0, config.height/2, config.width, 15, 0x000000).setOrigin(0).setAlpha(1);
-        this.leafAmountTS = this.add.sprite(30, config.height/2+60, "leaf").setScale(2);
+        
+        this.upgradesRectangle = this.add.rectangle(0, this.upgradeRectangleY, config.width, config.height-this.upgradeRectangleY, 0x000000).setOrigin(0).setAlpha(0.5);
+        this.upgradesRectangle = this.add.rectangle(0, this.upgradeRectangleY, config.width, 15, 0x000000).setOrigin(0).setAlpha(1);
+        this.leafAmountTS = this.add.sprite(30, this.upgradeRectangleY + 60, "leaf").setScale(2);
         this.goGroup.add(this.leafAmountTS);
-        this.leafAmountText = new FancyText(this, 55, config.height/2+43, false, "", "30px", "white", "black");
+        this.leafAmountText = new FancyText(this, 55, this.upgradeRectangleY+43, false, "", "30px", "white", "black");
         this.goGroup.add(this.leafAmountText);
 
-        this.playerHouse = this.add.sprite(35, config.height/2+140, "thELevel1").setScale(0.4);
+        this.playerHouse = this.add.sprite(35, this.upgradeRectangleY+140, "thELevel1").setScale(0.4);
         this.goGroup.add(this.playerHouse);
-        this.playerHouseText = new FancyText(this, 70, config.height/2+123, false, "", "30px", "white", "black");
+        this.playerHouseText = new FancyText(this, 70, this.upgradeRectangleY+123, false, "", "30px", "white", "black");
 this.goGroup.add(this.playerHouseText);
 
 
-this.highestWave = this.add.sprite(35, config.height/2+180, "highestWave").setScale(1);
+this.highestWave = this.add.sprite(35, this.upgradeRectangleY+180, "highestWave").setScale(1);
         this.goGroup.add(this.highestWave);
-this.highestWaveText = new FancyText(this, 75, config.height/2+183, false, "1", "30px", "white", "black");
+this.highestWaveText = new FancyText(this, 75, this.upgradeRectangleY+183, false, "1", "30px", "white", "black");
 this.goGroup.add(this.highestWaveText);
 
         this.houseUpgradeText = new FancyText(this, this.upgradeSlots1X, this.textY, true, "Buy House [LVL 1]" + (player.houseLevel +1), "30px", "white", "black");
         this.goGroup.add(this.houseUpgradeText);
-        this.leafCost = this.add.sprite(this.upgradeSlots1X-35, this.upgradeSlotsY-125, "leaf").setScale(1.5);
+        this.leafCost = this.add.sprite(this.upgradeSlots1X+120, this.upgradeSlotsY+115, "leaf").setScale(1.5);
         this.goGroup.add(this.leafCost);
-        this.leafCostText = new FancyText(this, this.upgradeSlots1X-10, this.upgradeSlotsY-142, false, this.houseLevel1Price, "30px", "white", "black");
+        this.leafCostText = new FancyText(this, this.upgradeSlots1X+140, this.upgradeSlotsY+115 - 17, false, this.houseLevel1Price, "30px", "white", "black");
         this.goGroup.add(this.leafCostText);
         this.houseLevelUpPlot = this.add.sprite(this.upgradeSlots1X, this.upgradeSlotsY, "plot").setScale(6);
         this.goGroup.add(this.houseLevelUpPlot);
@@ -106,6 +111,7 @@ this.goGroup.add(this.highestWaveText);
         this.gobox.tilePositionX += 0.5;
         this.leafAmountText.text = player.cash;
         if(player.houseLevel <= 3){
+            this.houseLevelButton.setAlpha(1);
             this.houseUpgradeText.text = "Buy House [LVL " + (player.houseLevel +1) + "]";
             if(player.houseLevel == 0){
                 this.leafCostText.text = this.houseLevel1Price;
@@ -134,12 +140,20 @@ this.goGroup.add(this.highestWaveText);
             this.highestWaveText.text = player.highestWave + " | Start " + Math.round(player.highestWave*2/3 + 1);
         }
 
-
-        if(!this.setUsername && player.uid !== ""){
+        if(this.setUsername && player.uid == ""){
+            this.playerUsername.text = "";
+            this.setUsername = false;
+        }
+        if(!this.setUsername && player.uid !== "" && this.timeLogIn == 0){
             this.setUsername = true;
+            this.timeLogIn += 1;
             this.playerUsername.text = player.username + "'s Quest For A";
             this.playerUsername.x -= this.playerUsername.width/2;
             this.playerUsername.y -= this.playerUsername.height/2;
+        } else if(!this.setUsername && player.uid !== "") {
+            this.setUsername = true;
+            this.timeLogIn += 1;
+            this.playerUsername.text = player.username + "'s Quest For A";
         }
     }
 }
