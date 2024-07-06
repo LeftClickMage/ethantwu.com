@@ -30,6 +30,7 @@ class loadandanimations extends Phaser.Scene{
         this.load.image("startWave", "assets/startWave.png");
         this.load.image("playAgain", "assets/playAgain.png");
         this.load.image("titleScreenBG", "assets/titleScreenBG.png");
+        this.load.image("next", "assets/Next.png");
         this.load.image("titleText", "assets/titleText.png");
         this.load.image("leaf", "assets/leaf.png");
         this.load.image("startGame", "assets/startGame.png");

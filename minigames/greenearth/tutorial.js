@@ -15,7 +15,7 @@ async createBox(x, y, text, callback){
     this.text = new FancyText(this, x+10+200, y+20, false, text, "35px", "black", "yellow");
     await downtime(1150);
 
-    this.button = new Button(this, config.width - 50 - 50, y + 150, "back", 3, "down", ()=>{
+    this.button = new Button(this, config.width - 50 - 50, y + 150, "next", 3, "down", ()=>{
         if(callback == "enemySpawn"){
             this.mainGame.tutorialEnemySpawn();
         } else if(callback == "map"){
