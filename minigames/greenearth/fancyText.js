@@ -8,7 +8,7 @@ class FancyText extends Phaser.GameObjects.Text
     } else if(textColor == "black"){
         textColor = "#000000";
     }
-    super(scene, x, y, text, {font: size + " Minecraft", color: textColor});
+    super(scene, x, y, text, {font: size + " Minecraft", color: textColor, wordWrap: {width:config.width-170, userAdvancedWrap: true}});
     scene.add.existing(this);
     if(recenter){
         this.x = this.x - this.width/2;

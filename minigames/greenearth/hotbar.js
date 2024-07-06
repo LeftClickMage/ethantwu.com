@@ -4,14 +4,18 @@ class hotbar extends Phaser.Scene {
     }
     
     create () {
-        
+        this.tutorialActive = true;
+        this.tutorialActiveSP = true;
+        this.tutorialActiveTree = true;
         this.waveTimerScene = this.scene.get("waveTimer");
+        this.tutorialScene = this.scene.get("tutorial");
         this.mainGame = this.scene.get("startGame");
         this.canPlace = true;
         this.canPlaceOBJ = true;
 
-        this.slot1X = config.width/2-35;
-        this.slot2X = config.width/2+35;
+        this.slot1X = config.width/2-70;
+        this.slot2X = config.width/2;
+        this.slot3X = config.width/2+70;
         this.slotsY = config.height-32*1.5;
 
         this.cancelPopup = this.add.group();
@@ -22,19 +26,40 @@ class hotbar extends Phaser.Scene {
         this.cancelPopup.setAlpha(0);
 
         this.startWaveButton = new Button(this, config.width-140-210, 123, "startWave", 3.5, "down", ()=>{  
-            if(this.canPlace && this.canPlaceOBJ){
+            if(this.tutorialActive){
+                this.tutorialActive = false;
+                this.tutorialActiveSP = false;
+                this.tutorialActiveTree = false;
+                this.tutorialScene.scene.stop();
                 this.waveTimerScene.timeLeft = 0;
-            } 
+            } else {
+                if(this.canPlace && this.canPlaceOBJ){
+                    this.waveTimerScene.timeLeft = 0;
+                } 
+            }
         });
 
         this.backButton = new Button(this, 85, 100, "back", 3.5, "down", ()=>{
             this.mainGame.toTitleScreen();
         });
 
+        
+
+        //ALGAE TOWER
+        this.add.image(this.slot1X, this.slotsY, "attackSlot").setScale(2);
+        this.algaeTower = new Button(this, this.slot1X, this.slotsY, "algaeTower", 1.5, "up", ()=>{
+            if(!this.tutorialActive && this.canPlace && this.canPlaceOBJ && this.mainGame.energyValue >= this.mainGame.algaeTowerPrice){
+                this.mainGame.createObject("algaeTower");
+                this.canPlaceOBJ = false;
+            }
+        });
+        this.algaeTowerText = "Algae Tower | "+this.mainGame.algaeTowerPrice+" Energy | "+this.mainGame.algaeTowerSpawnRate+" O2/s";
+        this.algaeTowerWidth = 425;
+
         //SOLAR PANEL
-        this.add.image(this.slot1X, this.slotsY, "hotbarSlot").setScale(2);
-        this.solarPanel = new Button(this, this.slot1X, this.slotsY, "solarPanel", 1.5/2, "up", ()=>{
-            if(this.canPlace && this.canPlaceOBJ && this.mainGame.energyValue >= 50){
+        this.add.image(this.slot2X, this.slotsY, "hotbarSlot").setScale(2);
+        this.solarPanel = new Button(this, this.slot2X, this.slotsY, "solarPanel", 1.5/2, "up", ()=>{
+            if(!this.tutorialActiveSP && this.canPlace && this.canPlaceOBJ && this.mainGame.energyValue >= 50){
                 this.mainGame.createObject("solarPanel");
                 this.canPlaceOBJ = false;
             }
@@ -43,15 +68,18 @@ class hotbar extends Phaser.Scene {
         this.energyWidth = 390;
         
         //TREE
-        this.add.image(this.slot2X, this.slotsY, "supportSlot").setScale(2);
-        this.tree = new Button(this, this.slot2X, this.slotsY, "tree", 1.5, "up", ()=>{
-            if(this.canPlace && this.canPlaceOBJ && this.mainGame.energyValue >= this.mainGame.treePrice){
+        this.add.image(this.slot3X, this.slotsY, "supportSlot").setScale(2);
+        this.tree = new Button(this, this.slot3X, this.slotsY, "tree", 1.5, "up", ()=>{
+            if(!this.tutorialActiveTree && this.canPlace && this.canPlaceOBJ && this.mainGame.energyValue >= this.mainGame.treePrice){
                 this.mainGame.createObject("tree");
                 this.canPlaceOBJ = false;
             }
         });
         this.treeText = "Tree | "+this.mainGame.treePrice+" Energy | "+this.mainGame.treeHealth+" HP";
         this.treeWidth = 295;
+
+        
+        
 
         //TOOLTIP
         this.toolTipBlue = new ToolTip(this, 0, 0, 0, 39, 0x000080);
@@ -68,8 +96,13 @@ class hotbar extends Phaser.Scene {
             this.input.on('pointermove', this.defineTarget, this);
         });
 
-    }
+        this.algaeTower.on("pointermove", ()=>{
+            this.toolTipManager(this.algaeTowerText, this.algaeTowerWidth, this.mainGame.algaeTowerPrice);
+            this.input.on('pointermove', this.defineTarget, this);
+        });
 
+
+    }
     toolTipManager(text, width, cost){
         if(this.mainGame.energyValue >= cost){
             this.toolTipText.text = text;

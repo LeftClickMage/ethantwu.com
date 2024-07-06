@@ -11,11 +11,16 @@ class greenearth extends Phaser.Scene{
             this.waveNumber = Math.round(player.highestWave*2/3);
             this.startingWave = Math.round(player.highestWave*2/3);
         }
-        
         this.townHallHealth = 5;
-        this.treeHealth = 4;
+        this.treeHealth = 5;
         this.treePrice = 40;
         this.solarPanelEnergyOutput = 2;
+
+        this.movingTutorial = true;
+        this.algaeTowerHealth = 1;
+        this.algaeTowerPrice = 450;
+        this.algaeTowerSpawnRate = 2;
+
 
         this.energyValue = 100*(this.startingWave+1);
         this.targetAcquired = false;
@@ -115,6 +120,8 @@ class greenearth extends Phaser.Scene{
 
         this.frontObjects = this.physics.add.group();
         this.enemySpawn = this.physics.add.sprite(1500,2500, "factoryIdle").setScale(5);
+        this.enemySpawn.setSize(this.enemySpawn.width, this.enemySpawn.height/2);
+        this.enemySpawn.setOffset(0, this.enemySpawn.height/3);
         this.enemySpawn.setImmovable();
         this.enemySpawn.play("factoryIdle");
         
@@ -139,7 +146,6 @@ class greenearth extends Phaser.Scene{
         this.physics.add.collider(this.player, this.enemySpawn);
 
         this.cameras.main.setBounds(-175, -175, 3350, 3350);
-        this.cameras.main.startFollow(this.player);     
           
 
         this.minimap = this.cameras.add(config.width-210, 10, 200, 200).setZoom(0.08).setName("minimap");
@@ -161,13 +167,117 @@ class greenearth extends Phaser.Scene{
         this.scene.launch("waveTimer");
         this.waveTimerScene = this.scene.get("waveTimer");
         // updateData();
-
+        this.oxygen = this.physics.add.group();
         this.enemies = this.physics.add.group();
+        this.physics.add.overlap(this.oxygen, this.enemySpawn, this.destroy, null, this);
         this.physics.add.overlap(this.enemies, this.frontBuildings, this.dealDamage, null, this);
         this.physics.add.overlap(this.enemies, this.backBuildings, this.dealDamage, null, this);
         this.physics.add.overlap(this.enemies, this.backObjects, this.dealObjDamage, null, this);
+        this.physics.add.overlap(this.enemies, this.oxygen, this.dealOxygenDamage, null, this);
         
+        if(player.highestWave == 0){
+            
+            this.scene.launch("tutorial");
+            this.tutorialScene = this.scene.get("tutorial");
+            this.startTutorial();
+        } else {
+            this.lockCam();
+            this.movingTutorial = false;
+        }
+    } 
+
+
+    lockCam(){
+        this.cameras.main.startFollow(this.player);
+    }
+  startTutorial(){
+     
+        this.cameras.main.pan(1500, 1520, 1000);
+        this.tutorialScene.createBox(0, config.height-200, "Welcome " + player.username + "! You are tasked with protecting this house from dangerous Greenhouse Gases.", "enemySpawn");
+
+
         
+
+
+
+        // this.tutorialScene.scene.stop();
+    }
+
+    tutorialHotbar(){
+        this.tutorialScene.destroyBox();
+        this.cameras.main.pan(1500, 1700, 1000);
+        this.tutorialScene.createBox(0, config.height-310, "What you see below is your hotbar. You can hover over the towers for a brief explanation!", "placeSolarPanel");
+    }
+    async tutorialPlaceSolarPanel(){
+        this.tutorialScene.destroyBox();
+        this.cameras.main.pan(1500, 1700, 1000);
+        this.hotbarScene.tutorialActiveSP = false;
+        this.tutorialScene.createBox(0, config.height-390, "Go ahead and place a solar panel on one of the side plots.", "none");
+        var value = 0;
+        while(value == 0){
+            this.plots.getChildren().forEach(function(plot){
+                if(plot.occupiedWith == "solarPanel"){
+                    value = 1;
+                    this.tutorialSPGJ();
+                }
+            }, this);
+            await downtime(100);
+        }
+    }
+
+    
+    async tutorialSPGJ(){
+        this.tutorialScene.destroyBox();
+        // this.cameras.main.pan(1500, 1700, 1000);
+        this.hotbarScene.tutorialActiveTree = false;
+        this.hotbarScene.tutorialActiveSP = true;
+        this.tutorialScene.createBox(0, 70, "Good Job! Now you can see your energy increasing. Use this energy to place down 2 Trees in front of the house!", "none");
+        var value = 0;
+        while(value < 2){
+            value = 0;
+            this.plots.getChildren().forEach(function(plot){
+                if(plot.occupiedWith == "tree"){
+                    value += 1;
+                }
+            }, this);
+            await downtime(100);
+        }
+        this.tutorialMove();
+        
+    }
+    tutorialMove(){
+        this.movingTutorial = false;
+        this.lockCam();
+        this.tutorialScene.destroyBox();
+        this.tutorialScene.createBox(0, config.height-310, "You can also move using the w, a, s, and d keys!", "startWave");
+    }
+    tutorialStartWave(){
+        this.tutorialScene.destroyBox();
+        // this.cameras.main.pan(1500, 1700, 1000);
+        this.hotbarScene.tutorialActiveTree = false;
+        this.tutorialScene.createBox(0, config.height-200, "That's it! Press the Start Wave Button! Good luck " + player.username + " and farewell!", "none");
+        
+    }
+
+    tutorialMap(){
+        this.cameras.main.setZoom(0.45);
+    }
+
+     tutorialEnemySpawn(){
+        this.tutorialScene.destroyBox();
+this.cameras.main.pan(1500, 2500, 1000);
+this.tutorialScene.createBox(0, config.height-200, "Greenhouse Gases will appear from the CO2 factory!", "hotbar");
+        // this.cameras.main.startFollow(this.player);
+
+    }
+
+   
+
+
+
+
+    destroy(spawn, oxygen){
+        oxygen.destroy();
     }
     checkIfEnemiesAlive(){
         if(this.enemies.getChildren().length == 0){
@@ -181,33 +291,93 @@ class greenearth extends Phaser.Scene{
         this.hotbarScene.startWaveButton.setAlpha(0);
         this.hotbarScene.startWaveButton.setInteractive(false);
         this.waveTimerScene.inProgress = true;
-        
+        this.enemiesAlive = true;
         this.wave();
             
 
         this.waveTimerScene.haventStarted = true;
         this.waveTimerScene.timeLeft = 25;
-        this.waveTimerScene.finishedSpawning = true;
+        
         
     }
-    async wave(){
+
+    async spawnOxygen(){
+        while(true){
+            if(this.enemiesAlive){
+                this.backObjects.getChildren().forEach(function(tower){
+                    if(tower.texture.key == "algaeTower"){
+                        var random = Math.random();
+                        random *= 50;
+                        var random2 = Math.random();
+                        random2 *= 50;
+                        var randomNeg = Math.random();
+                        var randomNeg2 = Math.random();
+                        if(randomNeg > 0.5){
+                            randomNeg = -1;
+                        } else {
+                            randomNeg = 1;
+                        }
+                        if(randomNeg2 > 0.5){
+                            randomNeg2 = -1;
+                        } else {
+                            randomNeg2 = 1;
+                        }
+                        random *= randomNeg;
+                        random2 *= randomNeg2;
+                        var oxygen = this.physics.add.sprite(tower.x + random, tower.y + random2, "O2WalkDown").setScale(2.5);
+                        oxygen.setSize(10, 10);
+                        oxygen.setOffset(5, 5);
+                        
+                        this.oxygen.add(oxygen);
+                    }
+                }, this);
+            } else {
+                return;
+            }
+            await downtime(1000/this.algaeTowerSpawnRate);
+        }
+    }
+
+    playAnimations(){
+        this.spawnOxygen();
+        this.backObjects.getChildren().forEach(function(tower){
+            if(tower.texture.key == "algaeTowerIdle"){
+                tower.play("algaeTower");
+            }
+        }, this);
+        this.frontObjects.getChildren().forEach(function(tower){
+            if(tower.texture.key == "algaeTowerIdle"){
+                tower.play("algaeTower");
+            }
+        }, this);
+        
         this.enemySpawn.play("factoryActive");
+    }
+    stopAnimations(){
+        
+        this.enemySpawn.play("factoryIdle");
+    }
+    async wave(){
+        this.playAnimations();
+        
         if(this.waveNumber == 1){
             var amount = 10;
           for(let i = 0; i < amount; i++){
             var enemy = this.physics.add.sprite(this.enemySpawn.x, this.enemySpawn.y, "CO2WalkDown").setScale(3);
             this.enemies.add(enemy);
-         await downtime(1000);
+         await downtime(10000/10);
             }
-            this.enemySpawn.play("factoryIdle");
+            this.waveTimerScene.finishedSpawning = true;
+            this.stopAnimations();
         } else {
             var amount = Math.round(15*this.waveNumber/2);
             for(let i = 0; i < amount; i++){
             var enemy = this.physics.add.sprite(this.enemySpawn.x, this.enemySpawn.y, "CO2WalkDown").setScale(3);
             this.enemies.add(enemy);
-         await downtime(1000);
+         await downtime(15000/amount);
         }
-        this.enemySpawn.play("factoryIdle");
+        this.waveTimerScene.finishedSpawning = true;
+        this.stopAnimations();
         }
         
     }
@@ -238,13 +408,21 @@ class greenearth extends Phaser.Scene{
         }
     }
     dealObjDamage(enemy, object){
-        this.explosion = this.add.sprite(enemy.x, enemy.y, "explosionBaba").setScale(4);
+        this.explosion = this.add.sprite(enemy.x, enemy.y, "explosionBaba").setScale(3);
         this.explosion.play("explosionBaba");
         enemy.destroy();
         object.health -= 1;
     }
+    dealOxygenDamage(enemy, oxygen){
+        this.explosion = this.add.sprite(enemy.x, enemy.y, "explosionBaba").setScale(3);
+        this.explosion.play("explosionBaba");
+        enemy.destroy();
+        this.explosion = this.add.sprite(oxygen.x, oxygen.y, "explosionBaba").setScale(3);
+        this.explosion.play("explosionBaba");
+        oxygen.destroy();
+    }
     dealDamage(enemy, building){
-        this.explosion = this.add.sprite(enemy.x, enemy.y, "explosionBaba").setScale(4);
+        this.explosion = this.add.sprite(enemy.x, enemy.y, "explosionBaba").setScale(3);
         this.explosion.play("explosionBaba");
         enemy.destroy();
         this.townHallHealth-=1;
@@ -305,6 +483,14 @@ moveObj(){
                     offsetY = 23;
                     play = "tree";
                     health = this.treeHealth;
+                } else if(this.target.texture.key == "algaeTower"){
+                    scale = 1;
+                    this.energyValue -= this.algaeTowerPrice;
+                    sizeScaleX = 2;
+                    sizeScaleY = 100;
+                    offsetY = 19;
+                    play = "algaeTowerIdle";
+                    health = this.algaeTowerHealth;
                 } 
                 this.targetClone = this.physics.add.sprite(placeSlot.x, placeSlot.y, this.target.texture.key).setScale(3/scale);
                 this.backObjects.add(this.targetClone);
@@ -564,6 +750,57 @@ moveObj(){
             this.enemy.play("CO2WalkDown", true);
         }
     }
+
+ findNearestCO2(oxygenObj){
+        var prevDistance = 10000;
+        this.enemies.getChildren().forEach(function(enemy){
+            if(Math.sqrt(Math.pow(enemy.x - oxygenObj.x, 2) + Math.pow(enemy.y - oxygenObj.y, 2)) <= prevDistance){
+                prevDistance = Math.sqrt(Math.pow(enemy.x - oxygenObj.x, 2) + Math.pow(enemy.y - oxygenObj.y, 2));
+                this.nearestEnemy = enemy;
+            }
+            
+        }, this);
+    }
+
+    oxygenMovement(object){
+        this.findNearestCO2(object);
+        this.oxygenObj = object;
+        this.oxygenObj.setVelocity(0);
+        if(Math.abs(this.nearestEnemy.x - this.oxygenObj.x)< 4){
+            this.oxygenObj.x = this.nearestEnemy.x;
+        }
+        if(Math.abs(this.nearestEnemy.y - this.oxygenObj.y)< 4){
+            this.oxygenObj.y = this.nearestEnemy.y;
+        }
+
+        if(this.nearestEnemy.x < this.oxygenObj.x){
+                this.oxygenObj.setVelocityX(-oxygen.speed);
+            } else if(this.nearestEnemy.x > this.oxygenObj.x){
+                this.oxygenObj.setVelocityX(oxygen.speed);
+            } else {
+                this.oxygenObj.setVelocityX(0);
+            }
+            if(this.nearestEnemy.y < this.oxygenObj.y){
+                this.oxygenObj.setVelocityY(-oxygen.speed);
+            } else if(this.nearestEnemy.y > this.oxygenObj.y){
+                this.oxygenObj.setVelocityY(oxygen.speed);
+            } else {
+                this.oxygenObj.setVelocityY(0);
+            }
+        
+        this.oxygenObj.body.velocity.normalize().scale(oxygen.speed);
+        if(this.nearestEnemy.x < this.oxygenObj.x){
+            this.oxygenObj.play("O2WalkLeft", true);
+        } else if (this.nearestEnemy.x > this.oxygenObj.x){
+            this.oxygenObj.play("O2WalkRight", true);
+        } else if (this.nearestEnemy.y < this.oxygenObj.y){
+            this.oxygenObj.play("O2WalkUp", true);
+        } else if (this.nearestEnemy.y > this.oxygenObj.y){
+            this.oxygenObj.play("O2WalkDown", true);
+        }  else {
+            this.oxygenObj.play("O2WalkDown", true);
+        }
+    }
     updateObjectHealth(){
             for(let i = 0; i < this.backObjects.getChildren().length; i+=1){
                 var object = this.backObjects.getChildren()[i];
@@ -584,9 +821,14 @@ moveObj(){
     }
     
     update(){
-        this.playerMovement();
+        if(!this.movingTutorial){
+            this.playerMovement();
+        }
         this.enemies.getChildren().forEach(function(enemy){
             this.enemyMovement(enemy);
+        }, this);
+        this.oxygen.getChildren().forEach(function(oxygen){
+            this.oxygenMovement(oxygen);
         }, this);
         this.updateBuildingIndex();
         this.updateEnergy();
@@ -597,13 +839,24 @@ moveObj(){
         this.backObjects.setDepth(0);
         this.backBuildings.setDepth(1);
         this.enemies.setDepth(2);
-        this.player.setDepth(3);
-        this.frontObjects.setDepth(4);
-        this.frontBuildings.setDepth(5);
-        this.enemySpawn.setDepth(6);
+        this.oxygen.setDepth(3);
+        this.player.setDepth(4);
+        this.frontObjects.setDepth(5);
+        this.frontBuildings.setDepth(6);
+        this.enemySpawn.setDepth(7);
 
-    
-      }
+        if(player.highestWave-1 !== 0){
+            if(this.hotbarScene.tutorialActive){
+                this.hotbarScene.tutorialActive = false;
+            }
+            if(this.hotbarScene.tutorialActiveSP){
+                this.hotbarScene.tutorialActiveSP = false;
+            }
+            if(this.hotbarScene.tutorialActiveTree){
+                this.hotbarScene.tutorialActiveTree = false;
+            }
+        }
+    }
 }
 
 

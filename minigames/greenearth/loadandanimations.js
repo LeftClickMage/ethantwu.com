@@ -19,6 +19,7 @@ class loadandanimations extends Phaser.Scene{
         this.load.image("treeBorder", "assets/TreeBorder.png");
         this.load.image("hotbarSlot", "assets/HotbarSlot.png");
         this.load.image("supportSlot", "assets/SupportSlot.png");
+        this.load.image("attackSlot", "assets/AttackSlot.png");
         this.load.image("plot", "assets/Plot.png");
         this.load.image("minimapB", "assets/MinimapBorder.png");
         this.load.image("solarPanel", "assets/SolarPanel.png");
@@ -32,10 +33,15 @@ class loadandanimations extends Phaser.Scene{
         this.load.image("titleText", "assets/titleText.png");
         this.load.image("leaf", "assets/leaf.png");
         this.load.image("startGame", "assets/startGame.png");
-        this.load.image("back", "assets/Back.png")
+        this.load.image("back", "assets/Back.png");
+
         this.load.spritesheet("loseHealth", "assets/LoseHealth.png", {
             frameWidth: 32,
             frameHeight: 32
+        });
+        this.load.spritesheet("agentTalking", "assets/AgentTalking.png", {
+            frameWidth: 16,
+            frameHeight: 16
         });
         this.load.spritesheet("factoryActive", "assets/factoryActive.png", {
             frameWidth: 64,
@@ -85,12 +91,43 @@ class loadandanimations extends Phaser.Scene{
             frameWidth: 32,
             frameHeight: 32
         });
+        this.load.spritesheet("O2WalkDown", "assets/O2WalkDown.png", {
+            frameWidth: 32,
+            frameHeight: 32
+        });
+        this.load.spritesheet("O2WalkUp", "assets/O2WalkUp.png", {
+            frameWidth: 32,
+            frameHeight: 32
+        });
+        this.load.spritesheet("O2WalkLeft", "assets/O2WalkLeft.png", {
+            frameWidth: 16,
+            frameHeight: 16
+        });
+        this.load.spritesheet("O2WalkRight", "assets/O2WalkRight.png", {
+            frameWidth: 16,
+            frameHeight: 16
+        });
         this.load.spritesheet("tree", "assets/Tree.png", {
             frameWidth: 32,
             frameHeight: 32
         });
+        this.load.spritesheet("algaeTower", "assets/AlgaeTower.png", {
+            frameWidth: 32,
+            frameHeight: 32
+        });
+        this.load.spritesheet("algaeTowerIdle", "assets/AlgaeTowerIdle.png", {
+            frameWidth: 32,
+            frameHeight: 32
+        });
+        
     }
     create(){
+        this.anims.create({
+            key: "agentTalking",
+            frames: this.anims.generateFrameNumbers("agentTalking"),
+            frameRate: 10,
+            repeat: -1
+        });
         this.anims.create({
             key: "loseHealth",
             frames: this.anims.generateFrameNumbers("loseHealth"),
@@ -164,8 +201,44 @@ class loadandanimations extends Phaser.Scene{
             repeat: -1
         });
         this.anims.create({
+            key: "O2WalkDown",
+            frames: this.anims.generateFrameNumbers("O2WalkDown"),
+            frameRate: 10,
+            repeat: -1
+        });
+        this.anims.create({
+            key: "O2WalkLeft",
+            frames: this.anims.generateFrameNumbers("O2WalkLeft"),
+            frameRate: 10,
+            repeat: -1
+        });
+        this.anims.create({
+            key: "O2WalkRight",
+            frames: this.anims.generateFrameNumbers("O2WalkRight"),
+            frameRate: 10,
+            repeat: -1
+        });
+        this.anims.create({
+            key: "O2WalkUp",
+            frames: this.anims.generateFrameNumbers("O2WalkUp"),
+            frameRate: 10,
+            repeat: -1
+        });
+        this.anims.create({
             key: "tree",
             frames: this.anims.generateFrameNumbers("tree"),
+            frameRate: 3,
+            repeat: -1
+        });
+        this.anims.create({
+            key: "algaeTower",
+            frames: this.anims.generateFrameNumbers("algaeTower"),
+            frameRate: 16,
+            repeat: -1
+        });
+        this.anims.create({
+            key: "algaeTowerIdle",
+            frames: this.anims.generateFrameNumbers("algaeTowerIdle"),
             frameRate: 3,
             repeat: -1
         });

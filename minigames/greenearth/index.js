@@ -10,6 +10,9 @@ var player = {
 var enemy = {
     speed: 200
 }
+var oxygen = {
+    speed: 180
+}
 var config = {
 
         width: window.innerWidth,
@@ -20,12 +23,12 @@ var config = {
             forceSetTimeOut: true
         },
     backgroundColor: 0x000000,
-    scene: [loadandanimations, titleScreen, greenearth, minimapBorder, hotbar, resources, health, waveTimer,gameOverScreen],
+    scene: [loadandanimations, titleScreen, greenearth, minimapBorder, hotbar, resources, health, waveTimer,gameOverScreen, tutorial],
     pixelArt:true, //prevents pixel art from being blurred when scaled OP!!
     physics: {
         default: "arcade",
         arcade:{
-            debug: false
+            debug: true,
         }
     },
     input: {
