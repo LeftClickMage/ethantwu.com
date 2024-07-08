@@ -25,8 +25,24 @@
 
 <!--https://www.codiva.io/p/cc99a2d7-6995-41cb-9c6d-317667a79386-->
 <body>
-<object type="text/html" data="public/backgrounds/homeBackground.html" class="position-fixed w-100 h-100" style="z-index:-1;"></object>
-<script src="public/navigation/homeNav.js"></script>
+
+<!-- Nav Code -->
+    <script src="public/navigation/homeNav.js"></script>
+    <script src="public/downtime.js"></script>
+    <!-- three.js package -->
+    <script async src="https://unpkg.com/es-module-shims@1.8.0/dist/es-module-shims.js"></script>
+	  <script type="importmap">
+		{
+			"imports": {
+				"three": "https://unpkg.com/three@0.156.0/build/three.module.js",
+				"three/addons/": "https://unpkg.com/three@0.156.0/examples/jsm/"
+			}
+		}
+	  </script>
+    <!-- Background Code-->
+    <link rel="stylesheet" href="public/backgrounds/background.css">
+    <canvas id = "overallBackground" class="background" style="z-index:-1; top:0; left:0;"></canvas>
+    <script type="module" src="public/backgrounds/index.js"></script>
 
 <div class="d-flex align-items-center" style="min-height:45vh;">
     <div class="container-md text-center mt-5">
