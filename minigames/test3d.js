@@ -85,6 +85,7 @@ camera.position.y = 20;
 //LIGHTS
 //attributes: color, brightness
 var light = new THREE.DirectionalLight(0xffffff, 10);
+var light2 = new THREE.AmbientLight(0xffffff);
 light.position.z = 10;
 light.position.y = 10;
 light.castShadow = true; //shadow
@@ -144,7 +145,7 @@ ground.receiveShadow = true; //shadow
 scene.add(cube, ground);
 
 // //ADD LIGHTS
-scene.add(light);
+scene.add(light, light2);
 
 
 var cannonDebugger = new CannonDebugger(scene, physicsWorld, {color: 0xff0000});
