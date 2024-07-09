@@ -5,7 +5,7 @@ import CannonDebugger from 'https://cdn.jsdelivr.net/npm/cannon-es-debugger@1.0.
 import { PointerLockControls } from 'three/addons/controls/PointerLockControls.js';
 
 var physicsWorld = new CANNON.World({
-    gravity: new CANNON.Vec3(0, -20.81, 0),
+    gravity: new CANNON.Vec3(0, -35, 0),
 });
 
 var timeStep = 1/60;
@@ -44,12 +44,19 @@ physicsWorld.addBody(boxBody);
 var platformBodyMaterial = new CANNON.Material();
 var platformBody = new CANNON.Body({
     type: CANNON.Body.STATIC,
-    shape: new CANNON.Box(new CANNON.Vec3(0.5, 2, 0.5)),
+    shape: new CANNON.Box(new CANNON.Vec3(0.5, 0.1, 0.5)),
     material: platformBodyMaterial,
 });
-platformBody.position.set(20, 0, 0);
+platformBody.position.set(20, 2, 0);
 physicsWorld.addBody(platformBody);
 
+var platformBody2 = new CANNON.Body({
+    type: CANNON.Body.STATIC,
+    shape: new CANNON.Box(new CANNON.Vec3(0.5, 0.1, 0.5)),
+    material: platformBodyMaterial,
+});
+platformBody2.position.set(17, 4, 0);
+physicsWorld.addBody(platformBody2);
 
 
 
@@ -209,6 +216,36 @@ function renderGame() {
     
     camera.lookAt(cube.position);
     renderer.render(scene, camera);
+    checkIfCanJump();
+}
+
+var canJump = false;
+function checkIfCanJump(){
+     var contactNormal = new CANNON.Vec3(); // Normal in the contact, pointing *out* of whatever the player touched
+  var upAxis = new CANNON.Vec3( 0, 1, 0 );
+  boxBody.addEventListener( "collide", function (e) {
+    
+    var contact = e.contact;
+
+    // contact.bi and contact.bj are the colliding bodies, and contact.ni is the collision normal.
+    // We do not yet know which one is which! Let's check.
+
+    if ( contact.bi.id == boxBody.id ) {
+      contact.ni.negate( contactNormal );
+    } // bi is the player body, flip the contact normal
+    else {
+      contactNormal.copy( contact.ni ); // bi is something else. Keep the normal as it is
+    }
+
+    // If contactNormal.dot(upAxis) is between 0 and 1, we know that the contact normal is somewhat in the up direction.
+    if ( contactNormal.dot( upAxis ) > 0.5) {
+      
+      // Use a "good" threshold value between 0 and 1 here!
+      canJump = true;
+      
+    }
+    
+  });
 }
 var rotationSpeed = 0.025;
 const force = 5;
@@ -240,8 +277,9 @@ function updateMovement() {
             velocity.add(rightVector.clone().multiplyScalar(force));
         }
     }
-    if (Math.abs(boxBody.velocity.y) < 0.1 && jumping){
-        boxBody.velocity.y = 10;
+    if (canJump && jumping){
+        boxBody.velocity.y = 13;
+        canJump = false;
     }
 
     // Set the velocity to the box body
