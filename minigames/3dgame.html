@@ -3,7 +3,8 @@
 	<meta charset="UTF-8">
 	<title>Page Title</title>
 	<meta name="viewport" content="width=device-width,initial-scale=1">
-	<link rel="stylesheet" href="">
+	<link rel="stylesheet" href="../public/fonts/ubuntu.css">
+	
 	<style>
 		html, body {
   font-family:Minecraft;
@@ -20,8 +21,9 @@
 	</style>
 	<body>
     	<script src="../public/downtime.js"></script>
-    	<!-- three.js package -->
+
     	<script async src="https://unpkg.com/es-module-shims@1.8.0/dist/es-module-shims.js"></script>
+		<script src="https://unpkg.com/@tweenjs/tween.js@^20.0.0/dist/tween.umd.js"></script>
 		<script type="importmap">
 			{
 				"imports": {
@@ -30,6 +32,40 @@
 				}
 			}
 		</script>
-    	<script type="module" src="test3d.js?version=0.0.1"></script>
+    	<script type="module" src="test3d.js?version=0.0.2"></script>
+
+		<p style="position:absolute; background-color:rgba(255, 255, 255, 0.5); font-family:Ubuntu;">GAME CONSOLE: <br><span id = "console"></span></p>
 	</body>
 </html>
+
+
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/20.0.0/tween.umd.js"></script>
+
+<div id="box"></div>
+
+<style>
+	#box {
+		background-color: red;
+		width: 100px;
+		height: 100px;
+	}
+</style>
+
+<script>
+	const box = document.getElementById('box') // Get the element we want to animate.
+
+	const coords = {x: 0, y: 0} // Start at (0, 0)
+
+	const tween = new TWEEN.Tween(coords, false) // Create a new tween that modifies 'coords'.
+		.to({x:100}, 1000); // Move to (300, 200) in 1 second.
+		//.easing(TWEEN.Easing.Quadratic.InOut); // Use an easing function to make the animation smooth.
+	tween.start() // Start the tween immediately.
+
+	// Setup the animation loop.
+	function animate(time) {
+		tween.update(time)
+		requestAnimationFrame(animate)
+		box.style.setProperty('transform', 'translate(' + coords.x + 'px, ' + coords.y + 'px)')
+	}
+	requestAnimationFrame(animate)
+</script> -->
