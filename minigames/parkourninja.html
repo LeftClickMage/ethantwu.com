@@ -7,17 +7,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Ethan Twu's Minigames - Parkour Ninja</title>  
     <meta name="description" content="Like Geometry Dash, but EVEN MORE INTENSE!">
-<meta name="keywords" content="Ethan Twu, Ethan Twu Millburn NJ, LeftClickMage, YukiThePomsky, MLightning, FairOPShotgun, parkour ninja, parkour ninja minigame">
-
+<meta name="keywords" content="Ethan Twu, Ethan Twu, LeftClickMage, YukiThePomsky, MLightning, FairOPShotgun, parkour ninja, parkour ninja minigame">
+    <link href="../public/fonts/ubuntu.css"/>
     <link rel="icon" href="https://i.ibb.co/0tvbVJL/Screenshot-2022-06-05-10-03-13-PM-removebg-preview.png"/>
     <style>
+
         @keyframes shrinkButton {
-            from {width:325px; height:55px; color:white;}
-            to {width:300px; height:50px; color:black;}
+            from {width:325px; height:55px;}
+            to {width:300px; height:50px;}
         }
         @keyframes expandButton {
-            from {width:300px; height:50px; color:black;}
-            to {width:325px; height:55px; color:white;}
+            from {width:300px; height:50px;}
+            to {width:325px; height:55px;}
         }
         @keyframes solidBackground{
             from{background-color:rgba(255,255,255,.7);}
@@ -89,6 +90,7 @@
             -moz-user-select: none;
             -o-user-select: none;
             user-select: none; 
+      font-family:'Ubuntu', sans-serif;
         }
         canvas {
             background-color:#ADD8E6;
@@ -336,6 +338,9 @@
             animation-name:solidBackground;
             animation-duration:1s;
         }
+        .text-white{
+            color:white;
+        }
     </style>
 </head>
 
@@ -347,17 +352,17 @@
 
 
     </div>
-    <h1 style = "color:white; font-size:8vw;animation-name:titleAnimation; animation-duration:7s; animation-iteration-count:infinite; position:absolute;top:19%; left:50%;-ms-transform: translate(-50%, -50%); transform: translate(-50%, -50%);text-outline:white; text-shadow: 0 0 12px #0000FF, 0 0 6px #FFFFFF;" id = "startTitle">Parkour Ninja</h2>
-<button onclick = "startGame()" id ="startButton">Normal Mode</button>
-<button onclick = "startInsane()" id ="insaneButton">Fakie Mode</button>
-<button onclick = "startClear()" id ="clearButton">Unfair Mode</button>
-<p id = "startText">Press W, Space, or Up Arrow to Jump!<br>Checkpoints every 3 levels!</p>
+    <h1 style = "color:white; font-size:7vw;position:absolute;top:19%; left:50%;-ms-transform: translate(-50%, -50%); transform: translate(-50%, -50%);text-outline:white; text-shadow: 0 0 12px #0000FF, 0 0 6px #FFFFFF;" id = "startTitle">Parkour Ninja</h2>
+<button onclick = "startGame()" id ="startButton" class="text-white">Normal</button>
+<button onclick = "startInsane()" id ="insaneButton" class="text-white">Fakie</button>
+<button onclick = "startClear()" id ="clearButton" class="text-white">Unfair</button>
+<p id = "startText">Press W, Space, or Up Arrow to Jump!</p>
 <img src = "https://i.ibb.co/0tvbVJL/Screenshot-2022-06-05-10-03-13-PM-removebg-preview.png" style="position:absolute;top:75%;left:50%;-ms-transform:translate(-50%,-50%);transform:translate(-50%,-50%); height:100px;" id = "img">
-<p style="position:absolute;top:62%;left:58%;-ms-transform:translate(-50%,-50%);transform:translate(-50%,-50%); font-size:100px; text-shadow:0 0 12px gold, 0 0 6px #FFFFFF; opacity:0.7;" id = "skinScroller" onclick = "skinScroller()"><b>></b></p>
+<p style="position:absolute;top:62%;left:70%;-ms-transform:translate(-50%,-50%);transform:translate(-50%,-50%); font-size:100px; text-shadow:0 0 12px gold, 0 0 6px #FFFFFF; opacity:0.7;" id = "skinScroller" onclick = "skinScroller()"><b>></b></p>
 <p id = "imgText" style="position:absolute;top:83%;left:50%;-ms-transform:translate(-50%,-50%);transform:translate(-50%,-50%); font-size:50px;"><b>Choose a skin</b></p>
 
 
-<p id = "p2">You are playing <b>Parkour Ninja (2.6.7) by Ethan Twu</b> on <b>ethantwu.com!</b></p>
+<!-- <p id = "p2">You are playing <b>Parkour Ninja (2.6.7) by Ethan</b> on <b>ethantwu.com!</b></p> -->
 <h2 id = "bottomLeft"><b>Music by Hilton Seibert</b></h2>
    
 <canvas id = "canva"></canvas>
@@ -482,7 +487,7 @@ async function openFSCPopup(){
    
 
 }
-openFSCPopup();
+//openFSCPopup();
 function closePopup(){
     document.body.removeChild(document.getElementById('profileDiv'));
 }
@@ -1561,7 +1566,7 @@ rgbRed+=5;
         
     
     
-    if (player.position.x > 500){
+    if (player.position.x > 150){
         player.velocity.x = 0;
             offset+=1;
 
@@ -2154,7 +2159,7 @@ rgbRed+=5;
         
     
     
-    if (player.position.x > 500){
+    if (player.position.x > 150){
         player.velocity.x = 0;
             offset+=1;
         
@@ -2506,7 +2511,7 @@ rgbRed+=5;
         
     
     
-    if (player.position.x > 500){
+    if (player.position.x > 150){
         player.velocity.x = 0;
             offset+=1;
         
