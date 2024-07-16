@@ -31,7 +31,7 @@ class titleScreen extends Phaser.Scene {
         this.playerUsername = new FancyText(this, config.width/2, 75, false, "", "40px", "white", "green");
 
 
-        this.versionText = new FancyText(this, 10, 10, false, "Version 1.2.3: TUTORIAL!! | ADDED NEW TOWER", "25px", "white", "none");
+        this.versionText = new FancyText(this, 10, 10, false, "Version 1.2.5: TUTORIAL!! | NEW TOWER, NAME TAG, HEALTH BAR, AND MORE", "25px", "white", "none");
         this.versionText.setInteractive();
         this.versionText.on("pointerdown", ()=>{
             window.open("updateLog.html");

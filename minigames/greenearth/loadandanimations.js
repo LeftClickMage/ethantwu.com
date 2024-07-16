@@ -35,8 +35,13 @@ class loadandanimations extends Phaser.Scene{
         this.load.image("leaf", "assets/leaf.png");
         this.load.image("startGame", "assets/startGame.png");
         this.load.image("back", "assets/Back.png");
+        
 
         this.load.spritesheet("loseHealth", "assets/LoseHealth.png", {
+            frameWidth: 32,
+            frameHeight: 32
+        });
+        this.load.spritesheet("batteryPack", "assets/BatteryPack.png", {
             frameWidth: 32,
             frameHeight: 32
         });
@@ -127,6 +132,12 @@ class loadandanimations extends Phaser.Scene{
             key: "agentTalking",
             frames: this.anims.generateFrameNumbers("agentTalking"),
             frameRate: 10,
+            repeat: -1
+        });
+        this.anims.create({
+            key: "batteryPack",
+            frames: this.anims.generateFrameNumbers("batteryPack"),
+            frameRate: 20,
             repeat: -1
         });
         this.anims.create({

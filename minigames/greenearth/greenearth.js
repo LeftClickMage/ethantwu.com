@@ -11,18 +11,26 @@ class greenearth extends Phaser.Scene{
             this.waveNumber = Math.round(player.highestWave*2/3);
             this.startingWave = Math.round(player.highestWave*2/3);
         }
+        this.maxEnergyStorage = 250;
         this.townHallHealth = 5;
         this.treeHealth = 5;
         this.treePrice = 40;
         this.solarPanelEnergyOutput = 2;
-
+        this.slotID = 0;
         this.movingTutorial = true;
-        this.algaeTowerHealth = 1;
+        this.algaeTowerHealth = 3;
         this.algaeTowerPrice = 450;
         this.algaeTowerSpawnRate = 2;
 
+        this.batteryPackPrice = 200;
+        this.batteryPackStorage = 250;
+
+        
 
         this.energyValue = 100*(this.startingWave+1);
+        if(this.energyValue > this.maxEnergyStorage){
+            this.overflow = true;
+        }
         this.targetAcquired = false;
         this.canMoveDown = true;
         this.canMoveRight = true;
@@ -145,6 +153,9 @@ class greenearth extends Phaser.Scene{
         this.physics.add.collider(this.player, this.frontObjects);
         this.physics.add.collider(this.player, this.enemySpawn);
 
+        this.healthBars = this.add.group();
+        this.healthBarsBack = this.add.group();
+
         this.cameras.main.setBounds(-175, -175, 3350, 3350);
           
 
@@ -184,6 +195,8 @@ class greenearth extends Phaser.Scene{
             this.lockCam();
             this.movingTutorial = false;
         }
+
+        this.nameText = new FancyText(this, 200, 200, true, "username", "20px", "white", "black");
     } 
 
 
@@ -491,12 +504,23 @@ moveObj(){
                     offsetY = 19;
                     play = "algaeTowerIdle";
                     health = this.algaeTowerHealth;
+                } else if(this.target.texture.key == "batteryPack"){
+                    scale = 1;
+                    this.energyValue -= this.batteryPackPrice;
+                    sizeScaleX = 2;
+                    sizeScaleY = 100;
+                    offsetY = 19;
+                    play = "batteryPack";
+                    health = 1;
+                    this.maxEnergyStorage += this.batteryPackStorage;
                 } 
+                this.slotID += 1;
                 this.targetClone = this.physics.add.sprite(placeSlot.x, placeSlot.y, this.target.texture.key).setScale(3/scale);
                 this.backObjects.add(this.targetClone);
                 this.targetClone.setSize(this.targetClone.width/sizeScaleX, this.targetClone.height/sizeScaleY, true);
                 this.targetClone.setOffset(this.targetClone.width/2 - this.targetClone.width/sizeScaleX/2, offsetY);
                 this.targetClone.play(play);
+                this.targetClone.id = this.slotID;
                 this.targetClone.health = health;
                 this.targetClone.setImmovable(true);
         
@@ -506,9 +530,18 @@ moveObj(){
                 this.targetClone2.setOffset(this.targetClone.width/2 - this.targetClone.width/sizeScaleX/2, offsetY);
                 this.targetClone2.play(play);
                 this.targetClone2.health = health;
-                this.targetClone2.setImmovable(true);
+                this.targetClone2.setImmovable(true)
                 placeSlot.occupiedWith = this.target.texture.key;
                 placeSlot.occupied = true;
+                
+            
+
+                this.healthbarBack = this.add.rectangle(placeSlot.x, placeSlot.y-60, 104, 10, 0x000000);
+                this.healthBarsBack.add(this.healthbarBack);
+                this.healthbar = this.add.rectangle(placeSlot.x, placeSlot.y-60, 100, 6, 0xff0000);
+                this.healthbar.id = this.slotID;
+                this.healthbar.maxHealth = health;
+                this.healthBars.add(this.healthbar);
             }
         }
     
@@ -677,6 +710,13 @@ moveObj(){
 
 
     updateEnergy(){
+        if(this.overflow && this.energyValue <= this.maxEnergyStorage){
+            this.overflow = false;
+        }
+        if(this.energyValue>this.maxEnergyStorage && !this.overflow){
+            this.energyValue = this.maxEnergyStorage;
+        } else if (!this.overflow){
+
         this.plots.getChildren().forEach(function(plot){
             if(plot.occupiedWith == "solarPanel"){
                 this.energyValue += this.solarPanelEnergyOutput/60;
@@ -694,7 +734,7 @@ moveObj(){
         if(this.townHall.texture.key == "thELevel4"){
             this.energyValue += 4/60;
         }
-        
+        }
     }
 
 
@@ -814,16 +854,46 @@ moveObj(){
                     if(this.targetAcquired){
                     this.showUnoccupiedPlots();
                     }
+                    if(object.texture.key == "batteryPack"){
+                        this.maxEnergyStorage -= this.batteryPackStorage;
+                    }
                     object.destroy();
                     this.frontObjects.getChildren()[i].destroy();
+                    this.healthBars.getChildren()[i].destroy();
+                    this.healthBarsBack.getChildren()[i].destroy();
+
                 }
             }
     }
     
+    updatePlayerNametag(username, x, y){
+        this.nameText.text = username;
+        this.nameText.x = x-this.nameText.width/2;
+        this.nameText.y = y-this.player.height*3-this.nameText.height/2;
+    }
+    updateHealthBars(){
+        var currentHealth;
+        var id;
+        this.backObjects.getChildren().forEach((tower)=>{
+            id = tower.id;
+            currentHealth = tower.health;
+            this.healthBars.getChildren().forEach((healthbar)=>{
+                if(healthbar.id == id){
+                    healthbar.width = 100*currentHealth/healthbar.maxHealth;
+                }
+            });
+            
+        })
+        
+        
+    }
+
     update(){
+        
         if(!this.movingTutorial){
             this.playerMovement();
         }
+        this.updatePlayerNametag(player.username, this.player.x, this.player.y);
         this.enemies.getChildren().forEach(function(enemy){
             this.enemyMovement(enemy);
         }, this);
@@ -841,10 +911,15 @@ moveObj(){
         this.enemies.setDepth(2);
         this.oxygen.setDepth(3);
         this.player.setDepth(4);
-        this.frontObjects.setDepth(5);
-        this.frontBuildings.setDepth(6);
-        this.enemySpawn.setDepth(7);
+        this.nameText.setDepth(5)
+        this.frontObjects.setDepth(6);
+        this.frontBuildings.setDepth(7);
+        this.enemySpawn.setDepth(8);
+        this.healthBarsBack.setDepth(9);
+        this.healthBars.setDepth(10);
 
+
+        this.updateHealthBars();
         if(player.highestWave-1 !== 0){
             if(this.hotbarScene.tutorialActive){
                 this.hotbarScene.tutorialActive = false;

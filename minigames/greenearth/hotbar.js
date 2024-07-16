@@ -13,9 +13,10 @@ class hotbar extends Phaser.Scene {
         this.canPlace = true;
         this.canPlaceOBJ = true;
 
-        this.slot1X = config.width/2-70;
-        this.slot2X = config.width/2;
-        this.slot3X = config.width/2+70;
+        this.slot1X = config.width/2-105;
+        this.slot2X = config.width/2-35;
+        this.slot3X = config.width/2+35;
+        this.slot4X = config.width/2+105;
         this.slotsY = config.height-32*1.5;
 
         this.cancelPopup = this.add.group();
@@ -56,9 +57,20 @@ class hotbar extends Phaser.Scene {
         this.algaeTowerText = "Algae Tower | "+this.mainGame.algaeTowerPrice+" Energy | "+this.mainGame.algaeTowerSpawnRate+" O2/s";
         this.algaeTowerWidth = 425;
 
-        //SOLAR PANEL
+        //BATTERY PACK
         this.add.image(this.slot2X, this.slotsY, "hotbarSlot").setScale(2);
-        this.solarPanel = new Button(this, this.slot2X, this.slotsY, "solarPanel", 1.5/2, "up", ()=>{
+        this.batteryPack = new Button(this, this.slot2X, this.slotsY, "batteryPack", 1.5, "up", ()=>{
+            if(!this.tutorialActive && this.canPlace && this.canPlaceOBJ && this.mainGame.energyValue >= this.mainGame.batteryPackPrice){
+                this.mainGame.createObject("batteryPack");
+                this.canPlaceOBJ = false;
+            }
+        });
+        this.batteryText = "Battery Pack | 200 Energy | +"+ this.mainGame.batteryPackStorage + " Storage";
+        this.batteryWidth = 520;
+
+        //SOLAR PANEL
+        this.add.image(this.slot3X, this.slotsY, "hotbarSlot").setScale(2);
+        this.solarPanel = new Button(this, this.slot3X, this.slotsY, "solarPanel", 1.5/2, "up", ()=>{
             if(!this.tutorialActiveSP && this.canPlace && this.canPlaceOBJ && this.mainGame.energyValue >= 50){
                 this.mainGame.createObject("solarPanel");
                 this.canPlaceOBJ = false;
@@ -68,8 +80,8 @@ class hotbar extends Phaser.Scene {
         this.energyWidth = 390;
         
         //TREE
-        this.add.image(this.slot3X, this.slotsY, "supportSlot").setScale(2);
-        this.tree = new Button(this, this.slot3X, this.slotsY, "tree", 1.5, "up", ()=>{
+        this.add.image(this.slot4X, this.slotsY, "supportSlot").setScale(2);
+        this.tree = new Button(this, this.slot4X, this.slotsY, "tree", 1.5, "up", ()=>{
             if(!this.tutorialActiveTree && this.canPlace && this.canPlaceOBJ && this.mainGame.energyValue >= this.mainGame.treePrice){
                 this.mainGame.createObject("tree");
                 this.canPlaceOBJ = false;
@@ -101,6 +113,10 @@ class hotbar extends Phaser.Scene {
             this.input.on('pointermove', this.defineTarget, this);
         });
 
+        this.batteryPack.on("pointermove", ()=>{
+            this.toolTipManager(this.batteryText, this.batteryWidth, this.mainGame.batteryPackPrice);
+            this.input.on('pointermove', this.defineTarget, this);
+        });
 
     }
     toolTipManager(text, width, cost){
