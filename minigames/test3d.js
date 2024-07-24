@@ -631,7 +631,7 @@ var normalize = 1;
 
     
     if (player.canJump && player.jumping){
-        player.body.velocity.y = 11;
+        player.body.velocity.y = 13;
         player.canJump = false;
     }
     if(player.sprinting){
@@ -871,75 +871,77 @@ function consoleLog(text){
 addEventListener('keydown', function(event) {
     // alert(event.key)
     // "ArrowRight", "ArrowLeft", "ArrowUp", or "ArrowDown"
-    if(event.key == "ArrowRight"){
+    var key = event.key.toLowerCase();
+    if(key == "arrowright"){
         keys.rightArrow = true;
     }
-    if(event.key == "ArrowLeft"){
+    if(key == "arrowleft"){
         keys.leftArrow = true;
     }
-    if(event.key == "ArrowUp"){
+    if(key == "arrowup"){
         keys.upArrow = true;
     }
-    if(event.key == "ArrowDown"){
+    if(key == "arrowdown"){
         keys.downArrow = true;
     }
-    if(event.key == "w"){
+    if(key == "w"){
         // alert('test');
         keys.w = true;
     }
-    if(event.key == "a"){
+    if(key == "a"){
         keys.a = true;
     }
-    if(event.key == "s"){
+    if(key == "s"){
         keys.s = true;
     }
-    if(event.key == "d"){
+    if(key == "d"){
         keys.d = true;
     }
-    if(event.key == "q"){
+    if(key == "q"){
         keys.q = true;
     }
-    if(event.key == "e"){
+    if(key == "e"){
         keys.e = true;
     }
-    if(event.key == " "){
+    if(key == " "){
         player.jumping = true;
     }
 });
 
 addEventListener('keyup', function(event) {
+    var key = event.key.toLowerCase();
     // "ArrowRight", "ArrowLeft", "ArrowUp", or "ArrowDown"
-    if(event.key == "ArrowRight"){
+    if(key == "arrowright"){
         keys.rightArrow = false;
     }
-    if(event.key == "ArrowLeft"){
+    if(key == "arrowleft"){
         keys.leftArrow = false;
     }
-    if(event.key == "ArrowUp"){
+    if(key == "arrowup"){
         keys.upArrow = false;
     }
-    if(event.key == "ArrowDown"){
+    if(key == "arrowdown"){
         keys.downArrow = false;
     }
-    if(event.key == "w"){
+    if(key == "w"){
         keys.w = false;
     }
-    if(event.key == "a"){
+    if(key == "a"){
         keys.a = false;
     }
-    if(event.key == "s"){
+    if(key == "s"){
         keys.s = false;
     }
-    if(event.key == "d"){
+    if(key == "d"){
         keys.d = false;
     }
-    if(event.key == "q"){
+    if(key == "q"){
         keys.q = false;
     }
-    if(event.key == "e"){
+    if(key == "e"){
         keys.e = false;
     }
-    if(event.key == " "){
+    if(key == " "){
         player.jumping = false;
     }
 });
