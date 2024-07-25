@@ -2575,20 +2575,20 @@ console.log(offset);
 }
 
 
-window.addEventListener('touchstart', (event)=>{
+canvas.addEventListener('touchstart', (event)=>{
     event.preventDefault();
     keys.jump.pressed = true;
 });
-window.addEventListener('touchend', (event)=>{
+canvas.addEventListener('touchend', (event)=>{
     event.preventDefault();
     keys.jump.pressed = false;
 });
 
-window.addEventListener('mousedown', (event)=>{
+canvas.addEventListener('mousedown', (event)=>{
     event.preventDefault();
     keys.jump.pressed = true;
 });
-window.addEventListener('mouseup', (event)=>{
+canvas.addEventListener('mouseup', (event)=>{
     event.preventDefault();
     keys.jump.pressed = false;
 });
@@ -2651,8 +2651,8 @@ document.body.removeChild(document.getElementById('startTitle'));
 document.body.removeChild(document.getElementById('imgText'));
 document.body.removeChild(document.getElementById('skinScroller'));
 document.body.removeChild(document.getElementById('img'));
+
 canvas.setAttribute("style", "background-color:#940E1B;");
-document.getElementById("p2").setAttribute("style","color:white;");
     player.velocity.x = 5;
     audio.play();
 
@@ -2670,14 +2670,13 @@ muteMusic.innerHTML = "Mute Music";
 document.body.appendChild(muteMusic);
 
 
-openFSCPopups();
   
     cloudColor = "#E71E02";
     planets.forEach(planet => {
         planet.color = "black";
         planet.glow = true;
     })
-    
+    insane();
     
 }
 function startClear(){
@@ -2692,7 +2691,6 @@ document.body.removeChild(document.getElementById('imgText'));
 document.body.removeChild(document.getElementById('skinScroller'));
 document.body.removeChild(document.getElementById('img'));
 canvas.setAttribute("style", "background-color:white;");
-document.getElementById("p2").setAttribute("style","color:black;");
     player.velocity.x = 5;
     audio.play();
 
