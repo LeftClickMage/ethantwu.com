@@ -2575,7 +2575,23 @@ console.log(offset);
 }
 
 
+window.addEventListener('touchstart', (event)=>{
+    event.preventDefault();
+    keys.jump.pressed = true;
+});
+window.addEventListener('touchend', (event)=>{
+    event.preventDefault();
+    keys.jump.pressed = false;
+});
 
+window.addEventListener('mousedown', (event)=>{
+    event.preventDefault();
+    keys.jump.pressed = true;
+});
+window.addEventListener('mouseup', (event)=>{
+    event.preventDefault();
+    keys.jump.pressed = false;
+});
 window.addEventListener('keydown', (event) => {
    if (event.key == "w" || event.key == " " || event.keyCode == 38){
        keys.jump.pressed = true;
