@@ -34,7 +34,9 @@
 			}
 		</script>
     	<p style="position:absolute; left:100px; color:white; font-size:15px;" id="bulletPoolCount">BulletPool:</p>
-<p style="position:absolute; left:45%; color:white; font-size:25px;" id="score">SCORE:</p>
+
+<p style="position:absolute; left:220px; color:white; font-size:25px;" id="highScore">HS:</p>
+<p style="position:absolute; left:350px; color:white; font-size:25px;" id="score">SCORE:</p>
 		<p style="position:absolute; top:50px; background-color:rgba(255, 255, 255, 0.5); font-family:Ubuntu;">GAME CONSOLE: <br><span id = "console"></span></p>
 
 		<p style="position:absolute; right:2%; color:white; font-family:Ubuntu;">Controls:<br>WASD - Movement<br>Left/Right Arrow - Look<br>Up Arrow - Dash<br>Q - Shoot<br>E - Super</p>
@@ -63,7 +65,7 @@
 			<button id="ar">AR</button>
 			<button id="sniper">Sniper</button>
 		</div>
-		<script type="module" src="test3d.js?version=0.2.4"></script>
+		<script type="module" src="test3d.js?version=0.2.5"></script>
 	</body>
 </html>
 
@@ -77,6 +79,7 @@
 0.1.3 release with higher walls 5->50, added cooldown for dash, added UI, added 4 guns, pistol, smg, ar, sniper, added bullets, added super, made enemies chase you. made 1 of the platforms the spawn platforn, enemies spawn randomly
 0.1.4 release with increase in jump height 11->13, added caps lock movement protection, added controls e = super
 0.2.4 release with grass, shaders to move grass. changed bullet size to smaller, and added a bullet pooling system to fix lag accumulation, changed ground color to match grass. added fps counter and bullet pool counter
+0.2.5 added high score counter
  -->
 
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/20.0.0/tween.umd.js"></script>

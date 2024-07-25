@@ -233,6 +233,7 @@ var player = {
     bulletSpeed: 50,
     gun: "pistol",
     score:0,
+    highScore: 0,
 }
 player.mesh.castShadow = true; //shadow
 addToWorld(player);
@@ -428,6 +429,7 @@ function renderGame() {
         delayAndMakeTrue(player.fireRate);
 
     }
+    HTMLObj("highScore").innerHTML = "HS: " + player.highScore;
     HTMLObj("score").innerHTML = "Score: " + player.score;
 // consoleLog(bulletPool.length);
     HTMLObj("bulletPoolCount").innerHTML = "BulletPool: " + bulletPool.length;
@@ -785,6 +787,9 @@ var normalize = 1;
 
 //// EXTRA FUNCTIONS ////
 function killPlayer(){
+    if(player.highScore < player.score){
+        player.highScore = player.score;
+    }
     player.score = 0;
     player.body.position.set(20, 10, 0);
 }
