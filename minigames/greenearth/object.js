@@ -10,6 +10,8 @@ constructor(scene, object){
     var scale = 1;
     if(object == "solarPanel"){
         scale = 2;
+    } else if (object == "windmill"){
+        scale = 3/4;
     }
     scene.add.existing(this.setScale(3/scale));
     scene.physics.world.enableBody(this);

@@ -4,6 +4,7 @@ class waveTimer extends Phaser.Scene {
     }
     
     create () {
+        this.secondSpawnCreated = false;
         this.gameEnded = false;
         this.finishedSpawning = true;
         this.haventStarted = true;
@@ -51,10 +52,17 @@ class waveTimer extends Phaser.Scene {
             
             this.haventStarted = false;
             this.mainGame.waveNumber += 1;
+            
             if(player.highestWave < this.mainGame.waveNumber){
                 player.highestWave = this.mainGame.waveNumber;
             }
-            
+            if(this.mainGame.waveNumber >= 5 && !this.secondSpawnCreated){
+                this.secondSpawnCreated = true;
+                this.mainGame.createEnemySpawn(500, 1500);
+                if(player.highestWave <= 5){
+                    this.mainGame.anotherSpawner();
+                }
+            }
             this.inProgress = false;
             this.timeLeft = 35;
 

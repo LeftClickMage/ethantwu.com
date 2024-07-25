@@ -36,9 +36,12 @@ class loadandanimations extends Phaser.Scene{
         this.load.image("startGame", "assets/startGame.png");
         this.load.image("back", "assets/Back.png");
         
-
-        this.load.spritesheet("loseHealth", "assets/LoseHealth.png", {
+        this.load.spritesheet("windmill", "assets/Windmill.png", {
             frameWidth: 32,
+            frameHeight: 32
+        });
+        this.load.spritesheet("loseHealth", "assets/LoseHealth.png", {
+            frameWidth: 32, 
             frameHeight: 32
         });
         this.load.spritesheet("batteryPack", "assets/BatteryPack.png", {
@@ -246,6 +249,12 @@ class loadandanimations extends Phaser.Scene{
             key: "algaeTower",
             frames: this.anims.generateFrameNumbers("algaeTower"),
             frameRate: 16,
+            repeat: -1
+        });
+        this.anims.create({
+            key: "windmill",
+            frames: this.anims.generateFrameNumbers("windmill"),
+            frameRate: 20,
             repeat: -1
         });
         this.anims.create({

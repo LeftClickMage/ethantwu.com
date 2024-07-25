@@ -5,6 +5,8 @@ class tutorial extends Phaser.Scene {
     
     create () {
       this.mainGame = this.scene.get("startGame");
+      this.waveTimerScene = this.scene.get("waveTimer");
+
     }
 async createBox(x, y, text, callback){
     this.dialougeBox1 = this.add.rectangle(x, y, config.width, 200, 0xFFFFFF).setOrigin(0).setAlpha(.9);
@@ -26,6 +28,12 @@ async createBox(x, y, text, callback){
             this.mainGame.tutorialPlaceSolarPanel();
         } else if(callback == "startWave"){
             this.mainGame.tutorialStartWave();
+        } else if (callback == "closeTutorial") {
+            this.destroyBox();
+            this.mainGame.lockCamOn(this.mainGame.player);
+
+            this.mainGame.tutorialScene.scene.stop();
+            this.waveTimerScene.timeLeft = 35;
         } else {
 
         }

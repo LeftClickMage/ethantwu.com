@@ -13,10 +13,11 @@ class hotbar extends Phaser.Scene {
         this.canPlace = true;
         this.canPlaceOBJ = true;
 
-        this.slot1X = config.width/2-105;
-        this.slot2X = config.width/2-35;
-        this.slot3X = config.width/2+35;
-        this.slot4X = config.width/2+105;
+        this.slot1X = config.width/2-140;
+        this.slot2X = config.width/2-70;
+        this.slot3X = config.width/2;
+        this.slot4X = config.width/2+70;
+        this.slot5X = config.width/2+140;
         this.slotsY = config.height-32*1.5;
 
         this.cancelPopup = this.add.group();
@@ -79,9 +80,21 @@ class hotbar extends Phaser.Scene {
         this.energyText = "Solar Panel | 50 Energy | "+this.mainGame.solarPanelEnergyOutput+" E/s";
         this.energyWidth = 390;
         
+
+        //WINDMILL
+        this.add.image(this.slot4X, this.slotsY, "hotbarSlot").setScale(2);
+        this.windmill = new Button(this, this.slot4X, this.slotsY, "windmill", 1.5, "up", ()=>{
+            if(!this.tutorialActive && this.canPlace && this.canPlaceOBJ && this.mainGame.energyValue >= this.mainGame.windmillPrice){
+                this.mainGame.createObject("windmill");
+                this.canPlaceOBJ = false;
+            }
+        });
+        this.windmillText = "Windmill | " + this.mainGame.windmillPrice + " Energy | "+this.mainGame.windmillEnergyOutput+" E/s";
+        this.windmillWidth = 365;
+        
         //TREE
-        this.add.image(this.slot4X, this.slotsY, "supportSlot").setScale(2);
-        this.tree = new Button(this, this.slot4X, this.slotsY, "tree", 1.5, "up", ()=>{
+        this.add.image(this.slot5X, this.slotsY, "supportSlot").setScale(2);
+        this.tree = new Button(this, this.slot5X, this.slotsY, "tree", 1.5, "up", ()=>{
             if(!this.tutorialActiveTree && this.canPlace && this.canPlaceOBJ && this.mainGame.energyValue >= this.mainGame.treePrice){
                 this.mainGame.createObject("tree");
                 this.canPlaceOBJ = false;
@@ -103,6 +116,11 @@ class hotbar extends Phaser.Scene {
             this.toolTipManager(this.energyText, this.energyWidth, 50);
             this.input.on('pointermove', this.defineTarget, this);
         });
+        this.windmill.on("pointermove", ()=>{
+            this.toolTipManager(this.windmillText, this.windmillWidth, this.mainGame.windmillPrice);
+            this.input.on('pointermove', this.defineTarget, this);
+        });
+
         this.tree.on("pointermove", ()=>{
             this.toolTipManager(this.treeText, this.treeWidth, this.mainGame.treePrice);
             this.input.on('pointermove', this.defineTarget, this);

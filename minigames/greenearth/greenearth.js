@@ -22,6 +22,9 @@ class greenearth extends Phaser.Scene{
         this.algaeTowerPrice = 450;
         this.algaeTowerSpawnRate = 2;
 
+        this.windmillPrice = 300;
+        this.windmillEnergyOutput = 15;
+
         this.batteryPackPrice = 200;
         this.batteryPackStorage = 250;
 
@@ -61,12 +64,12 @@ class greenearth extends Phaser.Scene{
         this.plots.add(new Plot(1365, 1935, this)); 
         this.plots.add(new Plot(1500, 1935, this)); 
         this.plots.add(new Plot(1635, 1935, this)); 
-        this.plots.add(new Plot(1365, 2070, this)); 
-        this.plots.add(new Plot(1500, 2070, this)); 
-        this.plots.add(new Plot(1635, 2070, this)); 
-        this.plots.add(new Plot(1365, 2205, this)); 
-        this.plots.add(new Plot(1500, 2205, this)); 
-        this.plots.add(new Plot(1635, 2205, this)); 
+        // this.plots.add(new Plot(1365, 2070, this)); 
+        // this.plots.add(new Plot(1500, 2070, this)); 
+        // this.plots.add(new Plot(1635, 2070, this)); 
+        // this.plots.add(new Plot(1365, 2205, this)); 
+        // this.plots.add(new Plot(1500, 2205, this)); 
+        // this.plots.add(new Plot(1635, 2205, this)); 
 
         this.plots.add(new Plot(1800, 1365, this)); 
         this.plots.add(new Plot(1800, 1500, this)); 
@@ -127,11 +130,13 @@ class greenearth extends Phaser.Scene{
         
 
         this.frontObjects = this.physics.add.group();
-        this.enemySpawn = this.physics.add.sprite(1500,2500, "factoryIdle").setScale(5);
-        this.enemySpawn.setSize(this.enemySpawn.width, this.enemySpawn.height/2);
-        this.enemySpawn.setOffset(0, this.enemySpawn.height/3);
-        this.enemySpawn.setImmovable();
-        this.enemySpawn.play("factoryIdle");
+
+        this.enemySpawns = this.physics.add.group();
+
+        this.createEnemySpawn(1500, 2500);
+        // this.createEnemySpawn(500, 1500);
+        
+
         
         this.frontBuildings = this.physics.add.group();
         
@@ -151,7 +156,7 @@ class greenearth extends Phaser.Scene{
         this.physics.add.collider(this.player, this.frontBuildings);
         this.physics.add.collider(this.player, this.backObjects);
         this.physics.add.collider(this.player, this.frontObjects);
-        this.physics.add.collider(this.player, this.enemySpawn);
+        this.physics.add.collider(this.player, this.enemySpawns);
 
         this.healthBars = this.add.group();
         this.healthBarsBack = this.add.group();
@@ -180,7 +185,7 @@ class greenearth extends Phaser.Scene{
         // updateData();
         this.oxygen = this.physics.add.group();
         this.enemies = this.physics.add.group();
-        this.physics.add.overlap(this.oxygen, this.enemySpawn, this.destroy, null, this);
+        this.physics.add.overlap(this.oxygen, this.enemySpawns, this.destroy, null, this);
         this.physics.add.overlap(this.enemies, this.frontBuildings, this.dealDamage, null, this);
         this.physics.add.overlap(this.enemies, this.backBuildings, this.dealDamage, null, this);
         this.physics.add.overlap(this.enemies, this.backObjects, this.dealObjDamage, null, this);
@@ -192,16 +197,18 @@ class greenearth extends Phaser.Scene{
             this.tutorialScene = this.scene.get("tutorial");
             this.startTutorial();
         } else {
-            this.lockCam();
+            this.lockCamOn(this.player);
             this.movingTutorial = false;
         }
 
         this.nameText = new FancyText(this, 200, 200, true, "username", "20px", "white", "black");
+
+        // this.anotherSpawner();
     } 
 
 
-    lockCam(){
-        this.cameras.main.startFollow(this.player);
+    lockCamOn(object){
+        this.cameras.main.startFollow(object);
     }
   startTutorial(){
      
@@ -213,7 +220,7 @@ class greenearth extends Phaser.Scene{
 
 
 
-        // this.tutorialScene.scene.stop();
+    
     }
 
     tutorialHotbar(){
@@ -221,6 +228,16 @@ class greenearth extends Phaser.Scene{
         this.cameras.main.pan(1500, 1700, 1000);
         this.tutorialScene.createBox(0, config.height-310, "What you see below is your hotbar. You can hover over the towers for a brief explanation!", "placeSolarPanel");
     }
+
+    anotherSpawner(){
+        // this.tutorialScene.destroyBox();
+        this.scene.launch("tutorial");
+        this.tutorialScene = this.scene.get("tutorial");    
+        this.cameras.main.pan(500, 1500, 1000);
+        this.lockCamOn(this.enemySpawns.getChildren()[1]);
+        this.tutorialScene.createBox(0, config.height-200, "Uh Oh! There seems to be another spawner!!", "closeTutorial");
+    }
+
     async tutorialPlaceSolarPanel(){
         this.tutorialScene.destroyBox();
         this.cameras.main.pan(1500, 1700, 1000);
@@ -289,7 +306,7 @@ this.tutorialScene.createBox(0, config.height-200, "Greenhouse Gases will appear
 
 
 
-    destroy(spawn, oxygen){
+    destroy(oxygen, spawn){
         oxygen.destroy();
     }
     checkIfEnemiesAlive(){
@@ -300,7 +317,7 @@ this.tutorialScene.createBox(0, config.height-200, "Greenhouse Gases will appear
     }
     startWave(){
         this.waveTimerScene.finishedSpawning = false;
-        
+        // this.putDownObj(undefined, undefined);
         this.hotbarScene.startWaveButton.setAlpha(0);
         this.hotbarScene.startWaveButton.setInteractive(false);
         this.waveTimerScene.inProgress = true;
@@ -363,12 +380,15 @@ this.tutorialScene.createBox(0, config.height-200, "Greenhouse Gases will appear
                 tower.play("algaeTower");
             }
         }, this);
-        
-        this.enemySpawn.play("factoryActive");
+        this.enemySpawns.getChildren().forEach((spawner)=>{
+            spawner.play("factoryActive");
+        }, this);
     }
     stopAnimations(){
         
-        this.enemySpawn.play("factoryIdle");
+        this.enemySpawns.getChildren().forEach((spawner)=>{
+            spawner.play("factoryIdle");
+        }, this);
     }
     async wave(){
         this.playAnimations();
@@ -383,10 +403,12 @@ this.tutorialScene.createBox(0, config.height-200, "Greenhouse Gases will appear
             this.waveTimerScene.finishedSpawning = true;
             this.stopAnimations();
         } else {
-            var amount = Math.round(15*this.waveNumber/2);
+            var amount = Math.round(15*this.waveNumber/2)/this.enemySpawns.getChildren().length;
             for(let i = 0; i < amount; i++){
-            var enemy = this.physics.add.sprite(this.enemySpawn.x, this.enemySpawn.y, "CO2WalkDown").setScale(3);
-            this.enemies.add(enemy);
+                this.enemySpawns.getChildren().forEach((enemySpawner)=>{
+                var enemy = this.physics.add.sprite(enemySpawner.x, enemySpawner.y, "CO2WalkDown").setScale(3);
+                this.enemies.add(enemy);
+                }, this);
          await downtime(15000/amount);
         }
         this.waveTimerScene.finishedSpawning = true;
@@ -513,6 +535,15 @@ moveObj(){
                     play = "batteryPack";
                     health = 1;
                     this.maxEnergyStorage += this.batteryPackStorage;
+                } else if(this.target.texture.key == "windmill"){
+                    scale = 3/4;
+                    this.energyValue -= this.windmillPrice;
+                    sizeScaleX = 2;
+                    sizeScaleY = 100;
+                    offsetY = 19;
+                    play = "windmill";
+                    health = 5;
+                    // this.maxEnergyStorage += this.batteryPackStorage;
                 } 
                 this.slotID += 1;
                 this.targetClone = this.physics.add.sprite(placeSlot.x, placeSlot.y, this.target.texture.key).setScale(3/scale);
@@ -575,6 +606,7 @@ moveObj(){
         this.minimapBorderScene.scene.stop();
         this.waveTimerScene.scene.stop();
         this.resources.scene.stop();
+        // this.tutorialScene.scene.stop();
         this.scene.start("titleScreen");
     }
     
@@ -715,11 +747,13 @@ moveObj(){
         }
         if(this.energyValue>this.maxEnergyStorage && !this.overflow){
             this.energyValue = this.maxEnergyStorage;
-        } else if (!this.overflow){
+        } else if (!this.overflow && this.energyValue < this.maxEnergyStorage){
 
         this.plots.getChildren().forEach(function(plot){
             if(plot.occupiedWith == "solarPanel"){
                 this.energyValue += this.solarPanelEnergyOutput/60;
+            } else if (plot.occupiedWith == "windmill"){
+                this.energyValue += this.windmillEnergyOutput/60;
             }
         }, this);
         if(this.townHall.texture.key == "thELevel1"){
@@ -888,8 +922,19 @@ moveObj(){
         
     }
 
+    createEnemySpawn(x, y){
+        var enemySpawn = this.physics.add.sprite(x, y, "factoryIdle").setScale(5);
+        this.enemySpawns.add(enemySpawn);
+        enemySpawn.setSize(enemySpawn.width, enemySpawn.height/1.4);
+        enemySpawn.setOffset(0, enemySpawn.height/3);
+        enemySpawn.setImmovable();
+        enemySpawn.play("factoryIdle");
+    }
+
     update(){
         
+
+
         if(!this.movingTutorial){
             this.playerMovement();
         }
@@ -904,17 +949,27 @@ moveObj(){
         this.updateEnergy();
         this.updateObjectHealth();
         if(this.targetAcquired){
-            this.moveObj();
+            if(!this.waveTimerScene.inProgress){
+                this.moveObj();
+            } else {
+                this.plots.setAlpha(0);
+                this.hotbarScene.cancelPopup.setAlpha(0);
+                this.target.destroy();
+                this.input.off("pointerdown", this.putDownObj, this);
+                this.targetAcquired = false;
+                this.hotbarScene.canPlaceOBJ = true;
+        
+            }
         }
         this.backObjects.setDepth(0);
         this.backBuildings.setDepth(1);
         this.enemies.setDepth(2);
         this.oxygen.setDepth(3);
         this.player.setDepth(4);
-        this.nameText.setDepth(5)
         this.frontObjects.setDepth(6);
         this.frontBuildings.setDepth(7);
-        this.enemySpawn.setDepth(8);
+        this.enemySpawns.setDepth(8);
+        this.nameText.setDepth(5)
         this.healthBarsBack.setDepth(9);
         this.healthBars.setDepth(10);
 
