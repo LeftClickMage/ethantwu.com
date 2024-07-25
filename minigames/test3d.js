@@ -4,6 +4,7 @@ import * as CANNON from "https://unpkg.com/cannon-es@0.20.0/dist/cannon-es.js";
 import CannonDebugger from 'https://cdn.jsdelivr.net/npm/cannon-es-debugger@1.0.0/+esm';
 import { PointerLockControls } from 'three/addons/controls/PointerLockControls.js';
 import {GLTFLoader} from "three/addons/loaders/GLTFLoader.js";
+import Stats from 'https://cdnjs.cloudflare.com/ajax/libs/stats.js/r17/Stats.min.js';
 
 //// VARIABLES ////
 var scene = new THREE.Scene();
@@ -62,6 +63,10 @@ var light2 = new THREE.AmbientLight(0xffffff);
 
 scene.add(light, light2);
 
+const stats = new Stats();
+stats.showPanel(0); // 0: fps, 1: ms, 2: memory
+document.body.appendChild(stats.dom);
+
 // var controls = new OrbitControls(camera, renderer.domElement);
 
 
@@ -79,6 +84,89 @@ scene.add(light, light2);
 
 
 //// GAME OBJECTS ////
+const vertexShader = `
+  varying vec2 vUv;
+  uniform float time;
+  
+	void main() {
+
+    vUv = uv;
+    
+    // VERTEX POSITION
+    
+    vec4 mvPosition = vec4( position, 1.0 );
+    #ifdef USE_INSTANCING
+    	mvPosition = instanceMatrix * mvPosition;
+    #endif
+    
+    // DISPLACEMENT
+    
+    // here the displacement is made stronger on the blades tips.
+    float dispPower = 1.0 - cos( uv.y * 3.1416 / 2.0 );
+    
+    float displacement = sin( mvPosition.z + time * 10.0 ) * ( 0.1 * dispPower );
+    mvPosition.z += displacement;
+    
+    //
+    
+    vec4 modelViewPosition = modelViewMatrix * mvPosition;
+    gl_Position = projectionMatrix * modelViewPosition;
+
+	}
+`;
+
+const fragmentShader = `
+  varying vec2 vUv;
+  
+  void main() {
+  	vec3 baseColor = vec3( 0.41, 1.0, 0.5 );
+    float clarity = ( vUv.y * 0.5 ) + 0.5;
+    gl_FragColor = vec4( baseColor * clarity, 1 );
+  }
+`;
+
+const leavesMaterial = new THREE.ShaderMaterial({
+	vertexShader,
+  fragmentShader,
+  uniforms: {
+    time: {
+        value: 0,
+    }
+  },
+  side: THREE.DoubleSide
+});
+
+
+const instanceNumber = 500000;
+const dummy = new THREE.Object3D();
+
+const geometry = new THREE.PlaneGeometry( 0.1, 1, 1, 4 );
+geometry.translate( 0, 0, 0 ); // move grass blade geometry lowest point at 0.
+const grass = new THREE.InstancedMesh( geometry, leavesMaterial, instanceNumber );
+
+
+scene.add( grass );
+
+
+
+// Position and scale the grass blade instances randomly.
+for (let i = 0; i < instanceNumber; i++) {
+  const x = Math.random()*50-25;
+  const z = Math.random()*50-25;
+  const height = Math.random();
+  const rotationY = Math.random() * Math.PI;
+
+  dummy.position.set(x, 0, z);
+  dummy.scale.setScalar(height);
+  dummy.rotation.y = rotationY;
+  dummy.updateMatrix();
+  
+  grass.setMatrixAt(i, dummy.matrix);
+}
+
+
+
+
 var platform = [
     {
         // mesh:
@@ -153,7 +241,7 @@ addToWorld(player);
 var ground = {
     mesh: new THREE.Mesh(
         new THREE.BoxGeometry(50, 50, 10), 
-        new THREE.MeshStandardMaterial({ color: 0xffffff })
+        new THREE.MeshStandardMaterial({ color: 0x66FF80 })
     ),
     body: new CANNON.Body({
         type: CANNON.Body.STATIC, 
@@ -290,11 +378,12 @@ HTMLObj("dashUI").style.background = "linear-gradient(to top, green, green)";
 
 
 
-
+var grassUpdateVal = 0;
 //// GAME RENDER ////
 function renderGame() {
     
-    
+
+
     physicsWorld.step(timeStep);
     
     cannonDebugger.update();
@@ -303,6 +392,9 @@ function renderGame() {
 
     
     player.body.quaternion.setFromAxisAngle(yAxis, -rotationX);
+
+    
+
 
     setCameraPosition(5);
     updateEnemyMovement();
@@ -337,11 +429,16 @@ function renderGame() {
 
     }
     HTMLObj("score").innerHTML = "Score: " + player.score;
-
-
+// consoleLog(bulletPool.length);
+    HTMLObj("bulletPoolCount").innerHTML = "BulletPool: " + bulletPool.length;
    
-
+    if(!runOnce){
+        runOnce = true;
+        populatePool();
+        
+    }
 }
+var runOnce = false;
 var runned = false;
 var runnedSuper = false;
 
@@ -419,15 +516,20 @@ HTMLObj("sniper").addEventListener("click", (e) => {
 
 
 //// SHOOTING ////
-var bullets = [];
+var bullets = new Set();
+var bulletPool = [];
 async function updateShooting(){
     bullets.forEach((bullet, index)=>{
+        if(bullet.body.position.y < -10){
+            destroy(bullet);  
+        }
         bullet.body.addEventListener( "collide", async function (event) {
             if(event.contact.bi == ground.body || event.contact.bj == ground.body){
             // await downtime(500);
                 destroy(bullet);            
             }
         });
+        
         bullet.prevVelX = bullet.body.velocity.x;
         bullet.prevVelY = bullet.body.velocity.y;
         bullet.prevVelZ = bullet.body.velocity.z;
@@ -445,45 +547,32 @@ async function updateShooting(){
     }
 }
 function createBullet(x, z, width, height){
-     var bulletScale = 1.8;
-
-    var bullet = {
-        mesh: new THREE.Mesh(
-            new THREE.BoxGeometry(width*bulletScale, height*bulletScale, 0.5*bulletScale),
-            new THREE.MeshStandardMaterial({ 
-                color: 0x000000,
-            }),
-        ),
-        body: new CANNON.Body({
-            mass: 10,
-            shape: new CANNON.Box(new CANNON.Vec3(width*bulletScale/2, height*bulletScale/2, 0.5*bulletScale/2)),
-            // angularDamping: 0.9,
-            // linearDamping: 0.9,
-            position: new CANNON.Vec3(player.body.position.x + x, player.body.position.y, player.body.position.z + z),
-            quaternion: new THREE.Quaternion().copy(player.body.quaternion),
-            ccdRadius: 1,
-            ccdMotionThreshold: 1,
-            material: new CANNON.Material(),
-        }),
-        prevVelX: x*player.bulletSpeed,
-        prevVelY: 0.3,
-        prevVelZ: z*player.bulletSpeed,
+    var bullet;
+    if(bulletPool.length > 0){
+        bullet = bulletPool.pop();
+        bullet.body.wakeUp();
+    } else {
+        bullet = createSmallBullet();
     }
-    bullet.mesh.castShadow = true;
+
+    bullet.body.position.set(player.body.position.x + x, player.body.position.y, player.body.position.z + z);
+    bullet.body.quaternion.copy(player.body.quaternion),
     bullet.mesh.position.copy(bullet.body.position);
     bullet.mesh.quaternion.copy(bullet.body.quaternion);
-    bullet.body.material.restitution = 0;
-    bullet.body.material.friction = 0;
+    bullet.body.angularVelocity.set(0, 0, 0);
+    bullet.body.angularFactor.set(0, 0, 0);
     addToWorld(bullet);
-    bullets.push(bullet);
+    bullets.add(bullet);
+    bullet.prevVelX = x*player.bulletSpeed;
+    bullet.prevVelY = 0.3;
+    bullet.prevVelZ = z*player.bulletSpeed;
     bullet.body.velocity.set(bullet.prevVelX, bullet.prevVelY, bullet.prevVelZ);
-
 
 }
 
 function shootSuper(){
 
-var superBulletSize = 0.25;
+var superBulletSize = 0.05;
 
 createBullet(1, 0.75, superBulletSize, superBulletSize);
 createBullet(-1, 0.75, superBulletSize, superBulletSize);
@@ -505,20 +594,58 @@ createBullet(-1, 0, superBulletSize, superBulletSize);
 createBullet(0, -1, superBulletSize, superBulletSize);
 
 }
-function shoot(){
-    // consoleLog(forwardVector.x)
 
+function populatePool(){
+    for(let i = 0; i < 30; i++){
+        bulletPool.push(createSmallBullet());
+    }
+}
+
+
+function shoot(){
+    
+    var bullet;
+    if(bulletPool.length > 0){
+        bullet = bulletPool.pop();
+        bullet.body.wakeUp();
+    } else {
+        bullet = createSmallBullet();
+    }
+    bullet.body.position.set(player.body.position.x + forwardVector.x*2, player.body.position.y, player.body.position.z + forwardVector.z*2);
+    bullet.body.quaternion.copy(player.body.quaternion),
+    bullet.mesh.position.copy(bullet.body.position);
+    bullet.mesh.quaternion.copy(bullet.body.quaternion);
+    bullet.body.angularVelocity.set(0, 0, 0);
+    bullet.body.angularFactor.set(0, 0, 0);
+    addToWorld(bullet);
+    bullets.add(bullet);
+    bullet.prevVelX = forwardVector.x*player.bulletSpeed;
+    bullet.prevVelY = 0.3;
+    bullet.prevVelZ = forwardVector.z*player.bulletSpeed;
+    bullet.body.velocity.set(bullet.prevVelX, bullet.prevVelY, bullet.prevVelZ);
+
+    
+    
+    // addToWorld(bullet);
+    // bullets.add(bullet);
+    
+    // bullet.body.velocity.set(bullet.prevVelX, bullet.prevVelY, bullet.prevVelZ);
+}
+
+
+
+function createSmallBullet(){
     var bulletScale = 1.8;
     var bullet = {
         mesh: new THREE.Mesh(
-            new THREE.BoxGeometry(0.15*bulletScale, 0.15*bulletScale, 0.5*bulletScale),
+            new THREE.BoxGeometry(0.05*bulletScale, 0.05*bulletScale, 0.5*bulletScale),
             new THREE.MeshStandardMaterial({ 
                 color: 0x000000,
             }),
         ),
         body: new CANNON.Body({
             mass: 10,
-            shape: new CANNON.Box(new CANNON.Vec3(0.15*bulletScale/2, 0.15*bulletScale/2, 0.5*bulletScale/2)),
+            shape: new CANNON.Box(new CANNON.Vec3(0.05*bulletScale/2, 0.05*bulletScale/2, 0.5*bulletScale/2)),
             // angularDamping: 0.9,
             // linearDamping: 0.9,
             position: new CANNON.Vec3(player.body.position.x + forwardVector.x*2, player.body.position.y, player.body.position.z + forwardVector.z*2),
@@ -532,23 +659,12 @@ function shoot(){
         prevVelZ: forwardVector.z*player.bulletSpeed,
     }
     bullet.mesh.castShadow = true;
-    bullet.mesh.position.copy(bullet.body.position);
-    bullet.mesh.quaternion.copy(bullet.body.quaternion);
     bullet.body.material.restitution = 0;
     bullet.body.material.friction = 0;
-    addToWorld(bullet);
-    // enemies.forEach((enemy)=>{
-    //     var enemyBullet = new CANNON.ContactMaterial(
-    //         bullet.body.material,
-    //         enemy.body.material,
-    //         {friction: 0, restitution: 0}
-    //     );
-    //     physicsWorld.addContactMaterial(enemyBullet);
-    // });
-    bullets.push(bullet);
-    bullet.body.velocity.set(bullet.prevVelX, bullet.prevVelY, bullet.prevVelZ);
-
+    return bullet;
 }
+
+
 
 
 
@@ -670,16 +786,14 @@ var normalize = 1;
 //// EXTRA FUNCTIONS ////
 function killPlayer(){
     player.score = 0;
-    player.body.position.x = 20;
-    player.body.position.y = 10;
-    player.body.position.z = 0;
+    player.body.position.set(20, 10, 0);
 }
 
 function killEnemy(enemy){
+    // enemy.body.sleep();
     player.score += 50;
-    enemy.body.position.x = Math.random()*40-20;
-    enemy.body.position.y = 5;
-    enemy.body.position.z = Math.random()*40-20;
+    enemy.body.position.set(Math.random() * 40 - 20, 5, Math.random() * 40 - 20);
+    // enemy.body.wakeUp();
 }
 
 function addEnemy(){
@@ -706,19 +820,18 @@ enemies.push(enemy);
 }
 
 function destroy(object) {
-    // Remove and dispose of the Three.js mesh
-    
-    if (object.mesh.geometry) object.mesh.geometry.dispose();
-    if (object.mesh.material) {
-        if (Array.isArray(object.mesh.material)) {
-            object.mesh.material.forEach(material => material.dispose());
-        } else {
-            object.mesh.material.dispose();
-        }
+    if(bullets.has(object)){
+        bullets.delete(object);
+        // object.body.velocity.set(0, 0, 0);
+        object.body.sleep();
+        object.body.position.set(-40, 5, -40);
+        object.mesh.position.copy(object.body.position);
+
+        // scene.remove(object.mesh);  
+        // physicsWorld.removeBody(object.body);
+        
+        bulletPool.push(object);
     }
-    scene.remove(object.mesh);  
-    // Remove the Cannon.js body
-    physicsWorld.removeBody(object.body);
 }
 
 function HTMLObj(id){
@@ -840,14 +953,21 @@ function loadContactMaterials(){
 var fps, fpsInterval, startTime, now, then, elapsed;
 
 function startAnimating(fps) {
+    
     fpsInterval = 1000 / fps;
     then = Date.now();
     startTime = then;
     // await downtime(1000);
     animate();
+    
 }
 
 function animate(delta) {
+    stats.begin()
+
+    grassUpdateVal += 1/300;
+    leavesMaterial.uniforms.time.value = grassUpdateVal;
+    leavesMaterial.uniformsNeedUpdate = true;
     requestAnimationFrame(animate);
     now = Date.now();
     elapsed = now - then;
@@ -857,6 +977,7 @@ function animate(delta) {
         renderGame();
         
     }
+    stats.end();
 }
 
 startAnimating(60);
