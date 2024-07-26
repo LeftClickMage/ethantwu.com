@@ -393,18 +393,12 @@ this.tutorialScene.createBox(0, config.height-200, "Greenhouse Gases will appear
     }
     async wave(){
         this.playAnimations();
-        
+        var amount;
         if(this.waveNumber == 1){
-            var amount = 10;
-          for(let i = 0; i < amount; i++){
-            var enemy = this.physics.add.sprite(this.enemySpawn.x, this.enemySpawn.y, "CO2WalkDown").setScale(3);
-            this.enemies.add(enemy);
-         await downtime(10000/10);
-            }
-            this.waveTimerScene.finishedSpawning = true;
-            this.stopAnimations();
-        } else {
-            var amount = Math.round(15*this.waveNumber/2)/this.enemySpawns.getChildren().length;
+             amount = 10;
+        } else{
+             amount = Math.round(15*this.waveNumber/2)/this.enemySpawns.getChildren().length;
+             }
             for(let i = 0; i < amount; i++){
                 this.enemySpawns.getChildren().forEach((enemySpawner)=>{
                 var enemy = this.physics.add.sprite(enemySpawner.x, enemySpawner.y, "CO2WalkDown").setScale(3);
@@ -414,7 +408,7 @@ this.tutorialScene.createBox(0, config.height-200, "Greenhouse Gases will appear
         }
         this.waveTimerScene.finishedSpawning = true;
         this.stopAnimations();
-        }
+        
         
     }
     spawnRandomEnemies(amount) {
