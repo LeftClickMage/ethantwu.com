@@ -58,14 +58,21 @@
 
 		</div>
 		<div style="position:absolute; bottom:1%; left:1%;">
-			<button id="fireRateUpgrade">Upgrade Fire Rate</button>
-			<button id="bulletSpeedUpgrade">Upgrade Bullet Speed</button>
-			<button id="pistol">Pistol</button>
-			<button id="smg">SMG</button>
-			<button id="ar">AR</button>
-			<button id="sniper">Sniper</button>
+		<p id="switchAnim" class="btn btn-primary border-dark border-5">Anims ON</p>
+		<p id="switchShadow" class="btn btn-primary border-dark border-5">Shadows ON</p>
+		<br>
+			<p id="fireRateUpgrade" class="btn btn-danger border-dark border-5">Upgrade Fire Rate</p>
+			
+			<p id="bulletSpeedUpgrade" class="btn btn-danger border-dark border-5">Upgrade Bullet Speed</p>
+			<br>
+			<p id="pistol" class="btn btn-light border-dark border-5">Pistol</p>
+	
+			<p id="smg" class="btn btn-light border-dark border-5">SMG</p>
+			
+			<p id="ar" class="btn btn-light border-dark border-5">AR</p>
+			<p id="sniper" class="btn btn-light border-dark border-5">Sniper</p>
 		</div>
-		<script type="module" src="test3d.js?version=0.2.5"></script>
+		<script type="module" src="test3d.js?version=0.3.5"></script>
 	</body>
 </html>
 
@@ -80,6 +87,7 @@
 0.1.4 release with increase in jump height 11->13, added caps lock movement protection, added controls e = super
 0.2.4 release with grass, shaders to move grass. changed bullet size to smaller, and added a bullet pooling system to fix lag accumulation, changed ground color to match grass. added fps counter and bullet pool counter
 0.2.5 added high score counter
+0.3.5 added a platform for people to join, and moved the spawn platform. Made grass shorter, made it interactive. All meshes recieve and cast shadows. Added buttons to remove anims and shadows. Changed player color and made it more metalic. Moved light, Added meshes to all bodies. Made game more efficient. Reduced amount of grass to 80000, it as at 500k+ before. bullets now delete if they are moving slower than .25 units/s.
  -->
 
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/20.0.0/tween.umd.js"></script>

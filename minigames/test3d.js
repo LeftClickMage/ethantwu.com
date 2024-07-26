@@ -32,12 +32,12 @@ var keys = {
     q: false,
     e: false,
 }
-var rotationX = 0;
+var rotationX = -Math.PI/2;
 var rotationY = 0;
 var yAxis = new CANNON.Vec3(0, 1, 0);
-
-
-
+var anim = true;
+var noFrictionMaterial = new CANNON.Material();
+var shadowsOn = true;
 
 
 
@@ -53,13 +53,12 @@ var yAxis = new CANNON.Vec3(0, 1, 0);
 //// GAME CODE ////
 var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 
-var light = new THREE.DirectionalLight(0xffffff, 10);
-light.position.z = 50;
-light.position.y = 70;
-light.position.x = 30;
+var light = new THREE.DirectionalLight(0xfff7e0, 10);
+light.position.set(50, 40, 10);
+
 increaseLightShadowRange(light, 100, 2048);
 
-var light2 = new THREE.AmbientLight(0xffffff);
+var light2 = new THREE.AmbientLight(0xF0F0F0);
 
 scene.add(light, light2);
 
@@ -85,34 +84,46 @@ document.body.appendChild(stats.dom);
 
 //// GAME OBJECTS ////
 const vertexShader = `
-  varying vec2 vUv;
-  uniform float time;
-  
-	void main() {
 
-    vUv = uv;
-    
-    // VERTEX POSITION
-    
-    vec4 mvPosition = vec4( position, 1.0 );
-    #ifdef USE_INSTANCING
-    	mvPosition = instanceMatrix * mvPosition;
-    #endif
-    
-    // DISPLACEMENT
-    
-    // here the displacement is made stronger on the blades tips.
-    float dispPower = 1.0 - cos( uv.y * 3.1416 / 2.0 );
-    
-    float displacement = sin( mvPosition.z + time * 10.0 ) * ( 0.1 * dispPower );
-    mvPosition.z += displacement;
-    
-    //
-    
-    vec4 modelViewPosition = modelViewMatrix * mvPosition;
-    gl_Position = projectionMatrix * modelViewPosition;
+    varying vec2 vUv;
+    uniform float time;
+    const int numOfObjects = 8;
+    uniform vec3 positions[numOfObjects]; 
+    uniform vec3 ballPosition;
+    uniform bool anim;
+    void main() {
+        vUv = uv;
+        vec4 grassPosition = instanceMatrix * vec4(position, 1.0);      
+        if(anim){
+            vec4 prevGrassPos = grassPosition;
+        float bendFactor = grassPosition.y * grassPosition.y * 2.0;
+        for(int i = 0; i<numOfObjects; i++){
+            vec3 toObject = grassPosition.xyz - positions[i];
+            float distanceToObject = length(toObject);
 
-	}
+            if(distanceToObject < 1.1){
+                if(positions[i].x > grassPosition.x){
+                    grassPosition.x -= bendFactor;
+                } else if(positions[i].x < grassPosition.x){
+                    grassPosition.x += bendFactor;
+                }
+                if(positions[i].z > grassPosition.z){
+                    grassPosition.z -= bendFactor;
+                } else if(positions[i].z < grassPosition.z){
+                    grassPosition.z += bendFactor;
+                }
+            } 
+        }
+        
+
+      if (prevGrassPos == grassPosition && grassPosition.y > 0.1){
+          grassPosition.x += sin(grassPosition.y*grassPosition.y + time*7.0)/7.0;
+       } 
+        }
+        
+       
+        gl_Position = projectionMatrix * modelViewMatrix * grassPosition;
+    }
 `;
 
 const fragmentShader = `
@@ -120,8 +131,8 @@ const fragmentShader = `
   
   void main() {
   	vec3 baseColor = vec3( 0.41, 1.0, 0.5 );
-    float clarity = ( vUv.y * 0.5 ) + 0.5;
-    gl_FragColor = vec4( baseColor * clarity, 1 );
+    float clarity = vUv.y * vUv.y * 0.4 + 0.35;
+    gl_FragColor = vec4( baseColor * clarity, 1);
   }
 `;
 
@@ -131,19 +142,34 @@ const leavesMaterial = new THREE.ShaderMaterial({
   uniforms: {
     time: {
         value: 0,
-    }
+    },
+    positions: { 
+        value: [
+            new THREE.Vector3(), //player [0]
+            new THREE.Vector3(), //sphere [1]
+            new THREE.Vector3(), //crate [2]
+            new THREE.Vector3(), //enemy [3] 
+            new THREE.Vector3(), //enemy [4]
+            new THREE.Vector3(), //enemy [5]
+            new THREE.Vector3(), //enemy [6]
+            new THREE.Vector3(), //enemy [7]
+        ]
+    },
+    anim: {value: true},
   },
   side: THREE.DoubleSide
 });
 
 
-const instanceNumber = 500000;
+const instanceNumber = 80000;
 const dummy = new THREE.Object3D();
 
-const geometry = new THREE.PlaneGeometry( 0.1, 1, 1, 4 );
-geometry.translate( 0, 0, 0 ); // move grass blade geometry lowest point at 0.
-const grass = new THREE.InstancedMesh( geometry, leavesMaterial, instanceNumber );
+const geometry = new THREE.PlaneGeometry(0.1, 0.2);
+geometry.translate( 0, 0.1, 0 ); // move grass blade geometry lowest point at 0.
 
+
+const grass = new THREE.InstancedMesh( geometry, leavesMaterial, instanceNumber );
+grass.frustumCulled = true;
 
 scene.add( grass );
 
@@ -153,7 +179,7 @@ scene.add( grass );
 for (let i = 0; i < instanceNumber; i++) {
   const x = Math.random()*50-25;
   const z = Math.random()*50-25;
-  const height = Math.random();
+  const height = 1;
   const rotationY = Math.random() * Math.PI;
 
   dummy.position.set(x, 0, z);
@@ -169,36 +195,72 @@ for (let i = 0; i < instanceNumber; i++) {
 
 var platform = [
     {
-        // mesh:
-        body: new CANNON.Body({
+        mesh: new THREE.Mesh(
+            new THREE.BoxGeometry(20, 0.2, 20), 
+            new THREE.MeshStandardMaterial({ color: 0x000000})
+        ),
+        body: new CANNON.Body({//starting platform
             type: CANNON.Body.STATIC,
-            shape: new CANNON.Box(new CANNON.Vec3(2, 0.1, 2)),
-            material: new CANNON.Material(),
-            position: new CANNON.Vec3(20, 7, 0)
+            shape: new CANNON.Box(new CANNON.Vec3(10, 0.1, 10)),
+            material: noFrictionMaterial,
+            position: new CANNON.Vec3(24+10, 7, 0)
         })
     },
     {
-        // mesh:
-        body: new CANNON.Body({
+        mesh: new THREE.Mesh(
+            new THREE.BoxGeometry(4, 0.6, 4), 
+            new THREE.MeshStandardMaterial({ color: 0x00F000})
+        ),
+        body: new CANNON.Body({//respawn platform
             type: CANNON.Body.STATIC,
-            shape: new CANNON.Box(new CANNON.Vec3(0.5, 0.1, 0.5)),
-            material: new CANNON.Material(),
-            position: new CANNON.Vec3(17, 6, 0)
+            shape: new CANNON.Box(new CANNON.Vec3(2, 0.3, 2)),
+            material: noFrictionMaterial,
+            position: new CANNON.Vec3(0, 8, 0)
         })
     },
     {
-        // mesh:
+        mesh: new THREE.Mesh(
+            new THREE.BoxGeometry(1, 0.2, 1), 
+            new THREE.MeshStandardMaterial({ color: 0x000000})
+        ),
         body: new CANNON.Body({
             type: CANNON.Body.STATIC,
             shape: new CANNON.Box(new CANNON.Vec3(0.5, 0.1, 0.5)),
-            material: new CANNON.Material(),
+            material: noFrictionMaterial,
             position: new CANNON.Vec3(20, 2, 4)
         })
     },
+
+    {
+        mesh: new THREE.Mesh(
+            new THREE.BoxGeometry(1, 0.2, 1), 
+            new THREE.MeshStandardMaterial({ color: 0x000000})
+        ),
+        body: new CANNON.Body({
+            type: CANNON.Body.STATIC,
+            shape: new CANNON.Box(new CANNON.Vec3(0.5, 0.1, 0.5)),
+            material: noFrictionMaterial,
+            position: new CANNON.Vec3(20, 4, 6)
+        })
+    },
+    {
+        mesh: new THREE.Mesh(
+            new THREE.BoxGeometry(1, 0.2, 1), 
+            new THREE.MeshStandardMaterial({ color: 0x000000})
+        ),
+        body: new CANNON.Body({
+            type: CANNON.Body.STATIC,
+            shape: new CANNON.Box(new CANNON.Vec3(0.5, 0.1, 0.5)),
+            material: noFrictionMaterial,
+            position: new CANNON.Vec3(20, 6, 8)
+        })
+    },
 ];
-physicsWorld.addBody(platform[0].body);
-physicsWorld.addBody(platform[1].body);
-physicsWorld.addBody(platform[2].body);
+platform.forEach((platform)=>{
+    addToWorld(platform);
+    platform.mesh.position.copy(platform.body.position);
+})
+
 
 
 var enemies = [];
@@ -211,14 +273,18 @@ addEnemy();
 var player = {
     mesh: new THREE.Mesh(
         new THREE.BoxGeometry(1, 1, 1), 
-        new THREE.MeshStandardMaterial({ color: 0x00ff00 }),
+        new THREE.MeshStandardMaterial({ 
+            color: 0xEEEEEE, // Base color of the metal (e.g., light gray)
+            metalness: 0.7,   // Fully metallic
+            roughness: 0.2,
+        }),
     ),
     body: new CANNON.Body({
         mass: 10,
         shape: new CANNON.Box(new CANNON.Vec3(0.5, 0.5, 0.5)),
         material: new CANNON.Material(),
         angularDamping: 0.3,
-        position: new CANNON.Vec3(0, 10, 0),
+        position: new CANNON.Vec3(30, 10, 0),
     }),
     jumping: false,
     sprinting: false,
@@ -235,68 +301,84 @@ var player = {
     score:0,
     highScore: 0,
 }
-player.mesh.castShadow = true; //shadow
 addToWorld(player);
 
 
 var ground = {
     mesh: new THREE.Mesh(
         new THREE.BoxGeometry(50, 50, 10), 
-        new THREE.MeshStandardMaterial({ color: 0x66FF80 })
+        new THREE.MeshStandardMaterial({ color: 0x005000 })
     ),
     body: new CANNON.Body({
         type: CANNON.Body.STATIC, 
         shape: new CANNON.Box(new CANNON.Vec3(25, 25, 5)),
-        material: new CANNON.Material(),   
+        material: noFrictionMaterial,
         position: new CANNON.Vec3(0, -5, 0)
     }),
 }
-ground.mesh.receiveShadow = true;
 ground.body.quaternion.setFromEuler(-Math.PI/2, 0, 0);
 addToWorld(ground);
 
 
 var walls = [
     {
-        body: new CANNON.Body({
+        mesh: new THREE.Mesh(
+            new THREE.BoxGeometry(50, 50, 4), 
+            new THREE.MeshStandardMaterial({ color: 0x555555})
+        ),
+        body: new CANNON.Body({//Right wall
             type: CANNON.Body.STATIC,
-            shape: new CANNON.Box(new CANNON.Vec3(25, 50, 0.5)),
-            material: new CANNON.Material(),   
-            position: new CANNON.Vec3(0, 0, -25)
+            shape: new CANNON.Box(new CANNON.Vec3(25, 25, 2)),
+            material: noFrictionMaterial,
+            position: new CANNON.Vec3(0, 25, -25 - 1)
         }),
     },
     {
-        body: new CANNON.Body({
+        mesh: new THREE.Mesh(
+            new THREE.BoxGeometry(50, 7, 4), 
+            new THREE.MeshStandardMaterial({ color: 0x555555})
+        ),
+        body: new CANNON.Body({//back wall
             type: CANNON.Body.STATIC,
-            shape: new CANNON.Box(new CANNON.Vec3(25, 50, 0.5)),
-            material: new CANNON.Material(),   
-            position: new CANNON.Vec3(25, 0, 0)
+            shape: new CANNON.Box(new CANNON.Vec3(25, 3.5, 2)),
+            material: noFrictionMaterial,  
+            position: new CANNON.Vec3(25+1, 3.5, 0)
         }),
     },
     {
-        body: new CANNON.Body({
+        mesh: new THREE.Mesh(
+            new THREE.BoxGeometry(50, 50, 4), 
+            new THREE.MeshStandardMaterial({ color: 0x555555})
+        ),
+        body: new CANNON.Body({//left wall
             type: CANNON.Body.STATIC, 
-            shape: new CANNON.Box(new CANNON.Vec3(25, 50, 0.5)),
-            material: new CANNON.Material(),   
-            position: new CANNON.Vec3(0, 0, 25)
+            shape: new CANNON.Box(new CANNON.Vec3(25, 25, 2)),
+            material: noFrictionMaterial,  
+            position: new CANNON.Vec3(0, 25, 25+1)
         }),
     },
     {
-        body: new CANNON.Body({
+        mesh: new THREE.Mesh(
+            new THREE.BoxGeometry(50, 50, 4), 
+            new THREE.MeshStandardMaterial({ color: 0x555555})
+        ),
+        body: new CANNON.Body({//front wall
             type: CANNON.Body.STATIC, 
-            shape: new CANNON.Box(new CANNON.Vec3(25, 50, 0.5)),
-            material: new CANNON.Material(),  
-            position: new CANNON.Vec3(-25, 0, 0)
+            shape: new CANNON.Box(new CANNON.Vec3(25, 25, 2)),
+            material: noFrictionMaterial, 
+            position: new CANNON.Vec3(-25 - 1, 25, 0)
         }),
     },
 ];
-physicsWorld.addBody(walls[0].body);
+walls.forEach((wall)=>{
+    addToWorld(wall);
+    wall.mesh.position.copy(wall.body.position);
+});
 walls[1].body.quaternion.setFromAxisAngle(yAxis, Math.PI/2);
-physicsWorld.addBody(walls[1].body);
-physicsWorld.addBody(walls[2].body);
 walls[3].body.quaternion.setFromAxisAngle(yAxis, Math.PI/2);
-physicsWorld.addBody(walls[3].body);
 
+walls[1].mesh.quaternion.copy(walls[1].body.quaternion);
+walls[3].mesh.quaternion.copy(walls[3].body.quaternion);
 
 
 
@@ -314,7 +396,6 @@ var sphere = {
         angularDamping: 0.3,
     }),
 }
-sphere.mesh.castShadow = true; 
 addToWorld(sphere);
 
 
@@ -387,7 +468,9 @@ function renderGame() {
 
     physicsWorld.step(timeStep);
     
-    cannonDebugger.update();
+    if(window.location.hostname == "localhost"){
+        cannonDebugger.update();
+    }
 
     originalAngularFactor = player.body.angularFactor.clone();
 
@@ -469,6 +552,7 @@ HTMLObj("shootUI").style.background = 'linear-gradient(to top, green, green)';
     runned = false;
 }
 
+
 HTMLObj("fireRateUpgrade").addEventListener("click", (e) => {
    if(player.fireRate > 100){
         player.fireRate -= 50;
@@ -510,9 +594,24 @@ HTMLObj("sniper").addEventListener("click", (e) => {
      player.gun = "sniper";
 });
 
-
-
-
+HTMLObj("switchShadow").addEventListener("click", (e) => {
+    shadowsOn = !shadowsOn;
+    shadows(shadowsOn);
+    if(shadowsOn){
+        HTMLObj("switchShadow").innerHTML = "Shadows ON";
+    } else if(!shadowsOn){
+        HTMLObj("switchShadow").innerHTML = "Shadows OFF";
+    }
+  
+});
+HTMLObj("switchAnim").addEventListener("click", (e) => {
+    anim = !anim;
+    if(anim){
+        HTMLObj("switchAnim").innerHTML = "Anims ON";
+    } else if(!anim){
+        HTMLObj("switchAnim").innerHTML = "Anims OFF";
+    }
+});
 
 
 
@@ -522,9 +621,10 @@ var bullets = new Set();
 var bulletPool = [];
 async function updateShooting(){
     bullets.forEach((bullet, index)=>{
-        if(bullet.body.position.y < -10){
+        if(bullet.body.position.y < -10 || bullet.body.velocity.length()< 0.25){
             destroy(bullet);  
         }
+        ;
         bullet.body.addEventListener( "collide", async function (event) {
             if(event.contact.bi == ground.body || event.contact.bj == ground.body){
             // await downtime(500);
@@ -660,7 +760,6 @@ function createSmallBullet(){
         prevVelY: 0.3,
         prevVelZ: forwardVector.z*player.bulletSpeed,
     }
-    bullet.mesh.castShadow = true;
     bullet.body.material.restitution = 0;
     bullet.body.material.friction = 0;
     return bullet;
@@ -713,6 +812,9 @@ function updateEnemyMovement(){
 
 //// PLAYER MOVEMENT ////
 function updateMovement() {
+    if(player.body.position.y < -10){
+        killPlayer();
+    }
     checkIfCanJump();
     velocity = new THREE.Vector3();
     // Calculate the forward direction vector based on the object's orientation
@@ -786,23 +888,42 @@ var normalize = 1;
 
 
 //// EXTRA FUNCTIONS ////
+function shadows(value) {
+    renderer.shadowMap.enabled = value;
+    
+    scene.traverse(function(object) {
+        if (object.isMesh) {
+            object.castShadow = value;
+            object.receiveShadow = value;
+        }
+    });
+
+    scene.children.forEach(function(child) {
+        if (child.isLight) {
+            child.castShadow = value;
+        }
+    });
+}
+
 function killPlayer(){
     if(player.highScore < player.score){
         player.highScore = player.score;
     }
     player.score = 0;
-    player.body.position.set(20, 10, 0);
+    player.body.position.set(0, 11, 0);
+    rotationX = -Math.PI/2;
 }
 
-function killEnemy(enemy){
-    // enemy.body.sleep();
+async function killEnemy(enemy){
+    enemy.body.sleep();
     player.score += 50;
     enemy.body.position.set(Math.random() * 40 - 20, 5, Math.random() * 40 - 20);
-    // enemy.body.wakeUp();
+    await downtime(1000);
+    enemy.body.wakeUp();
 }
 
 function addEnemy(){
-    var enemyScale = 1.3;
+    var enemyScale = 1.2;
     var enemy = {
     mesh: new THREE.Mesh(
         new THREE.BoxGeometry(1*enemyScale, 1*enemyScale, 1*enemyScale),
@@ -815,11 +936,10 @@ function addEnemy(){
         shape: new CANNON.Box(new CANNON.Vec3(0.5*enemyScale, 0.5*enemyScale, 0.5*enemyScale)),
         angularDamping: 0.9,
         linearDamping: 0.9,
-        position: new CANNON.Vec3(10, 1, 10),
+        position: new CANNON.Vec3(Math.random()*40-20, 3, Math.random()*40-20),
         material: new CANNON.Material(),
     }),
 }
-enemy.mesh.castShadow = true;
 addToWorld(enemy);
 enemies.push(enemy);
 }
@@ -870,6 +990,7 @@ function loadSprite(addMesh, path, height){
         gltfScene.scene.traverse(function(node){
             if ( node.isMesh ) {
                 node.castShadow = true; 
+                node.receiveShadow = true; 
             }
         })
         gltfScene.scene.position.set(0, -height/32, 0);
@@ -880,6 +1001,8 @@ function loadSprite(addMesh, path, height){
 function addToWorld(container){
     physicsWorld.addBody(container.body);
     scene.add(container.mesh);
+    container.mesh.receiveShadow = true;
+    container.mesh.castShadow = true;
 }
 
 function increaseLightShadowRange(light, amount, shadowQuality){
@@ -926,7 +1049,7 @@ function loadContactMaterials(){
     );
     
     var groundBoxContactMaterial = new CANNON.ContactMaterial(
-        ground.body.material,
+        noFrictionMaterial,
         player.body.material,
         {friction: 0, restitution: 0}
     );
@@ -939,15 +1062,7 @@ function loadContactMaterials(){
         physicsWorld.addContactMaterial(enemyGround);
 
     });
-    
-    walls.forEach((wall)=>{
-        var wallContactMaterial = new CANNON.ContactMaterial(
-            wall.body.material,
-            player.body.material,
-            {friction: 0, restitution: 0}
-        );
-        physicsWorld.addContactMaterial(wallContactMaterial);
-    });
+
 
     physicsWorld.addContactMaterial(groundBoxContactMaterial);
     physicsWorld.addContactMaterial(groundSphereContactMaterial);
@@ -969,10 +1084,19 @@ function startAnimating(fps) {
 
 function animate(delta) {
     stats.begin()
+    grassUpdateVal += 1/240;
+    leavesMaterial.uniforms.anim.value = anim;
 
-    grassUpdateVal += 1/300;
     leavesMaterial.uniforms.time.value = grassUpdateVal;
     leavesMaterial.uniformsNeedUpdate = true;
+
+    leavesMaterial.uniforms.positions.value[0].copy(player.mesh.position);
+    leavesMaterial.uniforms.positions.value[1].copy(sphere.mesh.position);
+    leavesMaterial.uniforms.positions.value[2].copy(crate.mesh.position);
+    enemies.forEach((enemy, index)=>{
+        leavesMaterial.uniforms.positions.value[index+3].copy(enemy.mesh.position);
+    })
+    
     requestAnimationFrame(animate);
     now = Date.now();
     elapsed = now - then;
