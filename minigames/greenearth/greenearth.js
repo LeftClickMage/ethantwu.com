@@ -277,7 +277,8 @@ class greenearth extends Phaser.Scene{
     }
     tutorialMove(){
         this.movingTutorial = false;
-        this.lockCam();
+        
+            this.lockCamOn(this.player);
         this.tutorialScene.destroyBox();
         this.tutorialScene.createBox(0, config.height-310, "You can also move using the w, a, s, and d keys!", "startWave");
     }
