@@ -5,6 +5,9 @@ import CannonDebugger from 'https://cdn.jsdelivr.net/npm/cannon-es-debugger@1.0.
 import { PointerLockControls } from 'three/addons/controls/PointerLockControls.js';
 import {GLTFLoader} from "three/addons/loaders/GLTFLoader.js";
 import Stats from 'https://cdnjs.cloudflare.com/ajax/libs/stats.js/r17/Stats.min.js';
+// import {RenderPass} from "three/addons/postprocessing/RenderPass";
+// import {EffectComposer} from "three/addons/postprocessing/EffectComposer";
+
 
 //// VARIABLES ////
 var scene = new THREE.Scene();
@@ -69,17 +72,9 @@ document.body.appendChild(stats.dom);
 // var controls = new OrbitControls(camera, renderer.domElement);
 
 
-
-
-
-
-
-
-
-
-
-
-
+// const composer = new EffectComposer(renderer);
+//         const renderPass = new RenderPass(scene, camera);
+//         composer.addPass(renderPass);
 
 
 //// GAME OBJECTS ////
@@ -209,7 +204,7 @@ var platform = [
     {
         mesh: new THREE.Mesh(
             new THREE.BoxGeometry(4, 0.6, 4), 
-            new THREE.MeshStandardMaterial({ color: 0x00F000})
+            new THREE.MeshPhongMaterial({ color: 0x00F000, shininess: 100})
         ),
         body: new CANNON.Body({//respawn platform
             type: CANNON.Body.STATIC,
@@ -482,6 +477,7 @@ function renderGame() {
 
     setCameraPosition(5);
     updateEnemyMovement();
+    
     updateMovement();
     updateShooting();
     camera.updateProjectionMatrix();
@@ -496,7 +492,7 @@ function renderGame() {
     crate.mesh.position.copy(crate.body.position);
     crate.mesh.quaternion.copy(crate.body.quaternion);
     camera.lookAt(player.mesh.position);
-
+    // composer.render();
     renderer.render(scene, camera);
 
     player.body.angularFactor.copy(originalAngularFactor);
@@ -573,9 +569,9 @@ HTMLObj("pistol").addEventListener("click", (e) => {
     player.gun = "pistol";
 });
 HTMLObj("ar").addEventListener("click", (e) => {
-   player.bulletSpeed = 65;
+   player.bulletSpeed = 75;
     player.fireRate = 200;
-    consoleLog("Assault Rifle loadout: 200 rate, 65 speed");
+    consoleLog("Assault Rifle loadout: 200 rate, 75 speed");
     HTMLObj("gunUI").innerHTML = "AR";
      player.gun = "ar";
 });
@@ -592,6 +588,13 @@ HTMLObj("sniper").addEventListener("click", (e) => {
     consoleLog("Sniper loadout: 700 rate, 120 speed");
     HTMLObj("gunUI").innerHTML = "Sniper";
      player.gun = "sniper";
+});
+HTMLObj("shotgun").addEventListener("click", (e) => {
+   player.bulletSpeed = 40;
+    player.fireRate = 500;
+    consoleLog("Shotgun loadout: 500 rate, 40 speed");
+    HTMLObj("gunUI").innerHTML = "Shotgun";
+     player.gun = "shotgun";
 });
 
 HTMLObj("switchShadow").addEventListener("click", (e) => {
@@ -705,26 +708,70 @@ function populatePool(){
 
 
 function shoot(){
-    
-    var bullet;
-    if(bulletPool.length > 0){
-        bullet = bulletPool.pop();
-        bullet.body.wakeUp();
+    if(player.gun == "shotgun"){
+        for(let i = 0; i<3; i++){
+            var shellFactor;
+            var bulletRotationVal = Math.PI/2;
+            var shellRotation = Math.PI;
+
+            var bullet;
+            if(bulletPool.length > 0){
+                bullet = bulletPool.pop();
+                bullet.body.wakeUp();
+            } else {
+                bullet = createSmallBullet();
+            }
+            if(i == 1){
+                shellRotation /= 25;
+                bulletRotationVal *= 2/1.9;
+            }
+            if(i == 2){
+                shellRotation /= -25;
+                bulletRotationVal *= 2/2.1;
+            }
+            const additionalRotation = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), shellRotation);
+        bullet.body.position.set(player.body.position.x+ forwardVector.x*2, player.body.position.y, player.body.position.z +forwardVector.z*2);
+
+            const resultQuaternion = new THREE.Quaternion().copy(player.body.quaternion).multiply(additionalRotation);
+
+            bullet.body.quaternion.copy(resultQuaternion)
+            
+            addToWorld(bullet);
+            bullets.add(bullet);
+            var bulletVector = new THREE.Vector3(1, 0 ,0);
+            bulletVector.applyQuaternion(player.body.quaternion);
+            const bulletRotation = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), bulletRotationVal);
+            bulletVector.applyQuaternion(bulletRotation);
+            bullet.prevVelX = bulletVector.x*player.bulletSpeed;
+            bullet.prevVelY = 0.3;
+            bullet.prevVelZ = bulletVector.z*player.bulletSpeed;
+            bullet.body.velocity.set(bullet.prevVelX, bullet.prevVelY, bullet.prevVelZ);
+            bullet.body.angularVelocity.set(0, 0, 0);
+            bullet.body.angularFactor.set(0, 0, 0);
+        }
     } else {
-        bullet = createSmallBullet();
+        var bullet;
+            if(bulletPool.length > 0){
+                bullet = bulletPool.pop();
+                bullet.body.wakeUp();
+            } else {
+                bullet = createSmallBullet();
+            }
+
+        bullet.body.position.set(player.body.position.x+ forwardVector.x*2, player.body.position.y, player.body.position.z +forwardVector.z*2);
+
+            bullet.body.quaternion.copy(player.body.quaternion)
+            
+            addToWorld(bullet);
+            bullets.add(bullet);
+
+            bullet.prevVelX = forwardVector.x*player.bulletSpeed;
+            bullet.prevVelY = 0.3;
+            bullet.prevVelZ = forwardVector.z*player.bulletSpeed;
+            bullet.body.velocity.set(bullet.prevVelX, bullet.prevVelY, bullet.prevVelZ);
+            bullet.body.angularVelocity.set(0, 0, 0);
+            bullet.body.angularFactor.set(0, 0, 0);
     }
-    bullet.body.position.set(player.body.position.x + forwardVector.x*2, player.body.position.y, player.body.position.z + forwardVector.z*2);
-    bullet.body.quaternion.copy(player.body.quaternion),
-    bullet.mesh.position.copy(bullet.body.position);
-    bullet.mesh.quaternion.copy(bullet.body.quaternion);
-    bullet.body.angularVelocity.set(0, 0, 0);
-    bullet.body.angularFactor.set(0, 0, 0);
-    addToWorld(bullet);
-    bullets.add(bullet);
-    bullet.prevVelX = forwardVector.x*player.bulletSpeed;
-    bullet.prevVelY = 0.3;
-    bullet.prevVelZ = forwardVector.z*player.bulletSpeed;
-    bullet.body.velocity.set(bullet.prevVelX, bullet.prevVelY, bullet.prevVelZ);
 
     
     
@@ -892,7 +939,7 @@ function shadows(value) {
     renderer.shadowMap.enabled = value;
     
     scene.traverse(function(object) {
-        if (object.isMesh) {
+        if (object.isMesh && object !== grass) {
             object.castShadow = value;
             object.receiveShadow = value;
         }
@@ -927,7 +974,7 @@ function addEnemy(){
     var enemy = {
     mesh: new THREE.Mesh(
         new THREE.BoxGeometry(1*enemyScale, 1*enemyScale, 1*enemyScale),
-        new THREE.MeshStandardMaterial({ 
+        new THREE.MeshPhongMaterial({ 
             color: 0xff0000,
         }),
     ),
@@ -1014,7 +1061,7 @@ function increaseLightShadowRange(light, amount, shadowQuality){
     light.shadow.mapSize.width = shadowQuality;
     light.shadow.mapSize.height = shadowQuality;
 }
-
+var inWall = false;
 function setCameraPosition(distance){
     if(keys.rightArrow){
         rotationX += player.lookSpeed;
@@ -1025,13 +1072,29 @@ function setCameraPosition(distance){
     var offsetX = Math.sin(-rotationX) * distance;
     var offsetY = Math.sin(rotationY) * distance;
     var offsetZ = Math.cos(-rotationX) * distance;
-    camera.position.set(player.mesh.position.x + offsetX, player.mesh.position.y + offsetY + 2.5, player.mesh.position.z + offsetZ);
+    // if(camera.position.z < 23 && camera.position.z >= -23 && !inWall){
+    // camera.position.set(camera.position.x, player.mesh.position.y + offsetY + 2.5, player.mesh.position.z + offsetZ);
+    // } else {
+    //     inWall = true;
+    //     camera.position.z = -23;
+    // }
+    // if(player.body.position.z > -18){
+    //     inWall = false;
+    // }
+    //  if(camera.position.x > -24){
+    // camera.position.set(player.mesh.position.x + offsetX, player.mesh.position.y + offsetY + 2.5, camera.position.z);
+    // }
+camera.position.set(player.mesh.position.x + offsetX, player.mesh.position.y + offsetY + 2.5, player.mesh.position.z + offsetZ);
+    
 }
 
 
 function sceneSetup(){
-    var axesHelper = new THREE.AxesHelper(8);
-    scene.add(axesHelper);
+    if(window.location.hostname == "localhost"){
+        var axesHelper = new THREE.AxesHelper(8);
+        scene.add(axesHelper);
+    }
+    scene.background = new THREE.Color(0x87CEEB);
 }
 
 function rendererSetup(){
@@ -1084,6 +1147,7 @@ function startAnimating(fps) {
 
 function animate(delta) {
     stats.begin()
+    
     grassUpdateVal += 1/240;
     leavesMaterial.uniforms.anim.value = anim;
 
