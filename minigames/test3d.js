@@ -88,7 +88,7 @@ const vertexShader = `
     uniform bool anim;
     void main() {
         vUv = uv;
-        vec4 grassPosition = instanceMatrix * vec4(position, 1.0);      
+        vec4 grassPosition = instanceMatrix * vec4(position, 1);      
         if(anim){
             vec4 prevGrassPos = grassPosition;
         float bendFactor = grassPosition.y * grassPosition.y * 2.0;
@@ -900,6 +900,7 @@ var normalize = 1;
     if (player.canJump && player.jumping){
         player.body.velocity.y = 13;
         player.canJump = false;
+        touchingGround = false;
     }
     if(player.sprinting){
         velocity.add(forwardVector.clone().multiplyScalar(player.speed*5));
@@ -953,6 +954,7 @@ function shadows(value) {
 }
 
 function killPlayer(){
+    player.body.velocity.set(0, 0, 0);
     if(player.highScore < player.score){
         player.highScore = player.score;
     }
@@ -1009,7 +1011,7 @@ function destroy(object) {
 function HTMLObj(id){
     return document.getElementById(id);
 }
-
+var touchingGround = false;
 function checkIfCanJump(){
      var contactNormal = new CANNON.Vec3(); // Normal in the contact, pointing *out* of whatever the player touched
     var upAxis = new CANNON.Vec3( 0, 1, 0 );
@@ -1026,9 +1028,15 @@ function checkIfCanJump(){
         }
         
         if ( contactNormal.dot( upAxis ) > 0.5) {
-            player.canJump = true;
+            touchingGround = true;
         }
     });
+    
+    if(Math.abs(player.body.velocity.y)>3){
+        player.canJump = false;
+    } else if (touchingGround){
+        player.canJump = true;
+    }
 }
 
 function loadSprite(addMesh, path, height){
