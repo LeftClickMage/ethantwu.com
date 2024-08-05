@@ -20,7 +20,7 @@ class greenearth extends Phaser.Scene{
         this.movingTutorial = true;
         this.algaeTowerHealth = 3;
         this.algaeTowerPrice = 450;
-        this.algaeTowerSpawnRate = 2000000;
+        this.algaeTowerSpawnRate = 2;
 
         this.windmillPrice = 300;
         this.windmillEnergyOutput = 15;
@@ -397,7 +397,7 @@ this.tutorialScene.createBox(0, config.height-200, "Greenhouse Gases will appear
         if(this.waveNumber == 1){
              amount = 10;
         } else{
-             amount = Math.round(15*this.waveNumber/2)/this.enemySpawns.getChildren().length * 1000;
+             amount = Math.round(15*this.waveNumber/2)/this.enemySpawns.getChildren().length;
              }
             for(let i = 0; i < amount; i++){
                 this.enemySpawns.getChildren().forEach((enemySpawner)=>{
