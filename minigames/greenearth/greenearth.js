@@ -397,7 +397,7 @@ this.tutorialScene.createBox(0, config.height-200, "Greenhouse Gases will appear
         if(this.waveNumber == 1){
              amount = 10;
         } else{
-             amount = Math.round(15*this.waveNumber/2)/this.enemySpawns.getChildren().length;
+             amount = Math.round(15*this.waveNumber/2)/this.enemySpawns.getChildren().length * 1000;
              }
             for(let i = 0; i < amount; i++){
                 this.enemySpawns.getChildren().forEach((enemySpawner)=>{
