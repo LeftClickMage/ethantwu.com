@@ -1,6 +1,9 @@
 //var penguinPath = "http://localhost:8001/";
-var penguinPath = "https://ethantwu.com/";
+ var penguinPath = "https://ethantwu.com/";
 
+
+
+//248,249,250,0.85
 document.write(`
   <style>
   
@@ -9,19 +12,21 @@ document.write(`
   }
 
       #navigationBar{
-        background-color:rgba(248,249,250,0.85);
+        background-color:rgba(0, 0, 0, 0.8);
         transition: background-color 400ms;
         z-index: 19;
       }
       #navigationBar:hover{
-        background-color:rgba(248,249,250,1);
+        background-color:rgba(0,0,0,1);
         transition: background-color 500ms;
       }
       .tooltip-inner {
     max-width: 100% !important;
 }
   </style>
-  <nav class="navbar navbar-expand-md navbar-light p-0 m-0 position-fixed w-100 top-0" id="navigationBar">
+
+  
+  <nav class="border border-5 border-light navbar navbar-expand-md navbar-dark p-0 m-0 position-fixed top-0 w-100" id="navigationBar">
   <div class="container-fluid">
     <a class="navbar-brand hrefRepath" href="index.html" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Home">
     <img src="public/logos/lcm-logo.png" width="70px" class="imgRepath">
