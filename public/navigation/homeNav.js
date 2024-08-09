@@ -1,5 +1,5 @@
 //var penguinPath = "http://localhost:8001/";
- var penguinPath = "https://ethantwu.com/";
+var penguinPath = "https://ethantwu.com/";
 
 
 
@@ -25,7 +25,7 @@ document.write(`
 }
   </style>
 
-  <nav class="border border-5 border-light navbar navbar-expand-md navbar-dark p-0 m-0 position-fixed top-0 w-100" id="navigationBar">
+  <nav class="border border-5 border-light border-top-0 border-start-0 border-end-0 navbar navbar-expand-md navbar-dark p-0 m-0 position-fixed top-0 w-100" id="navigationBar">
   <div class="container-fluid">
     <a class="navbar-brand hrefRepath" href="index.html" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Home">
     <img src="public/logos/lcm-logo.png" width="70px" class="imgRepath">
