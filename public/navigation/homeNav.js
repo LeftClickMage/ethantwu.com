@@ -25,7 +25,6 @@ document.write(`
 }
   </style>
 
-  
   <nav class="border border-5 border-light navbar navbar-expand-md navbar-dark p-0 m-0 position-fixed top-0 w-100" id="navigationBar">
   <div class="container-fluid">
     <a class="navbar-brand hrefRepath" href="index.html" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Home">
