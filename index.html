@@ -79,7 +79,7 @@
             <p id="filmDesc" style="display:none;" class="text-light container">Ethan enjoys filming, editing, post production, VFX, and anything else to do with film creation, because it allows him to be creative. One of his many youtube channels is: <a class="link-danger" onclick="window.open('https://youtube.com/leftclickmage')">LeftClickMage</a>, where you can see some of his editing and entertainment skills!</p>
 
   <p class="display-6 outline-text-white fw-bold slide-in-left slideTextMain" style="animation-delay: 1.00s; opacity:0;" onclick="changeToggle('entreDesc')">entrepreneur</p>
-            <p id="entreDesc" style="display:none;" class="text-light container">Ethan is a big fan of entrepreneurship! Creating new businessess has always been a fever dream for him. As a freshman, he sold potato chips, a sophmore he sold custom keyboards, a junior he gave people lessons, etc.. you get the point. Let's see what the future has in store!</p>
+            <p id="entreDesc" style="display:none;" class="text-light container">Ethan is a big fan of entrepreneurship! Creating new businessess has always been a dream for him. As a freshman, he sold potato chips, a sophmore he sold custom keyboards, a junior he gave people lessons, etc.. you get the point. Let's see what the future has in store!</p>
 
 
 
@@ -108,42 +108,61 @@
 
 
 <!-- NEWS -->
-    <div class="container-fluid text-center">
-    <p class="display-1 text-white outline-text-red text-center fw-bold">What's New?</p>
+    <div class="container-fluid text-center" style="margin-top:35vh;">
+    <p class="display-1 text-white text-center fw-bold glowWhite slide-in-top">What's New?</p>
     </div>
-        <div class="card container p-0 h-100 mt-5" style="background-color: black;">
-        <img src="classes/photos/webdevwhat.jpg" class="card-img-top img-fluid">
-          <div class="card-body d-flex flex-column text-white">
-            <h5 class="card-title mt-auto fw-bold">Website Creation</h5>
-            <p class="card-text">Ethan has always loved developing, and now he has the chance to share his knowledge with you. Get your online presence created FOR FREE!</p>
-            <a href="classes/websitecreation.html" class="btn btn-danger">Create your OWN website!</a>
-          </div>
-          
-        </div>
-      
 
-        <div class="card container p-0 h-100 mt-5" style="background-color: black;">
-        <img src="classes/photos/satbackground.jpg" class="card-img-top img-fluid">
-          <div class="card-body d-flex flex-column text-white">
-            <h5 class="card-title mt-auto fw-bold">SAT Math Tutoring</h5>
-            <p class="card-text">Ethan has experience tutoring for College Board and Schoolhouse.world, and would like to bring that same skillset to you with AFFORDABLE PRIVATE LESSONS!</p>
-            <a href="classes/satmath.html" class="btn btn-danger">Boost your Math Score!</a>
-          </div>
-          
-        </div>
- 
-<script>
-async function removeOpacity(){
+
+<div class="container mt-5">
+  <div class="row g-5 slide-in-bottom" style="animation-delay:0.35s; opacity:0;">
   
-   var description = document.querySelectorAll('.slideTextMain');
-   await downtime(1750);
-  description.forEach(async element => {
-    await downtime(50);
-      element.style.opacity = 1;
-   });
-}
-removeOpacity();
+    <div class="card container-fluid p-0 col-md-5 text-center border-3 border-light" style="background-color: black;">
+    <img src="minigames/images/cubepvp.jpg" class="card-img-top img-fluid">
+      <div class="card-body d-flex flex-column text-white">
+        <h5 class="card-title mt-1 fw-bold">Cube PVP</h5>
+        <p class="card-text">Try out this NEW 3D Multiplayer Shooter Game created by Ethan! Play with your friends online, to see who is the best Cube!</p>
+        <a href="https://cubepvp.ethantwu.com" class="btn btn-danger mt-auto">Play Now!</a>
+      </div>
+    </div>
 
+    <div class="card container-fluid p-0 col-md-5 text-center border-3 border-light" style="background-color: black;">
+    <img src="mef/rocktoberfest.jpg" class="card-img-top img-fluid">
+      <div class="card-body d-flex flex-column text-white">
+        <h5 class="card-title mt-1 fw-bold">3D Rocktoberfest</h5>
+        <p class="card-text">Explore Rocktoberfest in a virtual 3D World!</p>
+        <a href="mef/rocktoberfest.html" class="btn btn-danger mt-auto">Explore Now!</a>
+      </div>
+    </div>
+
+  </div>
+
+
+  <div class="row g-5 mt-2 slide-in-bottom" style="animation-delay:0.6s; opacity:0;">
+
+    <div class="card container-fluid p-0 col-md-5 text-center border-3 border-light" style="background-color: black;">
+    <img src="classes/photos/webdevwhat.jpg" class="card-img-top img-fluid">
+      <div class="card-body d-flex flex-column text-white">
+        <h5 class="card-title mt-1 fw-bold">Website Creation</h5>
+        <p class="card-text">Ethan has always loved developing, and now he has the chance to share his knowledge with you. Get your online presence created FOR FREE!</p>
+        <a href="classes/websitecreation.html" class="btn btn-danger mt-auto">Create your OWN website!</a>
+      </div>
+    </div>
+
+    <div class="card container-fluid p-0 col-md-5 text-center border-3 border-light" style="background-color: black;">
+    <img src="classes/photos/satbackground.jpg" class="card-img-top img-fluid">
+      <div class="card-body d-flex flex-column text-white">
+        <h5 class="card-title mt-1 fw-bold">SAT Math Tutoring</h5>
+        <p class="card-text">Ethan has experience tutoring for College Board and Schoolhouse.world, and would like to bring that same skillset to you with AFFORDABLE PRIVATE LESSONS!</p>
+        <a href="classes/satmath.html" class="btn btn-danger mt-auto">Boost your Math Score!</a>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+
+<script>
 
 async function changeToggle(id){
   var element = document.getElementById(id);

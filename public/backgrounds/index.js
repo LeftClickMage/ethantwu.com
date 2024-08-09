@@ -97,8 +97,7 @@ function animate() {
     if (elapsed > fpsInterval) {
         then = now - (elapsed % fpsInterval);
         var elapsedTime = clock.getElapsedTime();
-        config.width = window.innerWidth;
-        config.height = window.innerHeight;
+        
         composer.render();
         particlesMesh.rotation.y += -.1/200;
         particlesMeshRed.rotation.y +=  -.02/100;
@@ -106,9 +105,14 @@ function animate() {
         particlesMesh.rotation.x += -.1/200;
         particlesMeshRed.rotation.x +=  -.02/100;
         particlesMeshBlue.rotation.x +=  -.25/300; 
-        camera.aspect = config.width/config.height;
-        camera.updateProjectionMatrix();
-        render.setSize(config.width, config.height);
+
+            config.width = window.innerWidth;
+    config.height = window.innerHeight;
+
+    camera.aspect = config.width / config.height;
+    camera.updateProjectionMatrix();
+    render.setSize(config.width, config.height);
+    composer.setSize(config.width, config.height); 
     }
 }
 startAnimating(60);

@@ -28,13 +28,31 @@
       opacity:1;
     }
   }
+
+   @keyframes slideInBottom {
+    from {
+      transform: translateY(+100%);
+      opacity:0;
+    }
+    to {
+      transform: translateY(0);
+      opacity:1;
+    }
+  }
   
   .slide-in-right {
-    animation: slideInRight 1s ease-in-out;
+    animation: slideInRight 1s ease-in-out forwards;
   }
   .slide-in-left {
-    animation: slideInLeft 1s ease-in-out;
+    animation: slideInLeft 1s ease-in-out forwards;
   }
   .slide-in-top {
-    animation: slideInTop 1s ease-in-out;
+    animation: slideInTop 1s ease-in-out forwards; 
+  }
+  .slide-in-bottom {
+    animation: slideInBottom 1s ease-in-out forwards; 
+  }
+
+  .pixelArt{
+    image-rendering: pixelated;
   }

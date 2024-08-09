@@ -10,3 +10,10 @@
          url('ubuntu-v20-latin-500.ttf') format('truetype'),
          url('ubuntu-v20-latin-500.svg#Ubuntu') format('svg');
   }
+  .glowWhite {
+  text-shadow: 0 0 8px #aeb9d9, 0 0 12px #aeb9d9, 0 0 6px #FFFFFF;
+ }
+ 
+ *{
+    font-family:'Ubuntu', sans-serif;
+}
