@@ -6,6 +6,26 @@ var penguinPath = "https://ethantwu.com/";
 //248,249,250,0.85
 document.write(`
   <style>
+  @keyframes fadeInNavbar{
+    from {
+      opacity:0%;
+      transform: rotate(180deg);
+    }
+    to{
+      opacity:100%;
+      transform: rotate(360deg);
+    }
+  }
+  @keyframes fadeOutNavbar{
+    from {
+      opacity:100%;
+      transform: rotate(0deg);
+    }
+    to{
+      opacity:0%;
+      transform: rotate(180deg);
+    }
+  }
   
   .font-increase-2x{
     font-size:150%;
@@ -22,6 +42,12 @@ document.write(`
       }
       .tooltip-inner {
     max-width: 100% !important;
+}
+.fadeInNavbar {
+  animation: fadeInNavbar 0.35s ease-in-out forwards; 
+}
+.fadeOutNavbar {
+  animation: fadeOutNavbar 0.35s ease-in-out forwards; 
 }
   </style>
 
@@ -95,13 +121,52 @@ for(let i =0; i<elements.length; i++){
       var toggler = document.getElementById("navbarToggler");
       var navbarCollapse = document.getElementById('collapse');
 
-  function changeRotation(){
-    if(navbarCollapse.classList.contains('show')){
-      toggler.src = penguinPath + "public/navigation/navbarClose.png";
-    } else {
-      toggler.src = penguinPath + "public/navigation/navbarOpen.png";
+var readyToSetNavbarIcon = true;
+var navbarExpanded;
+function changeRotation(){
+
+
+
+    if(navbarCollapse.classList.contains('show') && readyToSetNavbarIcon){
+      navbarExpanded = true;
+      setNavbarIconType("closed");
+    } else if (readyToSetNavbarIcon) {
+      navbarExpanded = false;
+      setNavbarIconType("open");
     }
+
+
+
     requestAnimationFrame(changeRotation);
-  }
+}
 
 changeRotation();
+
+async function fadingNavbar(value){
+  toggler.classList.remove('fadeInNavbar');
+  toggler.classList.add('fadeOutNavbar');
+  await downtime(350);
+  readyToSetNavbarIcon = true;
+  
+  setNavbarIconType(value);
+ 
+  toggler.classList.remove('fadeOutNavbar');
+  toggler.classList.add('fadeInNavbar');
+}
+
+function setNavbarIconType(value){
+  if(value == "open"){
+    toggler.src = penguinPath + "public/navigation/navbarOpen.png";
+  } else if (value == "closed") {
+    toggler.src = penguinPath + "public/navigation/navbarClose.png";
+  }
+}
+
+document.getElementById("navbarToggler").addEventListener("click", (event)=>{
+  readyToSetNavbarIcon = false;
+  if(!navbarExpanded){
+    fadingNavbar("closed");
+  } else {
+    fadingNavbar("open");
+  }
+});
