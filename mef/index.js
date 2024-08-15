@@ -1,5 +1,7 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import {GLTFLoader} from "three/addons/loaders/GLTFLoader.js";
+
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
@@ -33,7 +35,9 @@ var floor = {
         new THREE.MeshStandardMaterial({
             color: 0x00430A,
         })    
-    )
+    ),
+    width: 215,
+    height: 454,
 } 
 
 floor.mesh.receiveShadow = true;
@@ -80,14 +84,25 @@ for (let i = 0; i < instanceNumber; i++) {
   grass.setMatrixAt(i, dummy.matrix);
 }
 
+//Water, Lake, Pond
+createLakeSquare(134, 0);
+createLakeSquare(133, 10);
+createLakeSquare(130, 20);
+createLakeSquare(129, 30);
+createLakeSquare(128, 40);
+createLakeSquare(126, 50);
+createLakeSquare(125, 60);
+createLakeSquare(124, 70);
+createLakeSquare(122, 80);
+createLakeSquare(121, 90);
+createLakeSquare(120, 100);
+
+
 
 
 
 function animate() {
-
-
 	renderer.render( scene, camera );
-
     camera.aspect = window.innerWidth/window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -116,4 +131,30 @@ document.onreadystatechange = async function () {
         document.getElementById("loadingPage").style.visibility = 'visibile';
         document.getElementById("loadingPage").style.display = 'flex';
     }
+}
+
+//From CubePVP
+var gltfLoader = new GLTFLoader();
+function loadSprite(addMesh, path, height){
+    var gltfLoader = new GLTFLoader();
+    gltfLoader.load(path, (gltfScene)=>{
+        gltfScene.scene.traverse(function(node){
+            if ( node.isMesh ) {
+                node.castShadow = true; 
+                node.receiveShadow = true; 
+            }
+        })
+        gltfScene.scene.scale.set(10, 10, 10);
+        addMesh.add(gltfScene.scene); 
+    });
+}
+
+function createLakeSquare(x, z){
+    var lake = {
+        mesh: new THREE.Group(),
+    } 
+
+    lake.mesh.position.set(floor.width/2-5-x, 1, floor.height/2-5-z)
+    loadSprite(lake.mesh, "taylorParkWater.gltf", 0.1);
+    scene.add(lake.mesh);
 }
