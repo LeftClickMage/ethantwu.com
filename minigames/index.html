@@ -34,23 +34,24 @@
  </head>
  <body>
 
-   <!-- Nav Code -->
-    <script src="../public/navigation/homeNav.js?version=2.1.1"></script>
-    <script src="../public/downtime.js"></script>
+    <!-- Nav Code -->
+    <script src="/public/navigation/homeNav.js?version=2.2.1"></script>
+    <script src="/public/downtime.js"></script>
     <!-- three.js package -->
-    <script async src="https://unpkg.com/es-module-shims@1.8.0/dist/es-module-shims.js"></script>
+    <script async src="/public/js/moduleChecker.js"></script>
 	  <script type="importmap">
 		{
 			"imports": {
-				"three": "https://unpkg.com/three@0.156.0/build/three.module.js",
-				"three/addons/": "https://unpkg.com/three@0.156.0/examples/jsm/"
+				"three": "/public/js/three/three.js",
+				"three/addons/": "/public/js/three/jsm/"
 			}
 		}
 	  </script>
     <!-- Background Code-->
-    <link rel="stylesheet" href="../public/backgrounds/background.css">
+    <link rel="stylesheet" href="/public/backgrounds/background.css">
     <canvas id = "overallBackground" class="background" style="z-index:-1; top:0; left:0;"></canvas>
-    <script type="module" src="../public/backgrounds/index.js"></script>
+    <script type="module" src="/public/backgrounds/index.js?version=1.0.1"></script>
+
   
  <div class="d-flex align-items-center" style="min-height:45vh;">
   <div class="container-md text-center mt-5">
@@ -64,10 +65,10 @@
   </div>
    <!-- <span class="badge bg-danger">NEW</span><b>  -->
     <!-- <span class="badge bg-warning">BETA</span><b> -->
- <div class="container-md darkBack border border-4 p-5 my-5 bg-opacity-50 slide-in-left" style="animation-delay:0.5s; opacity:0;" role="button" onclick="window.open('https://cubepvp.ethantwu.com')">
+ <div class="container-md backgroundGlow darkBack border border-4 p-5 my-5 bg-opacity-50 slide-in-left" style="animation-delay:0.5s; opacity:0;" role="button" onclick="window.open('https://cubepvp.ethantwu.com')">
     <div class="row">
       <div class="col-md-6 text-white">
-        <p><span class="badge bg-success">ALPHA RELEASE 1.0.4</span><b> Cube PVP</b><br><br>Cube PVP is a 3D online multiplayer, third person shooter game that tests your movement, aiming, and shooting abilities!<br><br>Can you defeat your opponents, all while being a cube?<br><br>
+        <p><b>Cube PVP </b><span class="badge bg-success">ALPHA RELEASE 1.0.4</span><br><br>Cube PVP is a 3D online multiplayer, third person shooter game that tests your movement, aiming, and shooting abilities!<br><br>Can you defeat your opponents, all while being a cube?<br><br>
 
         <span class="backgroundInfo text-info">
         Cube PVP started off as a test game for Ethan to learn THREE.JS, but eventually turned into a full fledged multiplayer game using an <u>AWS Lightsail Server</u> to run online! Ethan learned <u>3D Modeling, GLSL, CANNON.js, and THREE.js</u> while coding Cube PVP in his <u>summer after 11th Grade</u>!
@@ -82,10 +83,10 @@
   </div>   
 
 
-  <div class="container-md darkBack border border-4 p-5 my-5 bg-opacity-50 slide-in-left" style="animation-delay:0.75s; opacity:0;" role="button" onclick="window.open('greenearth/index.html')">
+  <div class="container-md backgroundGlow darkBack border border-4 p-5 my-5 bg-opacity-50 slide-in-left" style="animation-delay:0.75s; opacity:0;" role="button" onclick="window.open('greenearth/index.html')">
     <div class="row">
       <div class="col-md-6 text-white">
-        <p><span class="badge bg-warning">BETA RELEASE 1.2.6</span><b> Green Earth</b> is a mix between a wave defense and a tower defense game! Everything in the game was drawn, coded, and CREATED by Ethan(except for the explosion animation, created by Emily). The game uses pixel art, phaserjs framework, animation, and much more!<br></p>
+        <p><b>Green Earth </b><span class="badge bg-warning">BETA RELEASE 1.2.6</span><br><br> A mix of wave defense and tower defense where you defend against different types of environmental hazards!<br><br>Credit to Emily for the explosion sprite!</p>
 
         <span class="backgroundInfo text-info">
         Tired of coding everything from scratch with games taking forever to finish, Ethan decided to look into Javascript Game Frameworks. He found PhaserJS and decided to use it along with a <u>Google Firebase Database</u> to store player data! Ethan learned <u>Pixel Art(Static and Animated), Database Handling, and PhaserJS</u> while coding Green Earth in his <u>summer after 11th Grade</u>!
@@ -104,14 +105,14 @@
  
 
 
-<div class="container-md darkBack border border-4 p-5 my-5 bg-opacity-50 slide-in-left" style="animation-delay:1s; opacity:0;" role="button" onclick="window.open('parkourninja.html')">
+<div class="container-md backgroundGlow darkBack border border-4 p-5 my-5 bg-opacity-50 slide-in-left" style="animation-delay:1s; opacity:0;" role="button" onclick="window.open('parkourninja.html')">
     <div class="row">
       <div class="col-md-6 text-white">
-        <p><span class="badge bg-success">ALPHA</span><b> Parkour Ninja</b> is a slow but intense auto-scroller parkour game! Can you survive the toughest of the levels?<br><br>New Music by Hilton Seibert!<br><br>Camper Seibert Skin!</p>
+        <p><b>Parkour Ninja </b><span class="badge bg-success">ALPHA</span><br><br>A slow but intense auto-scroller parkour game! Can you survive the toughest of the levels?<br><br>New Music by Hilton Seibert!<br><br>Camper Seibert Skin!</p>
 
 
          <span class="backgroundInfo text-info">
-        Parkour Ninja was Ethan's "first real" game (coded by himself in pure JS), with moving characters, platforms, and an end goal! While coding this game, his Computer Science teacher even offered to put his music in it! Ethan learned how to use <u>JavaScript Canvas and how collision, movement, and SFX work,</u> while coding Parkour Ninja in his <u>9th Grade</u>!
+        Parkour Ninja was Ethan's "first real" game (coded by himself in pure JS), with moving characters, platforms, and an end goal! While coding this game, his Computer Science teacher even offered to put his music in it! Ethan learned the <u>basics of game development</u>, like collison detection, parallax scrolling, movement controls, and more! Ethan also learned how to use the <u>JavaScript Canvas</u> while coding Parkour Ninja in his <u>9th Grade</u>!
         
         </span>
 
@@ -125,10 +126,10 @@
 
 
 
-  <div class="container-md darkBack border border-4 p-5 my-5 fadeHover slide-in-left" style="animation-delay:1.25s; opacity:0;" role="button" onclick="window.open('minecraftdle.html')">
+  <div class="container-md backgroundGlow darkBack border border-4 p-5 my-5 fadeHover slide-in-left" style="animation-delay:1.25s; opacity:0;" role="button" onclick="window.open('minecraftdle.html')">
     <div class="row">
       <div class="col-md-6 text-white">
-        <p><span class="badge bg-success">ALPHA</span><b> Minecraftdle</b> is a sequel to wordle, but the twist is that it only includes minecraft items.<br></p>
+        <p><b>Minecraftdle </b><span class="badge bg-success">ALPHA</span><br><br>A sequel to wordle, but the twist is that it only includes minecraft items.<br></p>
 
 
        <span class="backgroundInfo text-info">
@@ -147,10 +148,10 @@
   
 
 
-  <div class="container-md darkBack border border-4 p-5 my-5 bg-opacity-50 slide-in-left" style="animation-delay:1.5s; opacity:0;" role="button" onclick="window.open('https://www.codiva.io/p/cc99a2d7-6995-41cb-9c6d-317667a79386')">
+  <div class="container-md backgroundGlow darkBack border border-4 p-5 my-5 bg-opacity-50 slide-in-left" style="animation-delay:1.5s; opacity:0;" role="button" onclick="window.open('https://www.codiva.io/p/cc99a2d7-6995-41cb-9c6d-317667a79386')">
     <div class="row">
       <div class="col-md-6 text-white">
-        <p><span class="badge bg-success">ALPHA</span><b> Mana Game</b> is a console game, entirely played in the console, and coded with Java! Fight against an AI or 1v1 a friend!</p>
+        <p><b>Mana Game </b><span class="badge bg-success">ALPHA</span><br><br>A game played in the console and coded with Java! Fight against an AI or 1v1 a friend!</p>
 
          <span class="backgroundInfo text-info">
         After being told he would learn Java in High School, Ethan took it upon himself to learn a bit of it beforehand. Ethan learned <u>Java and Console Game Creation</u> while coding one of his first fully functional games, Mana Game, in his <u>8th Grade</u>!
@@ -168,10 +169,10 @@
   </div>
 
 
- <div class="container-md darkBack border border-4 p-5 bg-opacity-50 my-5 slide-in-left" style="animation-delay:1.75s; opacity:0;" role="button" onclick="window.open('https://github.com/LeftClickMage/blocksmasher.io')">
+ <div class="container-md backgroundGlow darkBack border border-4 p-5 bg-opacity-50 my-5 slide-in-left" style="animation-delay:1.75s; opacity:0;" role="button" onclick="window.open('https://github.com/LeftClickMage/blocksmasher.io')">
     <div class="row">
       <div class="col-md-6 text-white">
-        <p><span class="badge bg-danger">CURRENTLY DOWN</span><b> Smasher.ET</b> is a multiplayer PVP game where you brawl to the death using a variety of classes!<br><br><b>Click here to view the Code!</b></p>
+        <p><b>Smasher.ET </b><span class="badge bg-danger">CURRENTLY DOWN</span><br><br>A multiplayer PVP game where you brawl to the death using a variety of classes!<br><br><b>Click here to view the Code!</b></p>
 
 
          <span class="backgroundInfo text-info">

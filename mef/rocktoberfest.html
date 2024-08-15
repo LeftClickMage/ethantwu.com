@@ -45,16 +45,20 @@
 
     <p class="text-dark display-6 container-fluid text-center position-absolute">THE WORLD OF ROCKTOBERFEST!</p>
     <script src="../public/downtime.js"></script>
+
     <!-- three.js package -->
-    <script async src="https://unpkg.com/es-module-shims@1.8.0/dist/es-module-shims.js"></script>
+    <script async src="/public/js/moduleChecker.js"></script>
 	  <script type="importmap">
 		{
 			"imports": {
-				"three": "https://unpkg.com/three@0.156.0/build/three.module.js",
-				"three/addons/": "https://unpkg.com/three@0.156.0/examples/jsm/"
+				"three": "/public/js/three/three.js",
+				"three/addons/": "/public/js/three/jsm/"
 			}
 		}
 	  </script>
+
+
+
     <script type="module" src="index.js?version=0.0.3"></script>
     <!-- 0.0.0 Uploaded page with a green floor
     0.0.1 Added shadows, grass, and a loading screen. 

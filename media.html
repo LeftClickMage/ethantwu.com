@@ -56,23 +56,24 @@
 
  
 
-<!-- Nav Code -->
-    <script src="public/navigation/homeNav.js?version=2.1.1"></script>
-    <script src="public/downtime.js"></script>
+    <!-- Nav Code -->
+    <script src="/public/navigation/homeNav.js?version=2.2.1"></script>
+    <script src="/public/downtime.js"></script>
     <!-- three.js package -->
-    <script async src="https://unpkg.com/es-module-shims@1.8.0/dist/es-module-shims.js"></script>
+    <script async src="/public/js/moduleChecker.js"></script>
 	  <script type="importmap">
 		{
 			"imports": {
-				"three": "https://unpkg.com/three@0.156.0/build/three.module.js",
-				"three/addons/": "https://unpkg.com/three@0.156.0/examples/jsm/"
+				"three": "/public/js/three/three.js",
+				"three/addons/": "/public/js/three/jsm/"
 			}
 		}
 	  </script>
     <!-- Background Code-->
-    <link rel="stylesheet" href="public/backgrounds/background.css">
+    <link rel="stylesheet" href="/public/backgrounds/background.css">
     <canvas id = "overallBackground" class="background" style="z-index:-1; top:0; left:0;"></canvas>
-    <script type="module" src="public/backgrounds/index.js"></script>
+    <script type="module" src="/public/backgrounds/index.js?version=1.0.1"></script>
+
  
 <div class="d-flex align-items-center" style="min-height:45vh;">
     <div class="container-md text-center mt-5">
@@ -82,17 +83,17 @@
         
             <div class="row container-fluid text-center mx-0 slide-in-bottom" style="font-weight:bold;">
 
-                <button class="col-md-7 col-xl-5 mt-0 youtubeButton btn border border-5 border-light text-white fs-3 position-relative d-flex align-items-center" style ="position:absolute;left:50%;transform:translateX(-50%);"onclick="window.open('https://youtube.com/leftclickmage/');"><span class="float-start p-1"><img src="public/logos/lcm-logo.png" width="70px"></span><span class="fw-bold ms-5 ms-sm-0" style="position:absolute;left:50%;transform:translateX(-50%);">LeftClickMage</span><span class="badge bg-black px-3 py-1 float-end ms-auto border border-light border-3 d-none d-sm-block"><img src="public/logos/youtube.png" width="60px"></span></button>
+                <button class="backgroundGlow col-md-7 col-xl-5 mt-0 youtubeButton btn border border-5 border-light text-white fs-3 position-relative d-flex align-items-center" style ="position:absolute;left:50%;transform:translateX(-50%);"onclick="window.open('https://youtube.com/leftclickmage/');"><span class="float-start p-1"><img src="public/logos/lcm-logo.png" width="70px"></span><span class="fw-bold ms-5 ms-sm-0" style="position:absolute;left:50%;transform:translateX(-50%);">LeftClickMage</span><span class="badge bg-black px-3 py-1 float-end ms-auto border border-light border-3 d-none d-sm-block"><img src="public/logos/youtube.png" width="60px"></span></button>
                 <div class="col-lg-5 col-md-3"></div>
-                <button class="col-md-7 col-xl-5 twitchButton btn border border-5 border-light text-white fs-3 position-relative d-flex align-items-center" style ="position:absolute;left:50%;transform:translateX(-50%);"onclick="window.open('https://twitch.tv/leftclickmage/');"><span class="float-start p-1"><img src="public/logos/lcm-logo.png" width="70px"></span><span class="fw-bold ms-5 ms-sm-0" style="position:absolute;left:50%;transform:translateX(-50%);">LeftClickMage</span><span class="badge bg-light px-3 py-1 float-end ms-auto border border-light border-3 d-none d-sm-block"><img src="public/logos/twitch.png" width="60px"></span></button>
+                <button class="backgroundGlow col-md-7 col-xl-5 twitchButton btn border border-5 border-light text-white fs-3 position-relative d-flex align-items-center" style ="position:absolute;left:50%;transform:translateX(-50%);"onclick="window.open('https://twitch.tv/leftclickmage/');"><span class="float-start p-1"><img src="public/logos/lcm-logo.png" width="70px"></span><span class="fw-bold ms-5 ms-sm-0" style="position:absolute;left:50%;transform:translateX(-50%);">LeftClickMage</span><span class="badge bg-light px-3 py-1 float-end ms-auto border border-light border-3 d-none d-sm-block"><img src="public/logos/twitch.png" width="60px"></span></button>
                 <div class="col-lg-5 col-md-3"></div>
-                <button class="col-md-7 col-xl-5 youtubeButton btn border border-5 border-light text-white fs-3 position-relative d-flex align-items-center" style ="position:absolute;left:50%;transform:translateX(-50%);"onclick="window.open('https://youtube.com/fairopshotgun/');"><span class="float-start p-1"><img src="public/logos/fair-logo.png" width="70px"></span><span class="fw-bold ms-5 ms-sm-0" style="position:absolute;left:50%;transform:translateX(-50%);">FairOPShotgun</span><span class="badge bg-black px-3 py-1 float-end ms-auto border border-light border-3 d-none d-sm-block"><img src="public/logos/youtube.png" width="60px"></span></button>
+                <button class="backgroundGlow col-md-7 col-xl-5 youtubeButton btn border border-5 border-light text-white fs-3 position-relative d-flex align-items-center" style ="position:absolute;left:50%;transform:translateX(-50%);"onclick="window.open('https://youtube.com/fairopshotgun/');"><span class="float-start p-1"><img src="public/logos/fair-logo.png" width="70px"></span><span class="fw-bold ms-5 ms-sm-0" style="position:absolute;left:50%;transform:translateX(-50%);">FairOPShotgun</span><span class="badge bg-black px-3 py-1 float-end ms-auto border border-light border-3 d-none d-sm-block"><img src="public/logos/youtube.png" width="60px"></span></button>
                 <div class="col-lg-5 col-md-3"></div>
-                <button class="col-md-7 col-xl-5 youtubeButton btn border border-5 border-light text-white fs-3 position-relative d-flex align-items-center" style ="position:absolute;left:50%;transform:translateX(-50%);"onclick="window.open('https://youtube.com/YukiThePomsky/');"><span class="float-start p-1"><img src="public/logos/yuki-logo.jpg" width="70px"></span><span class="fw-bold ms-5 ms-sm-0" style="position:absolute;left:50%;transform:translateX(-50%);">YukiThePomsky</span><span class="badge bg-black px-3 py-1 float-end ms-auto border border-light border-3 d-none d-sm-block"><img src="public/logos/youtube.png" width="60px"></span></button>
+                <button class="backgroundGlow col-md-7 col-xl-5 youtubeButton btn border border-5 border-light text-white fs-3 position-relative d-flex align-items-center" style ="position:absolute;left:50%;transform:translateX(-50%);"onclick="window.open('https://youtube.com/YukiThePomsky/');"><span class="float-start p-1"><img src="public/logos/yuki-logo.jpg" width="70px"></span><span class="fw-bold ms-5 ms-sm-0" style="position:absolute;left:50%;transform:translateX(-50%);">YukiThePomsky</span><span class="badge bg-black px-3 py-1 float-end ms-auto border border-light border-3 d-none d-sm-block"><img src="public/logos/youtube.png" width="60px"></span></button>
                 <div class="col-lg-5 col-md-3"></div>
-                <button class="col-md-7 col-xl-5 youtubeButton btn border border-5 border-light text-white fs-3 position-relative d-flex align-items-center" style ="position:absolute;left:50%;transform:translateX(-50%);"onclick="window.open('https://youtube.com/@lnyfestival/');"><span class="float-start p-1"><img src="public/logos/millburnlny-logo.png" width="70px"></span><span class="fw-bold ms-5 ms-sm-0" style="position:absolute;left:50%;transform:translateX(-50%);">Millburn's LNY</span><span class="badge bg-black px-3 py-1 float-end ms-auto border border-light border-3 d-none d-sm-block"><img src="public/logos/youtube.png" width="60px"></span></button>
+                <button class="backgroundGlow col-md-7 col-xl-5 youtubeButton btn border border-5 border-light text-white fs-3 position-relative d-flex align-items-center" style ="position:absolute;left:50%;transform:translateX(-50%);"onclick="window.open('https://youtube.com/@lnyfestival/');"><span class="float-start p-1"><img src="public/logos/millburnlny-logo.png" width="70px"></span><span class="fw-bold ms-5 ms-sm-0" style="position:absolute;left:50%;transform:translateX(-50%);">Millburn's LNY</span><span class="badge bg-black px-3 py-1 float-end ms-auto border border-light border-3 d-none d-sm-block"><img src="public/logos/youtube.png" width="60px"></span></button>
                 <div class="col-lg-5 col-md-3"></div>
-                <button class="col-md-7 col-xl-5 instaButton btn border border-5 border-light text-white fs-3 position-relative d-flex align-items-center" style ="position:absolute;left:50%;transform:translateX(-50%);"onclick="window.open('https://www.instagram.com/leftclickmage/');"><span class="float-start p-1"><img src="public/logos/lcm-logo.png" width="70px"></span><span class="fw-bold ms-5 ms-sm-0" style="position:absolute;left:50%;transform:translateX(-50%);">LeftClickMage</span><span class="badge bg-light px-3 py-1 float-end ms-auto border border-dark border-3 d-none d-sm-block"><img src="public/logos/instagram.png" width="60px"></span></button>
+                <button class="backgroundGlow col-md-7 col-xl-5 instaButton btn border border-5 border-light text-white fs-3 position-relative d-flex align-items-center" style ="position:absolute;left:50%;transform:translateX(-50%);"onclick="window.open('https://www.instagram.com/leftclickmage/');"><span class="float-start p-1"><img src="public/logos/lcm-logo.png" width="70px"></span><span class="fw-bold ms-5 ms-sm-0" style="position:absolute;left:50%;transform:translateX(-50%);">LeftClickMage</span><span class="badge bg-light px-3 py-1 float-end ms-auto border border-dark border-3 d-none d-sm-block"><img src="public/logos/instagram.png" width="60px"></span></button>
                 <div class="col-lg-5 col-md-3"></div>
             </div>
         

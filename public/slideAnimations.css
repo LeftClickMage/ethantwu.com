@@ -10,11 +10,11 @@
   }
   @keyframes slideInLeft {
     from {
-      transform: translateX(-40%);
+      transform: translateX(-40%) scale(1);
       opacity:0;
     }
     to {
-      transform: translateX(0);
+      transform: translateX(0) scale(1);
       opacity:1;
     }
   }
@@ -53,6 +53,23 @@
     animation: slideInBottom 1s ease-in-out forwards; 
   }
 
-  .pixelArt{
-    image-rendering: pixelated;
+  .backgroundGlow{
+    transition:0.25s !important;
   }
+
+    .backgroundGlow:hover{
+      box-shadow: 0 0 50px #FFFFFF !important;
+  }
+
+
+  .card{
+    transition:0.25s !important;
+  }
+
+    .card:hover{
+      box-shadow: 0 0 50px #FFFFFF !important;
+  }
+
+
+
+  

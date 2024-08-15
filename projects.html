@@ -23,23 +23,24 @@
 <!--https://www.codiva.io/p/cc99a2d7-6995-41cb-9c6d-317667a79386-->
 <body>
 
-<!-- Nav Code -->
-    <script src="public/navigation/homeNav.js?version=2.1.1"></script>
-    <script src="public/downtime.js"></script>
+    <!-- Nav Code -->
+    <script src="/public/navigation/homeNav.js?version=2.2.1"></script>
+    <script src="/public/downtime.js"></script>
     <!-- three.js package -->
-    <script async src="https://unpkg.com/es-module-shims@1.8.0/dist/es-module-shims.js"></script>
+    <script async src="/public/js/moduleChecker.js"></script>
 	  <script type="importmap">
 		{
 			"imports": {
-				"three": "https://unpkg.com/three@0.156.0/build/three.module.js",
-				"three/addons/": "https://unpkg.com/three@0.156.0/examples/jsm/"
+				"three": "/public/js/three/three.js",
+				"three/addons/": "/public/js/three/jsm/"
 			}
 		}
 	  </script>
     <!-- Background Code-->
-    <link rel="stylesheet" href="public/backgrounds/background.css">
+    <link rel="stylesheet" href="/public/backgrounds/background.css">
     <canvas id = "overallBackground" class="background" style="z-index:-1; top:0; left:0;"></canvas>
-    <script type="module" src="public/backgrounds/index.js"></script>
+    <script type="module" src="/public/backgrounds/index.js?version=1.0.1"></script>
+
 
 <div class="d-flex align-items-center" style="min-height:45vh;">
     <div class="container-md text-center mt-5">
@@ -49,12 +50,15 @@
     
 <div class="container mb-5">
   <div class="row g-5 slide-in-bottom" style="animation-delay:0.35s;">
+
+
+
     <div class="col-md-6">
       <div class="card container-fluid p-0 h-100 slide-in-left border-3 border-light" style="animation-delay:0.35s; opacity:0; background-color:black;">
         <img src="mef/rocktoberfest.jpg" class="card-img-top img-fluid">
         <div class="card-body d-flex flex-column text-white">
           <h5 class="card-title mt-0 fw-bold">3D Rocktoberfest</h5>
-          <p class="card-text">As a Millburn Ed Foundation intern, Ethan created promotional videos as well as this 3D render of Rocktoberfest!</p>
+          <p class="card-text">As a Millburn Ed Foundation intern, Ethan created <a class="link-danger" href="/mef/videos.html">promotional videos</a> as well as this 3D render of Rocktoberfest!</p>
           <a href="mef/rocktoberfest.html" class="btn btn-primary mt-auto" target="_blank">Visit 3D Rocktoberfest</a>
         </div>
         

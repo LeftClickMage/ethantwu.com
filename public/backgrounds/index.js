@@ -1,7 +1,7 @@
 import * as THREE from 'three';
-import {RenderPass} from "three/addons/postprocessing/RenderPass";
-import {EffectComposer} from "three/addons/postprocessing/EffectComposer";
-import {UnrealBloomPass} from "three/addons/postprocessing/UnrealBloomPass";
+import {RenderPass} from "three/addons/postprocessing/RenderPass.js";
+import {EffectComposer} from "three/addons/postprocessing/EffectComposer.js";
+import {UnrealBloomPass} from "three/addons/postprocessing/UnrealBloomPass.js";
 
 var scene = new THREE.Scene();
 var config = {
@@ -9,7 +9,7 @@ var config = {
     height: window.innerHeight,
 }
 var loader = new THREE.TextureLoader();
-var texture = loader.load(penguinPath + "public/backgrounds/testStar.png");
+var texture = loader.load("/public/backgrounds/testStar.png");
 
 const geometry = new THREE.SphereGeometry( 3, 64, 64); 
 
