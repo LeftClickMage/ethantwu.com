@@ -36,6 +36,10 @@ var oxygen = {
 }
 var debugValue = false;
 if(window.location.hostname == "localhost"){
+    window.addEventListener('error', function(event) {
+    alert("YOU GOT AN ERROR! TRY RELOADING THE PAGE! SEND THIS ERROR TO leftclickmage@gmail.com!: \nError:" + event.message + "\nSource: " + event.filename + "\nLine:" + event.lineno + "Column:" + event.colno + "\nError object:" + event.error + "\nError Trace: " + event.error.stack);
+});
+
     debugValue = true;
 }
 var configNew = {
@@ -73,9 +77,6 @@ window.addEventListener("resize", (event)=>{
 });
 
 
-window.addEventListener('error', function(event) {
-    alert("YOU GOT AN ERROR! TRY RELOADING THE PAGE! SEND THIS ERROR TO leftclickmage@gmail.com!: \nError:" + event.message + "\nSource: " + event.filename + "\nLine:" + event.lineno + "Column:" + event.colno + "\nError object:" + event.error + "\nError Trace: " + event.error.stack);
-});
 
 
     
