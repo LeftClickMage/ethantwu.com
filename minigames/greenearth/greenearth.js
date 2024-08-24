@@ -548,7 +548,7 @@ this.tutorialScene.createBox(0, config.height-200, "Greenhouse Gases will appear
         // this.cfcBoss.body.setOffset(0, 20);
         cfcBoss.setImmovable(true);
         cfcBoss.play("cfcBoss");
-        cfcBoss.health = 350/100;
+        cfcBoss.health = 350;
 
 
 
@@ -567,7 +567,7 @@ this.tutorialScene.createBox(0, config.height-200, "Greenhouse Gases will appear
     async enemyBossSpam(){
         var speed = 0;
         if(this.waveNumber > 15){
-            speed = 12000;
+            speed = 120;
         } else {
             speed = 160;
         }
@@ -705,7 +705,13 @@ moveObj(){
         this.targetAcquired = false;
         this.hotbarScene.canPlaceOBJ = true;
         var placeSlot = targets[0];
-        var targetName = placeSlot.texture.key;
+        var targetName;
+        if(placeSlot){
+            targetName = placeSlot.texture.key;
+        } else {
+
+        targetName = "undefined";
+        }
         // alert(targetName); //keep here for debug
         if(targetName == "plot"){
             if (placeSlot.occupied) {
