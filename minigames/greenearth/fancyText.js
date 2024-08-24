@@ -8,7 +8,7 @@ class FancyText extends Phaser.GameObjects.Text
     } else if(textColor == "black"){
         textColor = "#000000";
     }
-    super(scene, x, y, text, {font: size + " Minecraft", color: textColor, wordWrap: {width:config.width-170, userAdvancedWrap: true}});
+    super(scene, x, y, text, {font: size + " Minecraft", color: textColor, wordWrap: {width:config.width-200, userAdvancedWrap: true}});
     scene.add.existing(this);
     if(recenter){
         this.x = this.x - this.width/2;
@@ -18,21 +18,21 @@ class FancyText extends Phaser.GameObjects.Text
     if(strokeColor == "lightBlue"){
         this.setStroke('#ABCDEF', );
     } else if(strokeColor == "red"){
-        this.setStroke('#800000', parseInt(strokeSize)/15);
+        this.setStroke('#FF0000', parseInt(strokeSize)/10);
     } else if(strokeColor == "black"){
-        this.setStroke('#000000', parseInt(strokeSize)/15);
+        this.setStroke('#000000', parseInt(strokeSize)/10);
     } else if(strokeColor == "white"){
-        this.setStroke('#FFFFFF', parseInt(strokeSize)/15);
+        this.setStroke('#FFFFFF', parseInt(strokeSize)/10);
     } else if(strokeColor == "blue"){
-        this.setStroke('#000080', parseInt(strokeSize)/15);
+        this.setStroke('#000080', parseInt(strokeSize)/10);
     } else if(strokeColor == "lightGreen"){
-        this.setStroke('#6AF859', parseInt(strokeSize)/15);
+        this.setStroke('#6AF859', parseInt(strokeSize)/10);
     } else if(strokeColor == "lightGray"){
-        this.setStroke('#DDDDDD', parseInt(strokeSize)/15);
+        this.setStroke('#DDDDDD', parseInt(strokeSize)/10);
     } else if(strokeColor == "lightOrange"){
-        this.setStroke('#FB9E7A', parseInt(strokeSize)/15);
+        this.setStroke('#FB9E7A', parseInt(strokeSize)/10);
     } else if(strokeColor == "yellow"){
-        this.setStroke('#FFC300', parseInt(strokeSize)/15);
+        this.setStroke('#FFC300', parseInt(strokeSize)/10);
     } else if(strokeColor == "green"){
         this.setStroke('#008000', parseInt(strokeSize)/5);
     } 

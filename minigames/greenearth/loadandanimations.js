@@ -12,10 +12,12 @@ class loadandanimations extends Phaser.Scene{
         this.load.image("thELevel5", "assets/townHallEnergyLevel5.png");
         this.load.image("upgradeButton", "assets/upgrade.png");
         this.load.image("background", "assets/Grass.png");
+        this.load.image("reset", "assets/reset.png");
         this.load.image("energy", "assets/energySymbol.png");
         this.load.image("highestWave", "assets/highestWave.png");
         this.load.image("house", "assets/testhouse.png");
         this.load.image("thELevel0", "assets/BlueHouse.png");
+        this.load.image("blueHouseBroken", "assets/blueHouseBroken.png");
         this.load.image("treeBorder", "assets/TreeBorder.png");
         this.load.image("hotbarSlot", "assets/HotbarSlot.png");
         this.load.image("supportSlot", "assets/SupportSlot.png");
@@ -35,6 +37,14 @@ class loadandanimations extends Phaser.Scene{
         this.load.image("leaf", "assets/leaf.png");
         this.load.image("startGame", "assets/startGame.png");
         this.load.image("back", "assets/Back.png");
+        this.load.image("statsPageBG", "assets/statsPageBG.png");
+        this.load.image("removeTower", "assets/removeTower.png");
+        this.load.image("removeSlot", "assets/removeSlot.png");
+        this.load.image("creativeMode", "assets/creativeMode.png"); 
+        this.load.image("minusWave", "assets/minusWave.png");
+        this.load.image("plusWave", "assets/plusWave.png");
+        this.load.image("continue", "assets/continue.png");
+        this.load.image("victoryBadge", "assets/victoryBadge.png");
         
         this.load.spritesheet("windmill", "assets/Windmill.png", {
             frameWidth: 32,
@@ -128,7 +138,31 @@ class loadandanimations extends Phaser.Scene{
             frameWidth: 32,
             frameHeight: 32
         });
-        
+        this.load.spritesheet("forest", "assets/Forest.png", {
+            frameWidth: 32,
+            frameHeight: 32
+        });
+        this.load.spritesheet("medbay", "assets/medbay.png", {
+            frameWidth: 32,
+            frameHeight: 32
+        });
+        this.load.spritesheet("truckBoss", "assets/truckBoss.png", {
+            frameWidth: 96,
+            frameHeight: 96
+        });
+        this.load.spritesheet("cfcBoss", "assets/cfcBoss.png", {
+            frameWidth: 32,
+            frameHeight: 32,
+        });
+
+        this.load.spritesheet("slowTower", "assets/slowTower.png", {
+            frameWidth: 32,
+            frameHeight: 32
+        });
+        this.load.spritesheet("slowTowerIdle", "assets/slowTowerIdle.png", {
+            frameWidth: 32,
+            frameHeight: 32
+        });
     }
     create(){
         this.anims.create({
@@ -246,21 +280,59 @@ class loadandanimations extends Phaser.Scene{
             repeat: -1
         });
         this.anims.create({
-            key: "algaeTower",
-            frames: this.anims.generateFrameNumbers("algaeTower"),
-            frameRate: 16,
-            repeat: -1
-        });
-        this.anims.create({
             key: "windmill",
             frames: this.anims.generateFrameNumbers("windmill"),
             frameRate: 20,
             repeat: -1
         });
         this.anims.create({
+            key: "forest",
+            frames: this.anims.generateFrameNumbers("forest"),
+            frameRate: 5,
+            repeat: -1
+        });
+        this.anims.create({
+            key: "medbay",
+            frames: this.anims.generateFrameNumbers("medbay"),
+            frameRate: 10,
+            repeat: -1
+        });
+        this.anims.create({
+            key: "algaeTower",
+            frames: this.anims.generateFrameNumbers("algaeTower"),
+            frameRate: 12,
+            repeat: -1
+        });
+        this.anims.create({
             key: "algaeTowerIdle",
             frames: this.anims.generateFrameNumbers("algaeTowerIdle"),
             frameRate: 3,
+            repeat: -1
+        });
+        this.anims.create({
+            key: "slowTowerIdle",
+            frames: this.anims.generateFrameNumbers("slowTowerIdle"),
+            frameRate: 2,
+            repeat: -1
+        });
+        this.anims.create({
+            key: "slowTower",
+            frames: this.anims.generateFrameNumbers("slowTower"),
+            frameRate: 8,
+            repeat: -1
+        });
+        this.anims.create({
+            key: "truckBoss",
+            frames: this.anims.generateFrameNumbers("truckBoss"),
+            frameRate: 5,
+            repeat: -1
+        });
+
+
+        this.anims.create({
+            key: "cfcBoss",
+            frames: this.anims.generateFrameNumbers("cfcBoss"),
+            frameRate: 2,
             repeat: -1
         });
         this.anims.create({

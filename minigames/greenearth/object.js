@@ -12,6 +12,8 @@ constructor(scene, object){
         scale = 2;
     } else if (object == "windmill"){
         scale = 3/4;
+    } else if (object == "forest"){
+        scale = 0.85;
     }
     scene.add.existing(this.setScale(3/scale));
     scene.physics.world.enableBody(this);

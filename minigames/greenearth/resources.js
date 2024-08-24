@@ -15,13 +15,22 @@ class resources extends Phaser.Scene {
     }
     calcLeaves(){
         var amount = 0;
-        for(let i = this.mainGame.startingWave+1; i <= this.mainGame.waveNumber-1; i++){
-            amount += i * 20;
+        if(!this.mainGame.creativeMode){
+            for(let i = this.mainGame.startingWave+1; i <= this.mainGame.waveNumber-1; i++){
+                amount += i * 20;
+            }
         }
+        
         this.leaves = amount;
 }
     update(){
+        try{
+    //    alert(this.mainGame.energyValue);
         this.energyValue.text = Math.round(this.mainGame.energyValue);
+        
+        } catch (error){
+            alert(error);
+        }
         this.leafValue.text = this.leaves;
     
     }
