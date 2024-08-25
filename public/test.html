@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Cube in Normal Website</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
+        header, footer { background-color: #333; color: white; text-align: center; padding: 1em; }
+        .content { padding: 20px; }
+        #cube-container { width: 300px; height: 300px; margin: 0 auto; }
+    </style>
+</head>
+<body>
+<script src="/public/js/alertErrors.js"></script>
+
+<script type="importmap">
+		{
+			"imports": {
+				"three": "/public/js/three/three.js",
+				"three/addons/": "/public/js/three/jsm/"
+			}
+		}
+	  </script>
+    <header>
+        <h1>My Website with a 3D Cube</h1>
+    </header>
+
+    <div class="content">
+        <h2>Welcome to My Website</h2>
+        <p>This is a normal website layout with a 3D cube embedded below.</p>
+        <div id="cube-container"></div> <!-- The div where the 3D cube will be rendered -->
+    </div>
+
+    <footer>
+        <p>&copy; 2024 My Website</p>
+    </footer>
+
+    <script type="module">
+    import * as THREE from 'three';
+    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+        // Find the container where we want to insert the 3D cube
+        const container = document.getElementById('cube-container');
+
+        // Create a scene
+        const scene = new THREE.Scene();
+
+        // Set up a camera (FOV, aspect ratio, near and far clipping plane)
+        const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+
+        // Create a WebGL renderer
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        renderer.setClearColor(0x000000, 0);
+        container.appendChild(renderer.domElement); // Append the renderer to the cube container
+
+        // Create a box geometry and a basic material and combine them into a mesh
+        const geometry = new THREE.BoxGeometry(); // Cube
+        const material = new THREE.MeshStandardMaterial({ color: 0x00ff00 }); // Green color
+        var light = new THREE.DirectionalLight(0xFFFFFF, 10);
+        light.position.set(5, 5, 5);
+        var light2 = new THREE.AmbientLight(0xFFFFFF);
+        scene.add(light2);
+        scene.add(light);
+        const cube = new THREE.Mesh(geometry, material);
+
+        // Add the cube to the scene
+        scene.add(cube);
+          
+const controls = new OrbitControls( camera, renderer.domElement );
+
+controls.enablePan = false;
+
+controls.enableZoom = false;
+        // Position the camera
+        camera.position.z = 2;
+
+        // Animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+
+            // Rotate the cube
+            cube.rotation.x += 0.01;
+            cube.rotation.y += 0.01;
+
+            // Render the scene
+            renderer.render(scene, camera);
+        }
+
+        // Start the animation loop
+        animate();
+
+        // Handle resizing of the container
+        window.addEventListener('resize', () => {
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+            renderer.setSize(width, height);
+            camera.aspect = width / height;
+            camera.updateProjectionMatrix();
+        });
+    </script>
+</body>
+</html>

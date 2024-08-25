@@ -10,14 +10,25 @@
     <link rel="canonical" href="https://ethantwu.com/">
     <link rel="stylesheet" href="public/css/bootstrap.min.css">
     <link rel="stylesheet" href="/public/fonts/ubuntu.css?version=1.0.1">
-    <link rel="stylesheet" href="/public/slideAnimations.css?version=1.0.1">
+    <link rel="stylesheet" href="/public/slideAnimations.css?version=1.0.2">
     <script src="public/js/bootstrap.bundle.min.js"></script>
     <style>
 
     html,body{
       font-family:'Ubuntu', sans-serif;
     }
-
+    .codeGlow{
+        transition:0.2s;
+        -webkit-filter: drop-shadow(0px 0px 15px #FFFFFF);
+        filter: drop-shadow(0px 0px 15px #FFFFFF);
+    }
+    .codeGlow:hover{
+      transform: rotate3d(0.8, 1, -0.2, 35deg);
+      transition:0.2s;
+    }
+    .cutOffTop{
+      object-fit:cover;
+    }
 
     .outline-text-emerald {
   
@@ -104,6 +115,54 @@
         </div>
 
         
+
+    <div class="container-fluid text-center d-flex justify-content-center flex-wrap gap-4" style="margin-top:5vh;">
+    <div class="codeGlow">
+    <p class="text-white fw-bold" style="font-size:20px;">JavaScript</p>
+      <img src="/public/logos/javascript.jpg" height="100px">
+    </div>
+    <div class="codeGlow">
+    <p class="text-white fw-bold" style="font-size:20px;">HTML</p>
+      <img src="/public/logos/html.png" height="100px">
+    </div>
+    <div class="codeGlow">
+    <p class="text-white fw-bold" style="font-size:20px;">CSS</p>
+      <img src="/public/logos/css.png" height="100px">
+    </div>
+    
+
+    <div class="codeGlow"> 
+    <p class="text-white fw-bold" style="font-size:20px;">ThreeJS</p>
+      <img src="/public/logos/three.png" height="100px">
+    </div>
+    
+    <div class="codeGlow">
+    <p class="text-white fw-bold" style="font-size:20px;">PhaserJS</p>
+      <img src="/public/logos/phaserjs.png" height="100px">
+    </div>
+    
+    
+    <div class="codeGlow">
+    <p class="text-white fw-bold" style="font-size:20px;">Java</p>
+      <img src="/public/logos/java.png" height="100px">
+    </div>
+    
+    <div class="codeGlow">
+    <p class="text-white fw-bold" style="font-size:20px;">Python</p>
+      <img src="/public/logos/python.png" height="100px">
+    </div>
+    
+    <div class="codeGlow">
+    <p class="text-white fw-bold" style="font-size:20px;">ReactJS</p>
+      <img src="/public/logos/reactjs.png" height="100px">
+    </div>
+    
+    <div class="codeGlow">
+    <p class="text-white fw-bold" style="font-size:20px;">C++</p>
+      <img src="/public/logos/c++.png" height="100px">
+    </div>
+    </div>
+
 
 
 <!-- NEWS -->
