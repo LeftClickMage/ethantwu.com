@@ -212,13 +212,13 @@ this.goGroup.add(this.highestWaveText);
         
         if(player.highestWave == 0){
             this.highestWaveText.text = player.highestWave + " | Start Game";
-        } else if(player.highestWave < 5){
+        } else if(player.highestWave <= 5){
             this.highestWaveText.text = player.highestWave + " | Start 2";
-        } else if(player.highestWave < 10){
+        } else if(player.highestWave <= 10){
             this.highestWaveText.text = player.highestWave + " | Start 6";
-        }  else if(player.highestWave < 15){
+        }  else if(player.highestWave <= 15){
             this.highestWaveText.text = player.highestWave + " | Start 11";
-        }  else if(player.highestWave < 20){
+        }  else if(player.highestWave <= 20){
             this.highestWaveText.text = player.highestWave + " | Start 16";
         } else {
             this.highestWaveText.text = player.highestWave + " | Start " + Math.round(20 + (player.highestWave-20)/3*2);
