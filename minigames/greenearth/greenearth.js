@@ -12,16 +12,16 @@ class greenearth extends Phaser.Scene{
 
             this.waveNumber = 0;
             this.startingWave = 0;
- } else if(player.highestWave < 5){
+ } else if(player.highestWave <= 5){
             this.waveNumber = 1;
             this.startingWave = 1;
-        } else if(player.highestWave < 10){
+        } else if(player.highestWave <= 10){
             this.waveNumber = 5;
             this.startingWave = 5;
-        }  else if(player.highestWave < 15){
+        }  else if(player.highestWave <= 15){
             this.waveNumber = 10;
             this.startingWave = 10;
-        }  else if(player.highestWave < 20){
+        }  else if(player.highestWave <= 20){
             this.waveNumber = 15;
             this.startingWave = 15;
         } else {
