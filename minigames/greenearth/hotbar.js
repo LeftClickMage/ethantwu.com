@@ -10,6 +10,7 @@ class hotbar extends Phaser.Scene {
         this.waveTimerScene = this.scene.get("waveTimer");
         this.tutorialScene = this.scene.get("tutorial");
         this.mainGame = this.scene.get("startGame");
+        this.towerGroup = this.add.group();
 
         this.mageBootstrap = this.mainGame.mageBootstrap;
         this.canPlace = true;
@@ -92,10 +93,12 @@ class hotbar extends Phaser.Scene {
                 this.canPlaceOBJ = false;
             }
         });
+        this.towerGroup.add(this.algaeTower);
         this.mageBootstrap.add(this.algaeTower);
         this.algaeTower.idRequirements = "stickToBottom centerX";
         this.algaeTowerText = "Algae Tower | "+this.mainGame.algaeTowerPrice+" Energy | "+this.mainGame.algaeTowerSpawnRate+" O2/s";
         this.algaeTowerWidth = 450;
+        this.algaeTower.cost = this.mainGame.algaeTowerPrice;
 
         //FOREST
         this.slot2 = this.add.image(this.slot2X, this.slotsY, "attackSlot").setScale(2);
@@ -109,10 +112,12 @@ class hotbar extends Phaser.Scene {
             }
         });
 
+        this.towerGroup.add(this.forest);
         this.mageBootstrap.add(this.forest);
         this.forest.idRequirements = "stickToBottom centerX";
         this.forestText = "Forest | "+this.mainGame.forestPrice+" Energy | "+this.mainGame.forestHealth +" HP | " + this.mainGame.forestSpawnRate + " O2/s";
         this.forestWidth = 480;
+        this.forest.cost = this.mainGame.forestPrice;
 
         //BATTERY PACK
         this.slot3 = this.add.image(this.slot3X, this.slotsY, "hotbarSlot").setScale(2);
@@ -125,7 +130,8 @@ class hotbar extends Phaser.Scene {
                 this.canPlaceOBJ = false;
             }
         });
-
+        this.towerGroup.add(this.batteryPack);
+        this.batteryPack.cost = 200;
         this.mageBootstrap.add(this.batteryPack);
         this.batteryPack.idRequirements = "stickToBottom centerX";
         this.batteryText = "Battery Pack | 200 Energy | +"+ this.mainGame.batteryPackStorage + " Storage";
@@ -142,7 +148,9 @@ class hotbar extends Phaser.Scene {
                 this.canPlaceOBJ = false;
             }
         });
+        this.solarPanel.cost = 50;
 
+        this.towerGroup.add(this.solarPanel);
         this.mageBootstrap.add(this.solarPanel);
         this.solarPanel.idRequirements = "stickToBottom centerX";
         this.energyText = "Solar Panel | 50 Energy | "+this.mainGame.solarPanelEnergyOutput+" E/s";
@@ -160,7 +168,8 @@ class hotbar extends Phaser.Scene {
                 this.canPlaceOBJ = false;
             }
         });
-
+        this.windmill.cost = this.mainGame.windmillPrice;
+        this.towerGroup.add(this.windmill);
         this.mageBootstrap.add(this.windmill);
         this.windmill.idRequirements = "stickToBottom centerX";
         this.windmillText = "Windmill | " + this.mainGame.windmillPrice + " Energy | "+this.mainGame.windmillEnergyOutput+" E/s";
@@ -178,7 +187,8 @@ class hotbar extends Phaser.Scene {
                 this.canPlaceOBJ = false;
             }
         });
-
+        this.slowTower.cost = this.mainGame.slowTowerPrice;
+        this.towerGroup.add(this.slowTower);
         this.mageBootstrap.add(this.slowTower);
         this.slowTower.idRequirements = "stickToBottom centerX";
         this.slowTowerText = "Slo Box | "+this.mainGame.slowTowerPrice+" Energy | "+this.mainGame.slowTowerRate+"x Slo-er";
@@ -196,7 +206,8 @@ class hotbar extends Phaser.Scene {
             }
         });
 
-
+        this.tree.cost = this.mainGame.treePrice;
+        this.towerGroup.add(this.tree);
         this.mageBootstrap.add(this.tree);
         this.tree.idRequirements = "stickToBottom centerX";
         this.treeText = "Tree | "+this.mainGame.treePrice+" Energy | "+this.mainGame.treeHealth+" HP";
@@ -214,7 +225,8 @@ class hotbar extends Phaser.Scene {
                 this.canPlaceOBJ = false;
             }
         });
-
+        this.medbay.cost = this.mainGame.medbayPrice
+        this.towerGroup.add(this.medbay);
         this.mageBootstrap.add(this.medbay);
         this.medbay.idRequirements = "stickToBottom centerX";
         this.medbayText = "Medbay | "+this.mainGame.medbayPrice+" Energy | +"+this.mainGame.medbayRate+" HP/s";
@@ -231,7 +243,8 @@ class hotbar extends Phaser.Scene {
                 this.canPlaceOBJ = false;
             }
         });
-
+        this.removeTower.cost = this.mainGame.removeTowerPrice;
+        this.towerGroup.add(this.removeTower);
         this.mageBootstrap.add(this.removeTower);
         this.removeTower.idRequirements = "stickToBottom centerX";
         this.removeTowerText = "Place to Remove a Tower | "+this.mainGame.removeTowerPrice+" Energy";
@@ -337,6 +350,13 @@ class hotbar extends Phaser.Scene {
     }
 
     update(){
+        for(let tower in this.towerGroup.getChildren()){
+            if(this.mainGame.energyValue < tower.cost){
+                tower.setTint(0x666666);
+            } else {
+                tower.clearTint();
+            }
+        }
         // alert("test");
         if(this.mainGame.creativeMode && this.startWaveButton.alpha != 0){
             this.plusWaveButton.alpha = 1;
