@@ -64,9 +64,7 @@ class waveTimer extends Phaser.Scene {
         if(player.highestWave < this.mainGame.waveNumber && !this.mainGame.creativeMode){
                 player.highestWave = this.mainGame.waveNumber;
             }
-        if(!this.creativeMode && playerWithAccount){
-            updateData();
-        }
+        
             if(this.mainGame.creativeMode && !this.pressed){
                 this.timeLeft = 99;
             }
@@ -109,6 +107,7 @@ class waveTimer extends Phaser.Scene {
             }
             this.hotbarScene.canPlace = false;
         } else {
+            
             this.timerText.text = "Wave " + this.mainGame.waveNumber + " In: " + this.timeLeft + "s";
             this.hotbarScene.canPlace = true;
             this.mainGame.oxygen.getChildren().forEach(function(oxygen){
@@ -118,7 +117,9 @@ class waveTimer extends Phaser.Scene {
 
         if(this.finishedSpawning && !this.mainGame.checkIfEnemiesAlive() && this.haventStarted) {
             
-            
+            if(!this.creativeMode && playerWithAccount){
+            updateData();
+        }
             this.haventStarted = false;
             this.mainGame.waveNumber += 1;
             
