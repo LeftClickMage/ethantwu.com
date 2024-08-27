@@ -32,7 +32,7 @@
 <script src="waveTimer.js?version=2.0.1.3"></script>
 
 
-<script src="index.js?version=2.0.1"></script>
+<script src="index.js?version=2.0.1.1"></script>
 
 <style>
 img {
@@ -189,6 +189,13 @@ function formOpen(){
   }
       }
   // alert(window.innerHeight);
+
+              // if(window.location.hostname == "localhost"){
+    window.addEventListener('error', function(event) {
+    alert("YOU GOT AN ERROR! TRY RELOADING THE PAGE! SEND THIS ERROR TO leftclickmage@gmail.com!: \nError:" + event.message + "\nSource: " + event.filename + "\nLine:" + event.lineno + "Column:" + event.colno + "\nError object:" + event.error + "\nError Trace: " + event.error.stack);
+});
+
+// }
 </script>
 </body>
 
