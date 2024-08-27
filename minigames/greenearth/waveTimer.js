@@ -56,9 +56,6 @@ class waveTimer extends Phaser.Scene {
                 this.hotbarScene.tutorialActiveTree = true;
             }
         
-            if(player.highestWave < this.mainGame.waveNumber && !this.mainGame.creativeMode){
-                player.highestWave = this.mainGame.waveNumber;
-            }
             if(this.mainGame.waveNumber == 21 && this.shownVictory == false && !this.mainGame.creativeMode && player.highestWave <= 20){
                 this.mainGame.victoryScreenActive = true;
                 this.scene.launch("victoryScreen");
