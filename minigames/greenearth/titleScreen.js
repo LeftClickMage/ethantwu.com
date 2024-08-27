@@ -131,7 +131,7 @@ this.goGroup.add(this.highestWaveText);
 
         this.victoryBadge = this.add.sprite(config.width-125, this.upgradeRectangleY+160, "victoryBadge").setScale(7);
         this.upgradeGroup.add(this.victoryBadge);
-        this.victoryBadge.idRequirements = "stickToRight";
+        this.victoryBadge.idRequirements = "stickToRight stickToBottom";
         this.victoryBadge.alpha = 0;
 
         this.resetButton = new Button(this, 75, this.upgradeRectangleY + 275, "reset", 3, "down", ()=>{
