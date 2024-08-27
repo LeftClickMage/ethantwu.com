@@ -67,7 +67,9 @@ class waveTimer extends Phaser.Scene {
         if(player.highestWave < this.mainGame.waveNumber && !this.mainGame.creativeMode){
                 player.highestWave = this.mainGame.waveNumber;
             }
-        this.mainGame.calcCash();
+        if(!this.creativeMode && playerWithAccount){
+            updateData();
+        }
             if(this.mainGame.creativeMode && !this.pressed){
                 this.timeLeft = 99;
             }
