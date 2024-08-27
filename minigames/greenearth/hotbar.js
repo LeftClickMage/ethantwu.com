@@ -350,7 +350,7 @@ class hotbar extends Phaser.Scene {
     }
 
     update(){
-        for(let tower in this.towerGroup.getChildren()){
+        for(let tower of this.towerGroup.getChildren()){
             if(this.mainGame.energyValue < tower.cost){
                 tower.setTint(0x666666);
             } else {
