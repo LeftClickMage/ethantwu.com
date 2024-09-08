@@ -1,3 +1,15 @@
 {
-    "display": "standalone",
+  "name": "Minecraftdle",
+  "short_name": "Minecraftdle",
+  "icons": [
+    {
+      "src": "/images/minecraftdleIcon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#000000"
 }
