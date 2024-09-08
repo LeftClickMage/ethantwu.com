@@ -3,12 +3,12 @@
   "short_name": "Minecraftdle",
   "icons": [
     {
-      "src": "/images/minecraftdleIcon.png",
+      "src": "/minigames/images/minecraftdleIcon.png",
       "sizes": "192x192",
       "type": "image/png"
     }
   ],
-  "start_url": "/",
+  "start_url": "/minigames/minecraftdle.html",
   "display": "standalone",
   "background_color": "#000000",
   "theme_color": "#000000"
