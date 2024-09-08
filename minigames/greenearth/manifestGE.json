@@ -1,7 +1,6 @@
 {
   "name": "Green Earth",
-  "short_name": "Green Earth",
-  "start_url": "/",
+  "start_url": "/minigames/greenearth/index.html",
   "display": "standalone",
   "background_color": "#000000",
   "theme_color": "#000000"

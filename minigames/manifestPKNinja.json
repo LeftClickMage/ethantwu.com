@@ -1,14 +1,6 @@
 {
   "name": "Parkour Ninja",
-  "short_name": "Parkour Ninja",
-  "icons": [
-    {
-      "src": "/minigames/images/pkninjaIcon.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    }
-  ],
-  "start_url": "/",
+  "start_url": "/minigames/parkourninja.html",
   "display": "standalone",
   "background_color": "#000000",
   "theme_color": "#000000"
