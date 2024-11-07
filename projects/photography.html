@@ -64,11 +64,21 @@
     </div>
 </div>
 
+<div class="container d-flex justify-content-between mb-5">
 
+    <button onclick="show('.photo')" class="btn btn-dark border border-3 border-light rounded-4">All Photos</button>
 
+    <button onclick="show('.people')" class="btn btn-primary border border-3 border-light rounded-4">People</button>
+
+    <button onclick="show('.animals')" class="btn btn-primary border border-3 border-light rounded-4">Animals</button>
+
+    <button onclick="show('.nature')" class="btn btn-primary border border-3 border-light rounded-4">Nature</button>
+
+</div>
 <div class="row g-5 mb-5 display-flex align-items-center">
 
-    <div class="col-lg-4 col-md-6 col-sm-12">
+
+    <div class="photo col-lg-4 col-md-6 col-sm-12 people nature">
         <div class="container-fluid">
             <div class="border border-light border-5">
                 <img src="photos/zaneBridge.JPG" alt="LOADING" class="img img-fluid" onclick="openImage('photos/zaneBridge.JPG')">
@@ -77,7 +87,7 @@
     </div>
 
 
-    <div class="col-lg-4 col-md-6 col-sm-12">
+    <div class="photo col-lg-4 col-md-6 col-sm-12 people">
         <div class="container-fluid">
             <div class="border border-light border-5">
                 <img src="photos/zanePT.JPG" alt="LOADING" class="img img-fluid" onclick="openImage('photos/zanePT.JPG')">
@@ -85,7 +95,7 @@
         </div>
     </div>
 
-    <div class="col-lg-4 col-md-6 col-sm-12">
+    <div class="photo col-lg-4 col-md-6 col-sm-12 nature">
         <div class="container-fluid">
             <div class="border border-light border-5">
                 <img src="photos/sunsetTP.JPG" alt="LOADING" class="img img-fluid" onclick="openImage('photos/sunsetTP.JPG')">
@@ -93,7 +103,7 @@
         </div>
     </div>
 
-    <div class="col-lg-4 col-md-6 col-sm-12">
+    <div class="photo col-lg-4 col-md-6 col-sm-12 animals">
         <div class="container-fluid">
             <div class="border border-light border-5">
                 <img src="photos/yukiLooking.JPG" alt="LOADING" class="img img-fluid" onclick="openImage('photos/yukiLooking.JPG')">
@@ -103,15 +113,30 @@
 
 
 
-    <div class="col-lg-4 col-md-6 col-sm-12">
+    <div class="photo col-lg-4 col-md-6 col-sm-12 nature">
         <div class="container-fluid">
             <div class="border border-light border-5">
                 <img src="photos/skyTP.JPG" alt="LOADING" class="img img-fluid" onclick="openImage('photos/skyTP.JPG')">
             </div>
         </div>
     </div>
+    
+    <div class="photo col-lg-4 col-md-6 col-sm-12 nature">
+        <div class="container-fluid">
+            <div class="border border-light border-5">
+                <img src="photos/TPSky.JPG" alt="LOADING" class="img img-fluid" onclick="openImage('photos/TPSky.JPG')">
+            </div>
+        </div>
+    </div>
 
-
+      
+    <div class="photo col-lg-4 col-md-6 col-sm-12 people">
+        <div class="container-fluid">
+            <div class="border border-light border-5">
+                <img src="photos/zaneTPP.JPG" alt="LOADING" class="img img-fluid" onclick="openImage('photos/zaneTPP.JPG')">
+            </div>
+        </div>
+    </div>
 
     
 </div>
@@ -144,6 +169,15 @@
     function openImage(filePath){
         document.getElementById('imagePopup').setAttribute("src", filePath)
         document.getElementById('imgPopup-container').style.display= "block";
+    }
+    function show(className){
+        document.body.querySelectorAll('.photo').forEach((element)=>{
+            element.style.display="none";
+        });
+
+        document.body.querySelectorAll(className).forEach((element)=>{
+            element.style.display="";
+        });
     }
 </script>
 
