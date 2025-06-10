@@ -1,61 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="icon" type="image/jpeg" href="public/logos/lcm-logo.png">
-    <title>Ethan Twu - Home Page</title>
-    <meta name="description" content="Ethan is a high school student in MHS, and goes by many online aliases. He owns and manages many youtube channels, websites, and has even started a company!">
-    <meta name="keywords" content="Ethan Twu, Ethan Twu Millburn NJ, LeftClickMage, YukiThePomsky, MLightning, FairOPShotgun">
-    <link rel="canonical" href="https://ethantwu.com/">
-    <link rel="stylesheet" href="public/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/public/fonts/ubuntu.css?version=1.0.1">
-    <link rel="stylesheet" href="/public/slideAnimations.css?version=1.0.2">
-    <script src="public/js/bootstrap.bundle.min.js"></script>
-    <style>
 
-    html,body{
-      font-family:'Ubuntu', sans-serif;
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="icon" type="image/jpeg" href="public/logos/lcm-logo.png">
+  <title>Ethan Twu - Home Page</title>
+  <meta name="description"
+    content="Ethan is a high school student in MHS, and goes by many online aliases. He owns and manages many youtube channels, websites, and has even started a company!">
+  <meta name="keywords"
+    content="Ethan Twu, Ethan Twu Millburn NJ, LeftClickMage, YukiThePomsky, MLightning, FairOPShotgun">
+  <link rel="canonical" href="https://ethantwu.com/">
+  <link rel="stylesheet" href="public/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/public/fonts/ubuntu.css?version=1.0.1">
+  <link rel="stylesheet" href="/public/slideAnimations.css?version=1.0.2">
+  <script src="public/js/bootstrap.bundle.min.js"></script>
+  <style>
+    html,
+    body {
+      font-family: 'Ubuntu', sans-serif;
     }
-    .codeGlow{
-        transition:0.2s;
-	transform: rotate3d(0.8, 1, -0.2, 35deg);
-        -webkit-filter: drop-shadow(0px 0px 15px #FFFFFF);
-        filter: drop-shadow(0px 0px 15px #FFFFFF);
+
+    .codeGlow {
+      transition: 0.2s;
+      transform: rotate3d(0.8, 1, -0.2, 35deg);
+      -webkit-filter: drop-shadow(0px 0px 15px #FFFFFF);
+      filter: drop-shadow(0px 0px 15px #FFFFFF);
     }
-    .codeGlow:hover{
+
+    .codeGlow:hover {
       transform: rotate3d(0.8, 1, -0.2, 0deg);
-      transition:0.2s;
+      transition: 0.2s;
     }
-    .cutOffTop{
-      object-fit:cover;
+
+    .cutOffTop {
+      object-fit: cover;
     }
 
     .outline-text-emerald {
-  
-  text-shadow: -.04em -.04em 0 #50C878, .04em -.04em 0 #50C878, -.04em .04em 0 #50C878, .04em .04em 0 #50C878;
+
+      text-shadow: -.04em -.04em 0 #50C878, .04em -.04em 0 #50C878, -.04em .04em 0 #50C878, .04em .04em 0 #50C878;
     }
-     .outline-text-red {
-  
-  text-shadow: -.04em -.04em 0 #FF0000, .04em -.04em 0 #FF0000, -.04em .04em 0 #FF0000, .04em .04em 0 #FF0000;
+
+    .outline-text-red {
+
+      text-shadow: -.04em -.04em 0 #FF0000, .04em -.04em 0 #FF0000, -.04em .04em 0 #FF0000, .04em .04em 0 #FF0000;
     }
+
     .outline-text-white {
-  text-shadow: -.04em -.04em 0 #FFF, .04em -.04em 0 #FFF, -.04em .04em 0 #FFF, .04em .04em 0 #FFF;
+      text-shadow: -.04em -.04em 0 #FFF, .04em -.04em 0 #FFF, -.04em .04em 0 #FFF, .04em .04em 0 #FFF;
     }
+
     .glow {
-  text-shadow: 0 0 12px #50C878, 0 0 16px #50C878, 0 0 10px #50C878;
- } 
+      text-shadow: 0 0 12px #50C878, 0 0 16px #50C878, 0 0 10px #50C878;
+    }
+  </style>
 
-    </style>	
+</head>
 
-  </head>
-  <body>
-    <!-- Nav Code -->
-    <script src="/public/navigation/homeNav.js?version=2.2.1"></script>
-    <script src="/public/downtime.js"></script>
-    <!-- three.js package -->
-    <script async src="/public/js/moduleChecker.js"></script>
-	  <script type="importmap">
+<body>
+  <!-- Nav Code -->
+  <script src="/public/navigation/homeNav.js?version=2.3.1"></script>
+  <script src="/public/downtime.js"></script>
+  <!-- three.js package -->
+  <script async src="/public/js/moduleChecker.js"></script>
+  <script type="importmap">
 		{
 			"imports": {
 				"three": "/public/js/three/three.js",
@@ -63,195 +72,258 @@
 			}
 		}
 	  </script>
-    <!-- Background Code-->
-    <link rel="stylesheet" href="/public/backgrounds/background.css">
-    <canvas id = "overallBackground" class="background" style="z-index:-1; top:0; left:0;"></canvas>
-    <script type="module" src="/public/backgrounds/index.js?version=1.0.1"></script>
+  <!-- Background Code-->
+  <link rel="stylesheet" href="/public/backgrounds/background.css">
+  <canvas id="overallBackground" class="background" style="z-index:-1; top:0; left:0;"></canvas>
+  <script type="module" src="/public/backgrounds/index.js?version=1.0.1"></script>
 
 
-        <div class="container text-center" style="z-index:18; margin-top:15vh; margin-bottom:25vh;">
-          <p class="display-1 text-white text-center fw-bold mt-5 glow slide-in-top">Ethan Twu</p>
+  <div class="container text-center" style="z-index:18; margin-top:15vh; margin-bottom:25vh;" id="titleContainer">
 
-
-
- <p class="display-6 outline-text-white fw-bold slide-in-left slideTextMain" style="animation-delay: .8s; opacity:0;" onclick="changeToggle('developerDesc')">developer</p>
-            <p id="developerDesc" style="display:none;" class="text-light container">Ethan loves developing, whether it be webpages or <a class="link-danger" href="minigames/index.html">games</a>, he loves it all! Learn how to make your own website here: <a class="link-danger" href="classes/websitecreation.html">FREE WEBSITE HERE!</a>!</p>
-
-
-   <p class="display-6 outline-text-white fw-bold slide-in-right slideTextMain" style="animation-delay: 0.85s; opacity:0;" onclick="changeToggle('engineerDesc')">engineer</p>
-            <p id="engineerDesc" style="display:none;" class="text-light container">Ethan has done work on an <a class="link-danger" href="projects/arduino.html">Arduino</a> and mechanical keyboards. He even knows how to solder!</p>
-
-
-<p class="display-6 outline-text-white fw-bold slide-in-left slideTextMain" style="animation-delay: 0.9s; opacity:0;" onclick="changeToggle('influencerDesc')">influencer</p>
-            <p id="influencerDesc" style="display:none;" class="text-light container">Ethan is an influencer, no doubt about it. But what type of influencer is he? Well all types. Check them out here: <a class="link-danger" href="media.html">Media Page</a>!</p>
+    <p class="display-1 text-white text-center fw-bold mt-5 glow slide-in-top">Ethan Twu</p>
+  </div>
 
 
 
-             <p class="display-6 outline-text-white fw-bold slide-in-right slideTextMain" style="animation-delay: 0.95s; opacity:0;" onclick="changeToggle('filmDesc')">film editor</p>
-            <p id="filmDesc" style="display:none;" class="text-light container">Ethan enjoys filming, editing, post production, VFX, and anything else to do with film creation, because it allows him to be creative. One of his many youtube channels is: <a class="link-danger" onclick="window.open('https://youtube.com/leftclickmage')">LeftClickMage</a>, where you can see some of his editing and entertainment skills! He has also done editing as an intern for Millburn Ed Foundation, and you can see his work here: <a class="link-danger" onclick="window.open('mef/videos.html')">internship work</a>.</p>
+  <div class="container text-center">
+    <a href="mailto:owner@ethantwu.com" class="btn w-100 btn-danger border-3 border-light rounded fw-bold">CONTACT
+      ME</a>
+  </div>
 
-
-            <p class="display-6 outline-text-white fw-bold slide-in-left slideTextMain" style="animation-delay: 1.00s; opacity:0;" onclick="changeToggle('videodesc')">cinematographer</p>
-            <p id="videodesc" style="display:none;" class="text-light container">Ethan loves filming. He mainly uses his iPhone to shoot in Apple Log, along with a gimbal and a few filters. Getting the perfect composition, lighting, and movement is key for the best shot.</p>
-
-
-            <p class="display-6 outline-text-white fw-bold slide-in-right slideTextMain" style="animation-delay: 1.05s; opacity:0;" onclick="changeToggle('photodesc')">photographer</p>
-            <p id="photodesc" style="display:none;" class="text-light container">Ethan takes photos of everything he thinks would be cool to capture. Whether it be photos of dogs, people, or pure nature. He shoots in a RAW file format, and then color grades it after! View his best photos <a class="link-danger" onclick="window.open('/projects/photography.html')">here</a>!</p>
-
-  <p class="display-6 outline-text-white fw-bold slide-in-left slideTextMain" style="animation-delay: 1.1s; opacity:0;" onclick="changeToggle('entreDesc')">entrepreneur</p>
-            <p id="entreDesc" style="display:none;" class="text-light container">Ethan is a big fan of entrepreneurship! Creating new businessess has always been a dream for him. As a freshman, he sold potato chips, a sophmore he sold custom keyboards, a junior he gave people lessons, etc.. you get the point. Let's see what the future has in store!</p>
+  <div class="container-fluid text-center d-flex justify-content-center flex-wrap gap-4" style="margin-top:5vh;" id="codeContainer">
+  <!-- CodeElementContainer -->
+  </div>
 
 
 
-
-
-            <p class="display-6 outline-text-white fw-bold slide-in-right slideTextMain" style="animation-delay: 1.15s; opacity:0;" onclick="changeToggle('teacherDesc')">teacher</p>
-            <p id="teacherDesc" style="display:none;" class="text-light container">Ethan loves to help people learn something new! That is why he has his own set of classes, geared towards allowing people to make new memories. Check them out here: <a href="classes/index.html" class="link-danger">Classes</a>!</p>
-
-
-
-
-            <p class="display-6 outline-text-white fw-bold slide-in-left slideTextMain" style="animation-delay: 1.20s; opacity:0;" onclick="changeToggle('lifeguardDesc')">lifeguard</p>
-            <p id="lifeguardDesc" style="display:none;" class="text-light container">Ethan was a lifeguard at the Millburn Pool in Gero Park for 2 years. He always made sure people were following the rules, and has even saved many lives!</p>
-
-            <p class="display-6 outline-text-white fw-bold slide-in-right slideTextMain" style="animation-delay: 1.25s; opacity:0;" onclick="changeToggle('artistDesc')">artist</p>
-            <p id="artistDesc" style="display:none;" class="text-light container">Along with creating his games, <a class="link-danger" href="minigames/greenearth/index.html">Green Earth</a> and <a class="link-danger" href="https://cubepvp.ethantwu.com">Cube PVP</a>, Ethan learned pixel art and 3D modeling. He also learned lighting, shading, and perspective when drawing! Using these skills, he created <a class="link-danger" href="mef/rocktoberfest.html">3D Rocktoberfest</a>, as an intern for the MEF!</p>
-
-
-
-                <p class="display-6 outline-text-white fw-bold slide-in-left slideTextMain" style="animation-delay: 1.3s; opacity:0;" onclick="changeToggle('martialArtistDesc')">martial artist</p>
-            <p id="martialArtistDesc" style="display:none;" class="text-light container">Ethan is a self-taught mixed martial artist! His progression is here: <a class="link-danger" onclick="window.open('https://youtube.com/@leftclickmagetkd')">LCMTKD</a>, and learn from him here: <a class="link-danger" href="classes/taekwondo.html">TKD Lessons</a>!</p>
-        </div>
-
-        
-
-        <div class="container text-center">
-          <a href="mailto:owner@ethantwu.com" class="btn w-100 btn-danger border-3 border-light rounded fw-bold">CONTACT ME</a>
-        </div>
-
-    <div class="container-fluid text-center d-flex justify-content-center flex-wrap gap-4" style="margin-top:5vh;">
-    <div class="codeGlow">
-    <p class="text-white fw-bold" style="font-size:20px;">JavaScript</p>
-      <img src="/public/logos/javascript.jpg" height="100px">
-    </div>
-    <div class="codeGlow">
-    <p class="text-white fw-bold" style="font-size:20px;">HTML</p>
-      <img src="/public/logos/html.png" height="100px">
-    </div>
-    <div class="codeGlow">
-    <p class="text-white fw-bold" style="font-size:20px;">CSS</p>
-      <img src="/public/logos/css.png" height="100px">
-    </div>
-    
-
-    <div class="codeGlow"> 
-    <p class="text-white fw-bold" style="font-size:20px;">ThreeJS</p>
-      <img src="/public/logos/three.png" height="100px">
-    </div>
-    
-    <div class="codeGlow">
-    <p class="text-white fw-bold" style="font-size:20px;">PhaserJS</p>
-      <img src="/public/logos/phaserjs.png" height="100px">
-    </div>
-    
-    
-    <div class="codeGlow">
-    <p class="text-white fw-bold" style="font-size:20px;">Java</p>
-      <img src="/public/logos/java.png" height="100px">
-    </div>
-    
-    <div class="codeGlow">
-    <p class="text-white fw-bold" style="font-size:20px;">Python</p>
-      <img src="/public/logos/python.png" height="100px">
-    </div>
-    
-    <div class="codeGlow">
-    <p class="text-white fw-bold" style="font-size:20px;">ReactJS</p>
-      <img src="/public/logos/reactjs.png" height="100px">
-    </div>
-    
-    <div class="codeGlow">
-    <p class="text-white fw-bold" style="font-size:20px;">C++</p>
-      <img src="/public/logos/c++.png" height="100px">
-    </div>
-    </div>
-
-
-
-<!-- NEWS -->
-    <div class="container-fluid text-center" style="margin-top:35vh;">
+  <!-- NEWS -->
+  <div class="container-fluid text-center" style="margin-top:35vh;">
     <p class="display-1 text-white text-center fw-bold glowWhite slide-in-top">What's New?</p>
+  </div>
+
+
+  <div class="container mt-5">
+    <div class="row g-5 slide-in-bottom" style="animation-delay:0.35s; opacity:0;">
+
+      <div class="card container-fluid p-0 col-md-5 text-center border-3 border-light" style="background-color: black;">
+        <img src="minigames/images/cubepvp.jpg" class="card-img-top img-fluid">
+        <div class="card-body d-flex flex-column text-white">
+          <h5 class="card-title mt-1 fw-bold">Cube PVP</h5>
+          <p class="card-text">Try out this NEW 3D Multiplayer Shooter Game created by Ethan! Play with your friends
+            online, to see who is the best Cube!</p>
+          <a href="https://cubepvp.ethantwu.com" class="btn btn-danger mt-auto">Play Now!</a>
+        </div>
+      </div>
+
+      <div class="card container-fluid p-0 col-md-5 text-center border-3 border-light" style="background-color: black;">
+        <img src="projects/photoBG.jpg" class="card-img-top img-fluid">
+        <div class="card-body d-flex flex-column text-white">
+          <h5 class="card-title mt-1 fw-bold">Photography</h5>
+          <p class="card-text">View Ethan's Best Photos, all taken on an iPhone!</p>
+          <a href="/projects/photography.html" class="btn btn-danger mt-auto">View Them Now!</a>
+        </div>
+      </div>
+
     </div>
 
 
-<div class="container mt-5">
-  <div class="row g-5 slide-in-bottom" style="animation-delay:0.35s; opacity:0;">
-  
-    <div class="card container-fluid p-0 col-md-5 text-center border-3 border-light" style="background-color: black;">
-    <img src="minigames/images/cubepvp.jpg" class="card-img-top img-fluid">
-      <div class="card-body d-flex flex-column text-white">
-        <h5 class="card-title mt-1 fw-bold">Cube PVP</h5>
-        <p class="card-text">Try out this NEW 3D Multiplayer Shooter Game created by Ethan! Play with your friends online, to see who is the best Cube!</p>
-        <a href="https://cubepvp.ethantwu.com" class="btn btn-danger mt-auto">Play Now!</a>
-      </div>
-    </div>
+    <div class="row g-5 mt-2 slide-in-bottom" style="animation-delay:0.6s; opacity:0;">
 
-    <div class="card container-fluid p-0 col-md-5 text-center border-3 border-light" style="background-color: black;">
-    <img src="projects/photoBG.jpg" class="card-img-top img-fluid">
-      <div class="card-body d-flex flex-column text-white">
-        <h5 class="card-title mt-1 fw-bold">Photography</h5>
-        <p class="card-text">View Ethan's Best Photos, all taken on an iPhone!</p>
-        <a href="/projects/photography.html" class="btn btn-danger mt-auto">View Them Now!</a>
+      <div class="card container-fluid p-0 col-md-5 text-center border-3 border-light" style="background-color: black;">
+        <img src="classes/photos/webdevwhat.jpg" class="card-img-top img-fluid">
+        <div class="card-body d-flex flex-column text-white">
+          <h5 class="card-title mt-1 fw-bold">Website Creation</h5>
+          <p class="card-text">Ethan has always loved developing, and now he has the chance to share his knowledge with
+            you. Get your online presence created FOR FREE!</p>
+          <a href="classes/websitecreation.html" class="btn btn-danger mt-auto">Create your OWN website!</a>
+        </div>
       </div>
+
+      <div class="card container-fluid p-0 col-md-5 text-center border-3 border-light" style="background-color: black;">
+        <img src="SFThumb.jpg" class="card-img-top img-fluid">
+        <div class="card-body d-flex flex-column text-white">
+          <h5 class="card-title mt-1 fw-bold">Super Four - First Contact</h5>
+          <p class="card-text">Watch Ethan Twu's most recent Film!</p>
+          <a href="projects/shortfilms.html" class="btn btn-danger mt-auto">Watch Now!</a>
+        </div>
+      </div>
+
     </div>
 
   </div>
 
-
-  <div class="row g-5 mt-2 slide-in-bottom" style="animation-delay:0.6s; opacity:0;">
-
-    <div class="card container-fluid p-0 col-md-5 text-center border-3 border-light" style="background-color: black;">
-    <img src="classes/photos/webdevwhat.jpg" class="card-img-top img-fluid">
-      <div class="card-body d-flex flex-column text-white">
-        <h5 class="card-title mt-1 fw-bold">Website Creation</h5>
-        <p class="card-text">Ethan has always loved developing, and now he has the chance to share his knowledge with you. Get your online presence created FOR FREE!</p>
-        <a href="classes/websitecreation.html" class="btn btn-danger mt-auto">Create your OWN website!</a>
-      </div>
-    </div>
-
-    <div class="card container-fluid p-0 col-md-5 text-center border-3 border-light" style="background-color: black;">
-    <img src="SFThumb.jpg" class="card-img-top img-fluid">
-      <div class="card-body d-flex flex-column text-white">
-        <h5 class="card-title mt-1 fw-bold">Super Four - First Contact</h5>
-        <p class="card-text">Watch Ethan Twu's most recent Film!</p>
-        <a href="projects/shortfilms.html" class="btn btn-danger mt-auto">Watch Now!</a>
-      </div>
-    </div>
-
+  <div class="container-fluid text-center my-5 slide-in-bottom" style="animation-delay:0.9s; opacity:0;">
+    <button class="btn-dark border-3 border-light backgroundGlow p-2"
+      onclick="window.open('https://github.com/LeftClickMage/ethantwu.com')">View Website Source Code!</button>
   </div>
 
-</div>
 
-<div class="container-fluid text-center my-5 slide-in-bottom" style="animation-delay:0.9s; opacity:0;">
-  <button class="btn-dark border-3 border-light backgroundGlow p-2" onclick="window.open('https://github.com/LeftClickMage/ethantwu.com')">View Website Source Code!</button>
-</div>
+  <script>
+
+    var slideInLeft = true;
+    var slideInDelay = .8;
+    async function changeToggle(id) {
+      var element = document.getElementById(id);
+      if (element.style.display == "none") {
+        element.style.display = "";
+        element.classList.add('slide-in-top');
+      } else {
+        element.style.display = "none";
+        element.classList.remove('slide-in-top');
+      }
+    }
+
+    function createCodeElement(title,href){
+      var codeElement = document.createElement("div");
+      codeElement.classList.add("codeGlow");
+      var codeText = document.createElement("p");
+      codeText.classList.add("text-white", "fw-bold");
+      codeText.style = "font-size:20px;";
+      codeText.innerHTML = title;
+      var codeImage = document.createElement("img");
+      codeImage.src = "/public/logos/" + href;
+      codeImage.style.height = "100px";
+      codeElement.appendChild(codeText);
+      codeElement.appendChild(codeImage);
+      document.getElementById("codeContainer").appendChild(codeElement);
+    }
 
 
-<script>
+    function createMainTitle(title, description) {
+      var titleTag = document.createElement("p");
+      slideInLeft ?
+        titleTag.classList.add("display-6", "outline-text-white", "fw-bold", "slide-in-left", "slideTextMain")
+        :
+        titleTag.classList.add("display-6", "outline-text-white", "fw-bold", "slide-in-right", "slideTextMain")
+        ;
+      slideInLeft = !slideInLeft;
 
-async function changeToggle(id){
-  var element = document.getElementById(id);
-  if (element.style.display == "none"){
-  element.style.display = "";
-  element.classList.add('slide-in-top'); 
-  } else {
-     element.style.display = "none";
-  element.classList.remove('slide-in-top'); 
-  }
-}
+      titleTag.setAttribute("style", "animation-delay: " + slideInDelay + "s; opacity:0;");
+      titleTag.innerHTML = title;
+      titleTag.setAttribute("onclick", "changeToggle('" + title + "Description')");
+
+      var descriptionTag = document.createElement("p");
+      descriptionTag.setAttribute("id", title + "Description");
+      descriptionTag.setAttribute("style", "display:none;");
+      descriptionTag.classList.add("text-light", "container");
+      descriptionTag.appendChild(description);
 
 
-</script>
-  </body>
+      document.getElementById("titleContainer").appendChild(titleTag);
+      document.getElementById("titleContainer").appendChild(descriptionTag);
+
+      slideInDelay += 0.05;
+    }
+    function createTitleElement(firstText, link1 = "", secondText = "", link2 = "", thirdText = "", link3 = "", fourthText = ""){
+      var titleElement = document.createElement("span");
+      titleElement.innerHTML = firstText;
+      var linkElement = document.createElement("a");
+      linkElement.classList.add("link-danger");
+      linkElement.innerHTML = link1.text;
+      linkElement.setAttribute("href", link1.href);
+      titleElement.appendChild(linkElement);
+      titleElement.innerHTML += secondText;
+
+      if(link2.text !== undefined){
+        var linkElement = document.createElement("a");
+        linkElement.classList.add("link-danger");
+        linkElement.innerHTML = link2.text;
+        linkElement.setAttribute("href", link2.href);
+        titleElement.appendChild(linkElement);
+        titleElement.innerHTML += thirdText;
+      }
+      if(link3.text !== undefined){
+        var linkElement = document.createElement("a");
+        linkElement.classList.add("link-danger");
+        linkElement.innerHTML = link3.text;
+        linkElement.setAttribute("href", link3.href);
+        titleElement.appendChild(linkElement);
+        titleElement.innerHTML += fourthText;
+      }
+
+
+
+      return titleElement;
+    }
+
+    //CodeElements
+    createCodeElement("JavaScript", "javascript.jpg");
+    createCodeElement("HTML", "html.png");
+    createCodeElement("CSS", "css.png");
+    createCodeElement("ThreeJS", "three.png");
+    createCodeElement("PhaserJS", "phaserjs.png");
+    createCodeElement("Java", "java.png");
+    createCodeElement("Python", "python.png");
+    createCodeElement("ReactJS", "reactjs.png");
+    createCodeElement("C++", "c++.png");
+
+
+    //MainTitles
+    createMainTitle(
+      "developer", 
+      createTitleElement(
+        "Ethan loves developing, whether it be webpages or ", 
+        {text: "games", href: "minigames/index.html"},
+        ", he loves it all!"
+      )
+    );
+    createMainTitle(
+      "engineer", 
+      createTitleElement(
+        "Ethan has done work on an ", 
+        {text: "Arduino", href: "projects/arduino.html"},
+        " and mechanical keyboards. He even knows how to solder!"
+      )
+    );
+    createMainTitle(
+      "influencer", 
+      createTitleElement(
+        "Ethan is an influencer, no doubt about it. But what type of influencer is he? Well all types. Check them out here: ", 
+        {text: "Media Page", href: "media.html"}
+      )
+    );
+    createMainTitle(
+      "filmmaker", 
+      createTitleElement(
+        "Ethan loves to create films, as it allows him to be creative. Watch his ", 
+        {text: "Short Films", href: "/projects/shortfilms.html"},
+        " here."
+      )
+    );
+    createMainTitle(
+      "cinematographer", 
+      createTitleElement(
+        "Ethan loves filming. He mainly uses his iPhone to shoot in Apple Log, along with a gimbal and a few filters. Getting the perfect composition, lighting, and movement is key for the best shot. He also takes ",
+        {text: "here", href: "/projects/photography.html"},
+        "."
+      )
+    );
+    createMainTitle(
+      "entrepreneur", 
+      createTitleElement(
+        "Ethan is a big fan of entrepreneurship, as creating new businessess has always been a dream for him. As a freshman, he sold potato chips, a sophomore he sold custom keyboards, a junior he gave people lessons- let's see what the future has in store!"
+      )
+    );
+    createMainTitle(
+      "lifeguard", 
+      createTitleElement(
+        "Ethan was a lifeguard at the Millburn Pool in Gero Park for 2 years. He always made sure people were following the rules, and has even saved many lives!"
+      )
+    );
+    createMainTitle(
+      "artist", 
+      createTitleElement(
+        "Along with creating his games, ",
+        {text: "Green Earth", href: "/minigames/greenearth/index.html"},
+        " and ",
+        {text: "Cube PVP", href: "https://cubepvp.ethantwu.com"},
+        ", Ethan learned pixel art and 3D modeling. He also learned lighting, shading, and perspective when drawing!"
+      )
+    );
+
+
+
+  </script>
+</body>
+
 </html>
-

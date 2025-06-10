@@ -68,7 +68,7 @@ document.write(`
             <div class="navbar-collapse collapse" id="collapse">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link font-increase-2x" href="/classes/index.html" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ethan's Classes" id="classes">Classes</a>
+                        <a class="nav-link font-increase-2x" href="/projects/shortfilms.html" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ethan's Short Films" id="shortfilms">Short Films</a>
                     </li>
                   
                     <li class="nav-item">
@@ -101,8 +101,8 @@ if(document.title == "Ethan Twu - FairOPBot"){
     document.getElementById('minigames').classList.add("active");
 } else if(document.title == "Ethan Twu - Projects"){
     document.getElementById('projects').classList.add("active");
-} else if(document.title == "Ethan Twu - Classes"){
-    document.getElementById('classes').classList.add("active");
+} else if(document.title == "Ethan Twu's Projects - Short Films"){
+    document.getElementById('shortfilms').classList.add("active");
 }
 
   
