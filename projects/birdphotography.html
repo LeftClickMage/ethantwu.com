@@ -78,6 +78,24 @@
 </div>
 
 <script>
+    function removeBorder(){
+        console.log("Ran removeBorder() Check.");
+        
+        var images = document.querySelectorAll("img.border-danger");
+        console.log(images.length + " photos still loading.");
+        if(images.length == 0){
+            clearInterval(removeBorderInterval);
+            console.log("Stopped removeBorder() Check.")
+        }
+        images.forEach((image) => {
+            if(image.complete){
+                image.classList.remove("border", "border-danger", "border-5");
+            }
+        });
+    }
+
+    var removeBorderInterval = setInterval(removeBorder, 1000);
+
     function openImage(filePath){
         document.getElementById('imagePopup').setAttribute("src", filePath)
         document.getElementById('imgPopup-container').style.display= "block";
@@ -94,7 +112,10 @@
         borderContainer.classList.add("border", "border-light", "border-5");
         
         var image = document.createElement("img");
-        image.src = "photos/birds/" + source;
+        var sourceLowRes = source.split(".");
+        image.src = "photos/birds/" + sourceLowRes[0] + " copy." + sourceLowRes[1];
+        image.classList.add("border", "border-3", "border-danger");
+        image.setAttribute("onLoad", "this.src = 'photos/birds/" + source + "'; this.onload = new Function();");
         image.alt= "LOADING";
         image.classList.add("img", "img-fluid");
         image.setAttribute("onclick", "openImage('photos/birds/" + source + "');");
