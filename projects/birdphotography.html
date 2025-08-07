@@ -79,17 +79,23 @@
 
 <script>
     function removeBorder(){
+        
         console.log("Ran removeBorder() Check.");
         
         var images = document.querySelectorAll("img.border-danger");
         console.log(images.length + " photos still loading.");
         if(images.length == 0){
             clearInterval(removeBorderInterval);
-            console.log("Stopped removeBorder() Check.")
+            console.log("Stopped removeBorder() Check.");
         }
+        
         images.forEach((image) => {
+            var imageURL = image.src.split("/");
+            imageURL = imageURL[imageURL.length - 1];
+            
             if(image.complete){
                 image.classList.remove("border", "border-danger", "border-5");
+                image.setAttribute("onclick", "openImage('photos/birds/" + imageURL + "')");
             }
         });
     }
@@ -118,7 +124,6 @@
         image.setAttribute("onLoad", "this.src = 'photos/birds/" + source + "'; this.onload = new Function();");
         image.alt= "LOADING";
         image.classList.add("img", "img-fluid");
-        image.setAttribute("onclick", "openImage('photos/birds/" + source + "');");
         borderContainer.appendChild(image);
         
         var birdName = document.createElement("p");
