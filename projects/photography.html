@@ -89,6 +89,8 @@
 </div>
 
 <script>
+
+
     function openImage(filePath){
         document.getElementById('imagePopup').setAttribute("src", filePath)
         document.getElementById('imgPopup-container').style.display= "block";
@@ -103,9 +105,30 @@
         });
     }
 
-    function removeBorder(object){
-        object.classList.remove("border", "border-light", "border-5");
+    function removeBorder(){
+        
+        console.log("Ran removeBorder() Check.");
+        
+        var images = document.querySelectorAll("img.border-danger");
+        console.log(images.length + " photos still loading.");
+        if(images.length == 0){
+            clearInterval(removeBorderInterval);
+            console.log("Stopped removeBorder() Check.")
+        }
+        images.forEach((image) => {
+            var imageURL = image.src.split("/");
+            imageURL = imageURL[imageURL.length-1].split("copy");
+
+            if(imageURL.length == 1){
+                image.classList.remove("border", "border-danger", "border-5");
+            }
+        });
+        
+        
+        
     }
+
+    var removeBorderInterval = setInterval(removeBorder, 3000);
 
     function createPhotoElement(source, category, secondCategory){
         
@@ -121,7 +144,7 @@
         var sourceLowRes = source.split(".");
         image.src = "photos/" + sourceLowRes[0] + " copy." + sourceLowRes[1];
         image.classList.add("border", "border-3", "border-danger");
-        image.setAttribute("onLoad", "this.src = 'photos/" + source + "'; this.onload = removeBorder(this);");
+        image.setAttribute("onLoad", "this.src = 'photos/" + source + "'; this.onload = new Function();");
         image.alt= "LOADING";
         image.classList.add("img", "img-fluid");
         image.setAttribute("onclick", "openImage('photos/" + source + "');");
