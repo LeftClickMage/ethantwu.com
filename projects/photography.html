@@ -116,13 +116,9 @@
             console.log("Stopped removeBorder() Check.")
         }
         images.forEach((image) => {
-            console.log(image.complete);
-            // var imageURL = image.src.split("/");
-            // imageURL = imageURL[imageURL.length-1].split("copy");
-
-            // if(imageURL.length == 1){
-            //     image.classList.remove("border", "border-danger", "border-5");
-            // }
+            if(image.complete){
+                image.classList.remove("border", "border-danger", "border-5");
+            }
         });
         
         
