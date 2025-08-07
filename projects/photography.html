@@ -103,6 +103,10 @@
         });
     }
 
+    function removeBorder(object){
+        object.classList.remove("border", "border-light", "border-5");
+    }
+
     function createPhotoElement(source, category, secondCategory){
         
         var container = document.createElement("div");
@@ -117,7 +121,7 @@
         var sourceLowRes = source.split(".");
         image.src = "photos/" + sourceLowRes[0] + " copy." + sourceLowRes[1];
         image.classList.add("border", "border-3", "border-danger");
-        image.setAttribute("onLoad", "this.src = 'photos/" + source + "'; this.onload = new Function(); this.classList.remove('border', 'border-danger', 'border-danger');");
+        image.setAttribute("onLoad", "this.src = 'photos/" + source + "'; this.onload = removeBorder(this);");
         image.alt= "LOADING";
         image.classList.add("img", "img-fluid");
         image.setAttribute("onclick", "openImage('photos/" + source + "');");
