@@ -114,7 +114,18 @@
         borderContainer.classList.add("border", "border-light", "border-5");
         
         var image = document.createElement("img");
-        image.src = "photos/" + source;
+        if(category == null || category == "1"){
+            var sourceLowRes = source.split(".");
+            image.src = "photos/" + sourceLowRes[0] + " copy." + sourceLowRes[1];
+            
+        } else {
+            image.src = "photos/" + source;
+        }
+
+        if(category == "1"){
+            image.setAttribute("onLoad", "this.src = 'photos/" + source + "'; this.onload = new Function();");
+        }
+        
         image.alt= "LOADING";
         image.classList.add("img", "img-fluid");
         image.setAttribute("onclick", "openImage('photos/" + source + "');");
@@ -151,7 +162,7 @@
     createPhotoElement("yukiFX30.JPG", "animals");
     createPhotoElement("sarahNNO.JPG", "people");
     createPhotoElement("nnoPoliceBack.jpg");
-    createPhotoElement("nnoTruckBack.jpg");
+    createPhotoElement("nnoTruckBack.jpg", "1");
 </script>
 
 
