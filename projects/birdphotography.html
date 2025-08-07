@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" type="image/jpeg" href="../public/logos/lcm-logo.png">
+    <title>Ethan Twu's Projects - Bird Photography</title>
+    <meta name="description" content="All of Ethan's bird photos!">
+    <meta name="keywords" content="Ethan's Photography, Ethan Twu Millburn NJ, LeftClickMage, bird photography, MLightning, FairOPShotgun, Photography, LeftClickMage Films">
+    <link rel="canonical" href="https://ethantwu.com/projects/photography">
+    <link rel="stylesheet" href="../public/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/public/fonts/ubuntu.css?version=1.0.1">
+    <link rel="stylesheet" href="/public/slideAnimations.css?version=1.0.1">
+    <script src="../public/js/bootstrap.bundle.min.js"></script>  
+<style>
+   
+    * {
+        font-family:'Ubuntu', sans-serif;
+    }
+    .glow {
+  text-shadow: 0 0 12px #aeb9d9, 0 0 16px #aeb9d9, 0 0 10px #aeb9d9;
+ }
+ .outline-text-white {
+  text-shadow: -.04em -.04em 0 #FFF, .04em -.04em 0 #FFF, -.04em .04em 0 #FFF, .04em .04em 0 #FFF;
+    }
+    .outline-text-black {
+  text-shadow: -.06em -.06em 0 #000, .06em -.06em 0 #000, -.06em .06em 0 #000, .06em .06em 0 #000;
+    }
+.resizeWidth{
+    width:500px;
+}
+</style>
+
+</head>
+
+<body>
+    <!-- Nav Code -->
+    <script src="/public/navigation/homeNav.js?version=2.3.1"></script>
+    <script src="/public/downtime.js"></script>
+    <!-- three.js package -->
+    <script async src="/public/js/moduleChecker.js"></script>
+	  <script type="importmap">
+		{
+			"imports": {
+				"three": "/public/js/three/three.js",
+				"three/addons/": "/public/js/three/jsm/"
+			}
+		}
+	  </script>
+
+      
+    <!-- Background Code-->
+    <link rel="stylesheet" href="/public/backgrounds/background.css">
+    <canvas id = "overallBackground" class="background" style="z-index:-1; top:0; left:0;"></canvas>
+    <script type="module" src="/public/backgrounds/index.js?version=1.0.1"></script>
+
+
+        
+
+
+<div class="d-flex align-items-center" style="min-height:45vh;">
+    <div class="container-fluid text-center mt-5">
+        <h1 class="display-1 fw-bold text-white text-center glow slide-in-top">Bird Photography</h1>
+    </div>
+</div>
+
+<div class="row g-5 mb-5 display-flex align-items-center" id = "photoContainer">
+    <!-- DO NOT DELETE -->
+</div>
+
+
+
+<div class="container-fluid text-center" style="position:fixed; top:54%; left:50%; transform:translate(-50%, -50%); display: none; " id="imgPopup-container">
+    <img id="imagePopup" class="border border-white border-5 img img-fluid" src="photos/sunsetTP.JPG" style="max-height:80vh;">
+
+    <button class="bg-dark text-danger text-center border border-white border-3 fs-1 rounded rounded-4" style="position:absolute; transform:translate(-145%, 30%);" onclick="document.getElementById('imgPopup-container').style.display= 'none'">&times;</button>
+
+</div>
+
+<script>
+    function openImage(filePath){
+        document.getElementById('imagePopup').setAttribute("src", filePath)
+        document.getElementById('imgPopup-container').style.display= "block";
+    }
+
+    function createPhotoElement(source, name){
+        
+        var container = document.createElement("div");
+        container.classList.add("photo", "col-lg-4", "col-md-6", "col-sm-12");
+        
+        var subContainerFluid = document.createElement("div");
+        subContainerFluid.classList.add("container-fluid");
+        var borderContainer = document.createElement("div");
+        borderContainer.classList.add("border", "border-light", "border-5");
+        
+        var image = document.createElement("img");
+        image.src = "photos/birds/" + source;
+        image.alt= "LOADING";
+        image.classList.add("img", "img-fluid");
+        image.setAttribute("onclick", "openImage('photos/birds/" + source + "');");
+        borderContainer.appendChild(image);
+        
+        var birdName = document.createElement("p");
+        birdName.innerHTML = name;
+        birdName.classList.add("fs-4", "text-white", "text-center");
+
+        subContainerFluid.appendChild(borderContainer);
+        subContainerFluid.appendChild(birdName);
+        container.appendChild(subContainerFluid);
+        document.getElementById("photoContainer").prepend(container);
+    }
+
+    createPhotoElement("canadaGoose.JPG", "Canada Goose");
+    createPhotoElement("americanBlackDuck.JPG", "American Black Duck");
+
+</script>
+
+
+
+</body>
+
+</html>
