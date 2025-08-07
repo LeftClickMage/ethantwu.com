@@ -114,18 +114,10 @@
         borderContainer.classList.add("border", "border-light", "border-5");
         
         var image = document.createElement("img");
-        if(category == null || category == "1"){
-            var sourceLowRes = source.split(".");
-            image.src = "photos/" + sourceLowRes[0] + " copy." + sourceLowRes[1];
-            
-        } else {
-            image.src = "photos/" + source;
-        }
-
-        if(category == "1"){
-            image.setAttribute("onLoad", "this.src = 'photos/" + source + "'; this.onload = new Function();");
-        }
-        
+        var sourceLowRes = source.split(".");
+        image.src = "photos/" + sourceLowRes[0] + " copy." + sourceLowRes[1];
+        image.classList.add("border", "border-3", "border-danger");
+        image.setAttribute("onLoad", "this.src = 'photos/" + source + "'; this.onload = new Function(); this.classList.remove('border', 'border-danger', 'border-danger');");
         image.alt= "LOADING";
         image.classList.add("img", "img-fluid");
         image.setAttribute("onclick", "openImage('photos/" + source + "');");
