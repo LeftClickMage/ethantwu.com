@@ -1,83 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="icon" type="image/jpeg" href="../public/logos/EthanTwuLogoCircle.png">
-  <title>Ethan Twu - CS Dept - Submit Ideas</title>
-  <meta name="description"
-    content="Ethan is a high school student in MHS, and goes by many online aliases. He owns and manages many youtube channels, websites, and has even started a company!">
-  <meta name="keywords"
-    content="Ethan Twu, Ethan Twu Millburn NJ, LeftClickMage, YukiThePomsky, MLightning, FairOPShotgun">
-  <link rel="canonical" href="https://ethantwu.com/">
-  <link rel="stylesheet" href="../public/css/bootstrap.min.css">
-  <link rel="stylesheet" href="../public/fonts/ubuntu.css?version=1.0.1">
-  <link rel="stylesheet" href="../public/slideAnimations.css?version=1.0.2">
-  <script src="../public/js/bootstrap.bundle.min.js"></script>
-  <style>
-    html,
-    body {
-      font-family: 'Ubuntu', sans-serif;
-    }
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" type="image/jpeg" href="/public/logos/purdueIcon.png">
+    <title>Ethan Twu - CS Department - Submit Video Ideas</title>
+    <meta name="description" content="Submit video ideas for Ethan to use as inspiration. This is the CS Department Video Idea submission page.">
+    <link rel="canonical" href="https://ethantwu.com/">
+    <link rel="stylesheet" href="/public/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/public/fonts/ubuntu.css?version=1.0.1">
+    <link rel="stylesheet" href="/public/slideAnimations.css?version=1.0.3">
+    <script src="/public/js/bootstrap.bundle.min.js"></script>
+    <style>
+      
+      html,
+      body {
+        font-family: 'Ubuntu', sans-serif;
+      }
 
-    .codeGlow {
-      transition: 0.2s;
-      transform: rotate3d(0.8, 1, -0.2, 35deg);
-      -webkit-filter: drop-shadow(0px 0px 15px #FFFFFF);
-      filter: drop-shadow(0px 0px 15px #FFFFFF);
-    }
+      .codeGlow {
+        transition: 0.2s;
+        transform: rotate3d(0.8, 1, -0.2, 35deg);
+        -webkit-filter: drop-shadow(0px 0px 15px #FFFFFF);
+        filter: drop-shadow(0px 0px 15px #FFFFFF);
+      }
 
-    .codeGlow:hover {
-      transform: rotate3d(0.8, 1, -0.2, 0deg);
-      transition: 0.2s;
-    }
+      .imageGlow {
+        -webkit-filter: drop-shadow(0px 0px 25px #FFFFFF);
+        filter: drop-shadow(0px 0px 25px #FFFFFF);
+      }
 
-    .cutOffTop {
-      object-fit: cover;
-    }
+      .imageGlowTight {
+        -webkit-filter: drop-shadow(0px 0px 5px #FFFFFF);
+        filter: drop-shadow(0px 0px 5px #FFFFFF);
+      }
 
-    .outline-text-emerald {
+      .codeGlow:hover {
+        transform: rotate3d(0.8, 1, -0.2, 0deg);
+        transition: 0.2s;
+      }
 
-      text-shadow: -.04em -.04em 0 #50C878, .04em -.04em 0 #50C878, -.04em .04em 0 #50C878, .04em .04em 0 #50C878;
-    }
+      .cutOffTop {
+        object-fit: cover;
+      }
 
-    .outline-text-red {
+      .outline-text-emerald {
 
-      text-shadow: -.04em -.04em 0 #FF0000, .04em -.04em 0 #FF0000, -.04em .04em 0 #FF0000, .04em .04em 0 #FF0000;
-    }
+        text-shadow: -.04em -.04em 0 #50C878, .04em -.04em 0 #50C878, -.04em .04em 0 #50C878, .04em .04em 0 #50C878;
+      }
 
-    .outline-text-white {
-      text-shadow: -.04em -.04em 0 #FFF, .04em -.04em 0 #FFF, -.04em .04em 0 #FFF, .04em .04em 0 #FFF;
-    }
+      .outline-text-red {
 
-    .glow {
-      text-shadow: 0 0 12px #50C878, 0 0 16px #50C878, 0 0 10px #50C878;
-    }
-  </style>
+        text-shadow: -.04em -.04em 0 #FF0000, .04em -.04em 0 #FF0000, -.04em .04em 0 #FF0000, .04em .04em 0 #FF0000;
+      }
 
-</head>
+      .outline-text-white {
+        text-shadow: -.04em -.04em 0 #FFF, .04em -.04em 0 #FFF, -.04em .04em 0 #FFF, .04em .04em 0 #FFF;
+      }
 
-<body>
-  <!-- Nav Code -->
-  <script src="../public/navigation/homeNav.js?version=2.3.1"></script>
-  <script src="../public/downtime.js"></script>
-  <!-- three.js package -->
-  <script async src="../public/js/moduleChecker.js"></script>
-  <script type="importmap">
-		{
-			"imports": {
-				"three": "../public/js/three/three.js",
-				"three/addons/": "../public/js/three/jsm/"
-			}
-		}
-	  </script>
-  <!-- Background Code-->
-  <link rel="stylesheet" href="../public/backgrounds/background.css">
-  <canvas id="overallBackground" class="background" style="z-index:-1; top:0; left:0;"></canvas>
-  <script type="module" src="../public/backgrounds/index.js?version=1.0.1"></script>
+      .glow {
+        text-shadow: 0 0 12px #50C878, 0 0 16px #50C878, 0 0 10px #50C878;
+      }
 
+    </style>
 
-</body>
+  </head>
+
+  <body>
+    <!-- Nav Code -->
+    <script src="/public/navigation/homeNav.js?version=2.3.1"></script>
+    <script src="/public/downtime.js"></script>
+    <!-- three.js package -->
+    <script async src="/public/js/moduleChecker.js"></script>
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "/public/js/three/three.js",
+          "three/addons/": "/public/js/three/jsm/"
+        }
+      }
+      </script>
+    <!-- Background Code-->
+    <link rel="stylesheet" href="/public/backgrounds/background.css">
+    <canvas id="overallBackground" class="background" style="z-index:-1; top:0; left:0;"></canvas>
+    <script type="module" src="/public/backgrounds/index.js?version=1.0.2"></script>
+
+    
+    <div class="container-fluid container-md text-center my-5">
+      <span class="imageGlow">
+        <img src="/public/logos/PurdueLogo.png" class="container img-fluid imageGlowTight">
+      </span>
+      <div class="container-md text-center">
+        <h1 class="display-1 fw-bold text-white text-center glowWhite">Video Idea Submission Form</h1>
+      </div>
+      <input type="text" class="mt-5 border border-dark border-5 container imageGlow py-2 text-center" placeholder="Your Name" id = "nameInput">
+      <textarea type="text" class="mt-3 border border-dark border-5 container imageGlow" style="height: 300px; resize: none;" id="ideaForm"></textarea>
+      <input type="text" class="mt-2 border border-dark border-5 container imageGlow py-2 text-center" placeholder="Type 'INDY' Here" id = "securityCode">
+      <br>
+      <button class="mt-3 p-3 container fs-5 btn btn-dark border border-3 border-dark imageGlow" onclick="sendEmail()">Send Email</button>
+    </div>
+    <script>
+      form = document.getElementById("ideaForm");
+      nameInput = document.getElementById("nameInput");
+      securityCode = document.getElementById("securityCode");
+      formPlaceholders = [
+        "I think filming the dining hall and all of the food options is a great idea! I always love the different options you get, and how there are vegetarian choices too! Some possibile topics could be..", 
+        "I saw a video on tiktok about CS students talking to their RA's, getting advice from them. Since Midterm season is coming up, maybe we could get RA's to participate and..",
+        "Fall colors are coming out on campus, and I really like the look of the leaves. The different shades of orange really shine a new light on campus. Maybe you could create a video based on the changing..",
+        "Creating videos about collaboration might bring a more positive light onto Purdue. You guys could create a short form video based on collaboration in..",
+        "Since I believe that the student's parents also need to be influenced, I think creating long form youtube videos to showcase campus life and student creativity is important. The first thing to capture would be..",
+        "I would love to be part of your videos, and be a face for Purdue Indy's CS Department. I will be at the Corner from 3pm - 5pm. I will bring some of my friends and we could create a banger video. Some ideas could be..",
+        "Doing interviews on Purdue Indy's Campus could be a good video idea! We could stop people on the sidewalk and ask them questions in an interview style. It could be random trivia that we take off the internet. Some places we could do this is..",
+        "I think you guys need to create more long form youtube posts. The instagram posts are good, but they main;y create impressions on the children. To really change public perception of Purdue Indy, we need to influence the adults. Some ideas of long form content could be..",
+        "I am working with the CS Department, and we have an upcoming event. The event will consist of people coming in the make Ramen. I was wondering if you could come in to cover the event. Ideas for music in the video could be..",
+      ]
+      randomValue = Math.round(Math.random() * (formPlaceholders.length-1));
+      form.setAttribute("placeholder", formPlaceholders[randomValue]);
+
+      function sendEmail(){
+        if(nameInput.value == ""){
+          alert("Please enter your name.");
+        } else if (form.value == ""){
+          alert("Please enter a video idea to submit!");
+        } else if (securityCode.value !== "INDY"){
+          alert("The security code is invalid.")
+        } else {
+          window.open("mailto:owner@ethantwu.com?subject=CS Department Video Idea Submission&body=Hey Ethan,%0D%0A%0D%0A" + form.value + "%0D%0A%0D%0AFrom,%0D%0A" + nameInput.value);
+        }
+      }
+
+    </script>
+  </body>
 
 </html>

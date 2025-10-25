@@ -89,8 +89,10 @@ function startAnimating(fps) {
     startTime = then;
     animate();
 }
-
+var windowHeight = window.innerHeight;
+var windowWidth = window.innerWidth;
 function animate() {
+    
     requestAnimationFrame(animate);
     now = Date.now();
     elapsed = now - then;
@@ -105,9 +107,15 @@ function animate() {
         particlesMesh.rotation.x += -.1/200;
         particlesMeshRed.rotation.x +=  -.02/100;
         particlesMeshBlue.rotation.x +=  -.25/300; 
-
-            config.width = window.innerWidth;
-    config.height = window.innerHeight;
+        
+        if (windowHeight < window.innerHeight){
+            windowHeight = window.innerHeight
+        }
+        if (windowWidth < window.innerWidth){
+            windowWidth = window.innerWidth
+        }
+        config.width = windowWidth;
+        config.height = windowHeight;
 
     camera.aspect = config.width / config.height;
     camera.updateProjectionMatrix();
