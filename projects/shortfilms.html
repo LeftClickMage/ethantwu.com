@@ -38,6 +38,9 @@
         .bringToYT:hover {
             cursor: pointer;
         }
+        .border-true-black {
+            border-color: #000000 !important;
+        }
     </style>
 
 </head>
@@ -86,7 +89,7 @@
                             title="YouTube video player" frameborder="0"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                             referrerpolicy="strict-origin-when-cross-origin" allowfullscreen
-                            class="border border-light border-5"></iframe>
+                            class="border border-true-black border-5"></iframe>
                     </div>
                     <!-- <div class="container text-center "> -->
                     <p class="fs-6 my-4 text-light">A group of 4 superheroes encounter a problem like never before, will
@@ -100,7 +103,7 @@
     </div>
 
 
-    <div class="container text-center">
+    <!-- <div class="container text-center">
         <div class="row g-5 mb-5 display-flex align-items-center">
 
             <div class="col-xl-8">
@@ -116,12 +119,12 @@
                             referrerpolicy="strict-origin-when-cross-origin" allowfullscreen
                             class="border border-light border-5"></iframe>
                     </div>
-                    <!-- <div class="container text-center "> -->
+
                     <p class="fs-6 my-4 text-light">In a world with minimal life, 2 scientists decide to clone people.
                         It turns out to be a bad idea.. but why?</p>
-                    <!-- </div> -->
+
                 </div>
-            </div>
+            </div> 
 
             <div class="col-xl-4">
                 <div class="container text-center">
@@ -136,20 +139,14 @@
                             referrerpolicy="strict-origin-when-cross-origin" allowfullscreen
                             class="border border-light border-5"></iframe>
                     </div>
-                    <!-- <div class="container text-center "> -->
                     <p class="fs-6 my-4 text-light">A dramatic commercial for the Millburn Standard in the style of
                         NIKE!</p>
-                    <!-- </div> -->
                 </div>
             </div>
 
-
-
-
-
         </div>
 
-    </div>
+    </div>  -->
 
     <div id="filmsContainer"></div>
     <div class="text-center mb-5">
@@ -160,7 +157,7 @@
  
     var filmNumber = 2;
     var displayContainersMade = 0;
-    function createFilmElement({title, description, href}){
+    function createFilmElement({title, description, href, featured = false, shortfilm = false}){
         filmNumber++;
 
         if(filmNumber == 3){
@@ -184,8 +181,20 @@
         filmTitle.setAttribute("onclick", "window.open('https://www.youtube.com/video/" + href + "')");
         filmTitle.innerHTML = title;
 
+        if (featured) {
+            var featuredTag = document.createElement("span");
+            featuredTag.classList.add("ms-3", "badge", "text-dark", "border", "border-light", "border-3");
+            featuredTag.setAttribute("style", "background-color:silver;");
+            featuredTag.innerHTML = "Featured";
+            filmTitle.appendChild(featuredTag);
+            overallDiv.classList.remove("col-xl-6");
+        }
+
+
         var videoContainer = document.createElement("div");
-        videoContainer.classList.add("ratio", "ratio-16x9", "border", "border-light", "border-5")
+        videoContainer.classList.add("ratio", "ratio-16x9", "border" , "border-5")
+        shortfilm ? videoContainer.classList.add("border-true-black") : videoContainer.classList.add("border-light");
+        videoContainer.style.borderColor = "black";
         var iframeElement = document.createElement("iframe");
         iframeElement.src = "https://www.youtube.com/embed/" + href;
         iframeElement.setAttribute("title", "Youtube video player");
@@ -216,12 +225,14 @@
     createFilmElement({
         title: "Eternal Darkness Awaits",
         description: "In a world where Mars and Earth is in a never-ending war, a soldier is sent to throw Earth into Eternal Darkness. Will he succeed?", 
-        href: "n0bPAO-xT0U?si=oK8315nQl23L313L$0"
+        href: "n0bPAO-xT0U?si=oK8315nQl23L313L$0",
+        shortfilm: true
     });
     createFilmElement({
         title: "Late To Class", 
         description: "A fellow classmate is met with hurdles when trying to get to class, but why didn't they make it?",
-        href: "qM-zW0oJivo?si=85fh0-CR_W62KbFg$0"
+        href: "qM-zW0oJivo?si=85fh0-CR_W62KbFg$0",
+        shortfilm: true
     });
     createFilmElement({
         title: "Yellowstone Slideshow", 
@@ -231,7 +242,8 @@
     createFilmElement({
         title: "Vengeance For The Bold", 
         description: "In a post-apocalyptic world, a fighter is thrown between 2 factions, finding the truth about his past, and protecting his future.",
-        href: "AzxvZhdGgsw?si=DpTRYgA72bhIser9"
+        href: "AzxvZhdGgsw?si=DpTRYgA72bhIser9",
+        shortfilm: true
     });
     createFilmElement({
         title: "Strike 3", 
@@ -269,6 +281,11 @@
         href: "cYzPMG2U2hc?si=9AFuUO_6XShd2p1D"
     });
     createFilmElement({
+        title: "Town in Anamorphic", 
+        description: "Blazar Apex 35mm lens on my FX30 in Town.",
+        href: "RK6rKGAqLpM?si=tz5Kt2OVyBrGWnou"
+    });
+    createFilmElement({
         title: "National Night Out 2025", 
         description: "The 2025 Millburn National Night Out Event!",
         href: "sXzA14CiAkk?si=S0-ufvq0JBJzSwb8"
@@ -279,9 +296,28 @@
         href: "csI4N3vna7k?si=RoGgM2i4lQKgURBG"
     });
     createFilmElement({
+        title: "A Winter Road Trip", 
+        description: "A Road Trip with my family, from NJ to Disney World.",
+        href: "ztX5wp3KIFE?si=bFwK_NQ7iRklyDak"
+    });
+    createFilmElement({
+        title: "Winter Drifting", 
+        description: "Anamorphic edit of a Mustang drifting.",
+        href: "PZRmnN_bdNs?si=grSrP-OMPa22MY68"
+    });
+    createFilmElement({
+        title: "A Bad Idea", 
+        description: "2 Scientists decide to clone people in a post apocalyptic world. It was a bad idea, but why?",
+        href: "gd_cR9CkMzM?si=6QdJYsAGTSxs2U3P6",
+        featured: true,
+        shortfilm: true
+    });
+    createFilmElement({
         title: "Doctor OmniPotent - The Second Awakening", 
-        description: "Will a retired hero go back to healing the world?",
-        href: "XTsR48f3Moo?si=M1aj8yW2lEVpK6D6"
+        description: "A retired hero has been sulking in his house for days on end. Will he go back to healing the world?",
+        href: "XTsR48f3Moo?si=M1aj8yW2lEVpK6D6",
+        featured: true,
+        shortfilm: true
     });
     
 </script>
