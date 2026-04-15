@@ -1,116 +1,183 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="icon" type="image/jpeg" href="public/logos/lcm-logo.png">
-    <title>Ethan Twu - Social Media</title>
-    <meta name="description" content="This is where you can find his online campaign!">
-    <meta name="keywords" content="Ethan Twu, Ethan Twu Millburn NJ, LeftClickMage, YukiThePomsky, MLightning, FairOPShotgun">
-    <link rel="canonical" href="https://ethantwu.com/media">
-    <link rel="stylesheet" href="public/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/public/fonts/ubuntu.css?version=1.0.1">
-    <link rel="stylesheet" href="/public/slideAnimations.css?version=1.0.3">
-    <script src="public/js/bootstrap.bundle.min.js"></script>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="icon" type="image/jpeg" href="public/logos/lcm-logo.png">
+        <title>Ethan Twu - Social Media</title>
+        <meta name="description" content="This is where you can find his online campaign!">
+        <meta name="keywords" content="Ethan Twu, Ethan Twu Millburn NJ, LeftClickMage, YukiThePomsky, MLightning, FairOPShotgun">
+        <link rel="canonical" href="https://ethantwu.com/media">
+        <link rel="stylesheet" href="public/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/public/fonts/ubuntu.css?version=1.0.1">
+        <link rel="stylesheet" href="/public/slideAnimations.css?version=1.0.3">
+        <script src="public/js/bootstrap.bundle.min.js"></script>
 
-<style>
-*{
-    font-family:'Ubuntu', sans-serif;
-}
-.youtubeButton {
-    margin-top:40px;
-    height:100px;
-    /* width:500px; */
-    
-    background-color: rgba(210,20,20);
-}
-.youtubeButton:hover{
-    cursor: pointer;
-}
-.twitchButton {
-    margin-top:40px;
-    height:100px;
-    /* width:500px; */
-    
-    background-color: #6441a5;
-}
-.twitchButton:hover{
-    cursor: pointer;
-}
-.instaButton {
-    margin-top:40px;
-    height:100px;
-    /* width:500px; */
-    
-    background-color:#F56040 ;
-}
-.instaButton:hover {
-    cursor:pointer;
-}
-.bg-black{
-    background-color:black;
-}
-</style>
-</head>
+        <style>
+            *{
+                font-family:'Ubuntu', sans-serif;
+            }
+            .youtubeButton {
+                margin-top:40px;
+                height:100px;
+                background-color: rgba(210,20,20);
+            }
+            .youtubeButton:hover{
+                cursor: pointer;
+            }
+            .twitchButton {
+                margin-top:40px;
+                height:100px;
+                background-color: #6441a5;
+            }
+            .twitchButton:hover{
+                cursor: pointer;
+            }
+
+            .imdbButton {
+                margin-top:40px;
+                height:100px;
+                background-color: #deb522;
+            }
+            .imdbButton:hover{
+                cursor: pointer;
+            }
+            .instagramButton {
+                margin-top:40px;
+                height:100px;
+                background-color:#F56040 ;
+            }
+            .instagramButton:hover {
+                cursor:pointer;
+            }
+            .bg-black{
+                background-color:black;
+            }
+        </style>
+    </head>
 <body>
-
- 
-
     <!-- Nav Code -->
     <script src="/public/navigation/homeNav.js?version=2.3.1"></script>
     <script src="/public/downtime.js"></script>
     <!-- three.js package -->
     <script async src="/public/js/moduleChecker.js"></script>
-	  <script type="importmap">
-		{
-			"imports": {
-				"three": "/public/js/three/three.js",
-				"three/addons/": "/public/js/three/jsm/"
-			}
-		}
-	  </script>
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "/public/js/three/three.js",
+            "three/addons/": "/public/js/three/jsm/"
+        }
+    }
+    </script>
     <!-- Background Code-->
     <link rel="stylesheet" href="/public/backgrounds/background.css">
     <canvas id = "overallBackground" class="background" style="z-index:-1; top:0; left:0;"></canvas>
     <script type="module" src="/public/backgrounds/index.js?version=1.0.2"></script>
-
  
-<div class="d-flex align-items-center" style="min-height:45vh;">
-    <div class="container-md text-center mt-5">
-        <h1 class="display-1 fw-bold text-white text-center glowWhite slide-in-top">Ethan's Media</h1>
+    <div class="d-flex align-items-center" style="min-height:45vh;">
+        <div class="container-md text-center mt-5">
+            <h1 class="display-1 fw-bold text-white text-center glowWhite slide-in-top">Ethan's Media</h1>
+        </div>
     </div>
-</div>
-        
-            <div class="row container-fluid text-center mx-0 slide-in-bottom" style="font-weight:bold;">
+    <div class="row container-fluid text-center mx-0 slide-in-bottom mb-5" style="font-weight:bold;" id="overallContainer">
+    <!-- container for media elements   -->
+    </div>
+    <script>
+        var amount = 0;
+        function createMediaElement({type, text, link, imgsrc, rounded = false}){
+            amount++;
 
-                <button class="backgroundGlow col-md-7 col-xl-5 mt-0 youtubeButton btn border border-5 border-light text-white fs-3 position-relative d-flex align-items-center" style ="position:absolute;left:50%;transform:translateX(-50%);"onclick="window.open('https://youtube.com/leftclickmage/');"><span class="float-start p-1"><img src="public/logos/lcm-logo.png" width="70px"></span><span class="fw-bold ms-5 ms-sm-0" style="position:absolute;left:50%;transform:translateX(-50%);">LeftClickMage</span><span class="badge bg-black px-3 py-1 float-end ms-auto border border-light border-3 d-none d-sm-block"><img src="public/logos/youtube.png" width="60px"></span></button>
-                <div class="col-lg-5 col-md-3"></div>
-                <button class="backgroundGlow col-md-7 col-xl-5 twitchButton btn border border-5 border-light text-white fs-3 position-relative d-flex align-items-center" style ="position:absolute;left:50%;transform:translateX(-50%);"onclick="window.open('https://twitch.tv/leftclickmage/');"><span class="float-start p-1"><img src="public/logos/lcm-logo.png" width="70px"></span><span class="fw-bold ms-5 ms-sm-0" style="position:absolute;left:50%;transform:translateX(-50%);">LeftClickMage</span><span class="badge bg-light px-3 py-1 float-end ms-auto border border-light border-3 d-none d-sm-block"><img src="public/logos/twitch.png" width="60px"></span></button>
-                <div class="col-lg-5 col-md-3"></div>
-                <button class="backgroundGlow col-md-7 col-xl-5 youtubeButton btn border border-5 border-light text-white fs-3 position-relative d-flex align-items-center" style ="position:absolute;left:50%;transform:translateX(-50%);"onclick="window.open('https://youtube.com/@ethantwu/');"><span class="float-start p-1"><img src="public/logos/ethanTwuLogo.jpg" width="70px" class="rounded-circle"></span><span class="fw-bold ms-5 ms-sm-0" style="position:absolute;left:50%;transform:translateX(-50%);">Ethan Twu</span><span class="badge bg-black px-3 py-1 float-end ms-auto border border-light border-3 d-none d-sm-block"><img src="public/logos/youtube.png" width="60px"></span></button>
-                
+            var overallContainer = document.getElementById('overallContainer');
 
-                <div class="col-lg-5 col-md-3"></div>
+            var buttonElement = document.createElement("button");
+            buttonElement.classList.add(type + "Button", "backgroundGlow", "col-md-7", "col-xl-5", "btn", "border", "border-5", "border-light", "fs-3", "position-relative", "d-flex", "align-items-center");
+            type == "imdb" ? buttonElement.classList.add("text-dark") : buttonElement.classList.add("text-white");
+            buttonElement.setAttribute("style", "position:absolute;left:50%;transform:translateX(-50%);");
+            (amount == 1) ? buttonElement.classList.add("mt-0") : "Not the top element" ;
+            buttonElement.setAttribute("onclick", "window.open('"+ link + "')");
 
-                <button class="backgroundGlow col-md-7 col-xl-5 youtubeButton btn border border-5 border-light text-white fs-3 position-relative d-flex align-items-center" style ="position:absolute;left:50%;transform:translateX(-50%);"onclick="window.open('https://youtube.com/@leftclickmagetkd/');"><span class="float-start p-1"><img src="public/logos/lcmtkd-logo.jpg" width="70px" class="rounded-circle"></span><span class="fw-bold ms-5 ms-sm-0" style="position:absolute;left:50%;transform:translateX(-50%);">LeftClickMageTKD</span><span class="badge bg-black px-3 py-1 float-end ms-auto border border-light border-3 d-none d-sm-block"><img src="public/logos/youtube.png" width="60px"></span></button>
-                
-                <div class="col-lg-5 col-md-3"></div>
+            var spanElement1 = document.createElement("span");
+            spanElement1.classList.add("float-start", "p-1");
+            var imgElement1 = document.createElement("img");
+            imgElement1.setAttribute("src", "public/logos/" + imgsrc);
+            imgElement1.setAttribute("width", "70px");
+            rounded ? imgElement1.classList.add("rounded-circle") : "Element logo not round.";
+            spanElement1.appendChild(imgElement1);
+            
+            var spanElement2 = document.createElement("span");
+            spanElement2.classList.add("fw-bold", "ms-5", "ms-sm-0");
+            spanElement2.setAttribute("style", "position:absolute;left:50%;transform:translateX(-50%);");
+            spanElement2.innerHTML = text;
 
-                
-                <button class="backgroundGlow col-md-7 col-xl-5 youtubeButton btn border border-5 border-light text-white fs-3 position-relative d-flex align-items-center" style ="position:absolute;left:50%;transform:translateX(-50%);"onclick="window.open('https://youtube.com/fairopshotgun/');"><span class="float-start p-1"><img src="public/logos/fair-logo.png" width="70px"></span><span class="fw-bold ms-5 ms-sm-0" style="position:absolute;left:50%;transform:translateX(-50%);">FairOPShotgun</span><span class="badge bg-black px-3 py-1 float-end ms-auto border border-light border-3 d-none d-sm-block"><img src="public/logos/youtube.png" width="60px"></span></button>
-                <div class="col-lg-5 col-md-3"></div>
-                <button class="backgroundGlow col-md-7 col-xl-5 youtubeButton btn border border-5 border-light text-white fs-3 position-relative d-flex align-items-center" style ="position:absolute;left:50%;transform:translateX(-50%);"onclick="window.open('https://youtube.com/YukiThePomsky/');"><span class="float-start p-1"><img src="public/logos/yuki-logo.jpg" width="70px" class="rounded-circle"></span><span class="fw-bold ms-5 ms-sm-0" style="position:absolute;left:50%;transform:translateX(-50%);">YukiThePomsky</span><span class="badge bg-black px-3 py-1 float-end ms-auto border border-light border-3 d-none d-sm-block"><img src="public/logos/youtube.png" width="60px"></span></button>
-                <div class="col-lg-5 col-md-3"></div>
-                <button class="backgroundGlow col-md-7 col-xl-5 youtubeButton btn border border-5 border-light text-white fs-3 position-relative d-flex align-items-center" style ="position:absolute;left:50%;transform:translateX(-50%);"onclick="window.open('https://youtube.com/@lnyfestival/');"><span class="float-start p-1"><img src="public/logos/millburnlny-logo.png" width="70px" class="rounded-circle"></span><span class="fw-bold ms-5 ms-sm-0" style="position:absolute;left:50%;transform:translateX(-50%);">Millburn's LNY</span><span class="badge bg-black px-3 py-1 float-end ms-auto border border-light border-3 d-none d-sm-block"><img src="public/logos/youtube.png" width="60px"></span></button>
-                <div class="col-lg-5 col-md-3"></div>
-                <button class="backgroundGlow col-md-7 col-xl-5 instaButton btn border border-5 border-light text-white fs-3 position-relative d-flex align-items-center" style ="position:absolute;left:50%;transform:translateX(-50%);"onclick="window.open('https://www.instagram.com/leftclickmage/');"><span class="float-start p-1"><img src="public/logos/lcm-logo.png" width="70px"></span><span class="fw-bold ms-5 ms-sm-0" style="position:absolute;left:50%;transform:translateX(-50%);">LeftClickMage</span><span class="badge bg-light px-3 py-1 float-end ms-auto border border-dark border-3 d-none d-sm-block"><img src="public/logos/instagram.png" width="60px"></span></button>
-                <div class="col-lg-5 col-md-3"></div>
-            </div>
-        
-  <script>
+            var spanElement3 = document.createElement("span");
+            spanElement3.classList.add("badge", "bg-black", "px-3", "py-1", "float-end", "ms-auto", "border", "border-light", "border-3", "d-none", "d-sm-block");
+            var imgElement3 = document.createElement("img");
+            imgElement3.src = "public/logos/" + type + ".png";
+            imgElement3.setAttribute("width", "60px");
+            spanElement3.appendChild(imgElement3);
+            
+            buttonElement.appendChild(spanElement1);
+            buttonElement.appendChild(spanElement2);
+            buttonElement.appendChild(spanElement3);
 
+            overallContainer.appendChild(buttonElement);
+        }
 
-  </script>
+        createMediaElement({
+            type: "instagram",
+            text: "LeftClickMage",
+            link: "https://www.instagram.com/leftclickmage/",
+            imgsrc: "ethanTwuLogo.jpg",
+            rounded: true,
+        });
+
+        createMediaElement({
+            type: "youtube",
+            text: "Ethan Twu",
+            link: "https://youtube.com/@ethantwu/",
+            imgsrc: "ethanTwuLogo.jpg",
+            rounded: true,
+        });
+
+        createMediaElement({
+            type: "imdb",
+            text: "Ethan Twu",
+            link: "https://www.imdb.com/name/nm18293870/",
+            imgsrc: "ethanTwuLogo.jpg",
+            rounded: true,
+        });
+
+        createMediaElement({
+            type: "youtube",
+            text: "LeftClickMage",
+            link: "https://youtube.com/leftclickmage/",
+            imgsrc: "lcm-logo.png",
+        });
+
+        createMediaElement({
+            type: "twitch",
+            text: "LeftClickMage",
+            link: "https://twitch.tv/leftclickmage/",
+            imgsrc: "lcm-logo.png",
+        });
+
+        createMediaElement({
+            type: "youtube",
+            text: "LeftClickMage",
+            link: "https://youtube.com/YukiThePomsky/",
+            imgsrc: "yuki-logo.jpg",
+            rounded: true,
+        });
+
+        createMediaElement({
+            type: "youtube",
+            text: "LeftClickMageTKD",
+            link: "https://youtube.com/@leftclickmagetkd/",
+            imgsrc: "lcmtkd-logo.jpg",
+            rounded: true,
+        });
+
+    </script>
 </body>
 
 </html>
