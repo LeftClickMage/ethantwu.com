@@ -54,7 +54,7 @@ document.write(`
             }
       </style>
 
-    <nav class="border border-5 border-light border-top-0 border-start-0 border-end-0 navbar navbar-expand-md navbar-dark p-0 m-0 position-fixed top-0 w-100" id="navigationBar" style="overflow:visible !important;">
+    <nav class="border border-5 border-light border-top-0 border-start-0 border-end-0 navbar navbar-expand-lg navbar-dark p-0 m-0 position-fixed top-0 w-100" id="navigationBar" style="overflow:visible !important;">
         <div class="container-fluid" style="overflow:visible !important;">
             <a class="navbar-brand" href="/index.html" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Home" style="overflow:visible !important;">
                 <img src="/public/logos/lcm-logo.png" width="90px" class = "homeLogoNavbar" style="overflow:visible !important; padding:10px; margin:-10px;">
@@ -82,7 +82,10 @@ document.write(`
                     </li>
                     
                 </ul>
-                <ul class="navbar-nav ms-auto me-1 mb-3 mb-md-0">
+                <ul class="navbar-nav ms-auto me-1 mb-3 mb-lg-0">
+                     <li class="nav-item me-2">
+                        <a class="nav-link font-increase-2x" href="https://elcm.ethantwu.com" data-bs-toggle="tooltip" data-bs-placement="bottom" title="ELCM" id="elcm">ELCM Studio</a>
+                    </li>
                     <a href="/media.html" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Social Media" ><button class="btn btn-danger fs-4">Media</button></a>
                 </ul>
             </div>

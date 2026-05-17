@@ -57,7 +57,7 @@
     </head>
 <body>
     <!-- Nav Code -->
-    <script src="/public/navigation/homeNav.js?version=2.3.1"></script>
+    <script src="/public/navigation/homeNav.js?version=2.3.2"></script>
     <script src="/public/downtime.js"></script>
     <!-- three.js package -->
     <script async src="/public/js/moduleChecker.js"></script>
@@ -90,7 +90,7 @@
             var overallContainer = document.getElementById('overallContainer');
 
             var buttonElement = document.createElement("button");
-            buttonElement.classList.add(type + "Button", "backgroundGlow", "col-md-7", "col-xl-5", "btn", "border", "border-5", "border-light", "fs-3", "position-relative", "d-flex", "align-items-center");
+            buttonElement.classList.add(type + "Button", "backgroundGlow", "col-md-7", "btn", "border", "border-5", "border-light", "fs-3", "position-relative", "d-flex", "align-items-center");
             type == "imdb" ? buttonElement.classList.add("text-dark") : buttonElement.classList.add("text-white");
             buttonElement.setAttribute("style", "position:absolute;left:50%;transform:translateX(-50%);");
             (amount == 1) ? buttonElement.classList.add("mt-0") : "Not the top element" ;
