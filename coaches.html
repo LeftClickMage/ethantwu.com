@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CoachHive — Find your coach</title>
+<title>CoachLink — Find your coach</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=Archivo+Black&display=swap" rel="stylesheet">
 <style>
@@ -254,7 +254,7 @@
 
   <!-- ============= NAV (shared) ============= -->
   <nav class="nav">
-    <div class="brand"><span class="dot"></span>CoachHive</div>
+    <div class="brand"><span class="dot"></span>CoachLink</div>
     <div class="nav-links">
       <a href="#">Categories</a>
       <a href="#">How it works</a>
@@ -307,7 +307,7 @@
       <div class="cat-card"><div class="emoji">🗣</div><div class="name">Languages</div><div class="count">263 coaches</div></div>
     </div>
 
-    <footer>© 2026 CoachHive, Inc. Every coach is background checked.* (*results may vary)</footer>
+    <footer>© 2026 CoachLink, Inc. Every coach is background checked.* (*results may vary)</footer>
   </main>
 
   <!-- ============= PROFILE / RESULT VIEW ============= -->
@@ -368,7 +368,7 @@
             <ul class="details-list">
               <li><span class="k">Price</span><span class="v" style="color:var(--free-red);">FREE</span></li>
               <li><span class="k">Location</span><span class="v">Any Chess Table</span></li>
-              <li><span class="k">Availability</span><span class="v">8AM</span></li>
+              <li><span class="k">Availability</span><span class="v">8:00AM</span></li>
               <li><span class="k">Payment</span><span class="v">None</span></li>
               <li><span class="k">Certifications</span><span class="v">None</span></li>
               <li><span class="k">Background check</span><span class="v">Pending</span></li>
@@ -385,7 +385,7 @@
     </div>
   </div>
 
-  <div class="toast" id="toast">Request sent to Dr. Marlsen. He'll meet you at 8am.</div>
+  <div class="toast" id="toast">Request sent to Dr. Marlsen. He'll meet you at 8:00AM.</div>
 
 <script>
   const homeView = document.getElementById('home-view');
@@ -400,14 +400,14 @@
     homeView.classList.add('hidden');
     profileView.classList.remove('hidden');
     window.scrollTo({ top:0, behavior:'instant' in window ? 'instant' : 'auto' });
-    document.title = 'Dr. Marlsen — Chess Coach (FREE) · CoachHive';
+    document.title = 'Dr. Marlsen — Chess Coach (FREE) · CoachLink';
   }
 
   function showHome(){
     profileView.classList.add('hidden');
     homeView.classList.remove('hidden');
     window.scrollTo({ top:0 });
-    document.title = 'CoachHive — Find your coach';
+    document.title = 'CoachLink — Find your coach';
     searchInput.focus();
   }
 
@@ -429,7 +429,7 @@
 
   bookBtn.addEventListener('click', () => {
     toast.classList.add('show');
-    setTimeout(() => toast.classList.remove('show'), 3200);
+    setTimeout(() => toast.classList.remove('show'), 6000);
   });
 </script>
 </body>
