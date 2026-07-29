@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CoachHive — Find your coach</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=Archivo+Black&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:            #FAFAF7;
+    --ink:           #1B2A4A;
+    --ink-soft:      #4B5A73;
+    --muted:         #8A8F98;
+    --teal:          #2F6F63;
+    --teal-dark:     #234F46;
+    --line:          #E6E1D6;
+    --card:          #FFFFFF;
+    --free:          #FFC93C;
+    --free-ink:      #3A2600;
+    --free-red:      #D8442C;
+    --shadow:        0 10px 30px rgba(27,42,74,0.08);
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.brand{ font-family:'Fraunces', Georgia, serif; }
+  a{ color:inherit; text-decoration:none; }
+  button{ font-family:inherit; cursor:pointer; }
+  .hidden{ display:none !important; }
+
+  /* ---------- NAV ---------- */
+  .nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:22px 6vw;
+    border-bottom:1px solid var(--line);
+    background:var(--bg);
+    position:sticky; top:0; z-index:20;
+  }
+  .brand{
+    font-size:24px; font-weight:700; letter-spacing:-0.02em; color:var(--ink);
+    display:flex; align-items:center; gap:8px;
+  }
+  .brand .dot{ width:9px; height:9px; border-radius:50%; background:var(--teal); display:inline-block; }
+  .nav-links{ display:flex; gap:32px; font-size:15px; font-weight:500; color:var(--ink-soft); }
+  .nav-links a:hover{ color:var(--teal-dark); }
+  .nav-cta{
+    background:var(--ink); color:#fff; padding:10px 20px; border-radius:999px;
+    font-size:14px; font-weight:600; border:none;
+  }
+
+  /* ---------- HOME / HERO ---------- */
+  .hero{
+    max-width:760px; margin:0 auto; text-align:center;
+    padding:100px 6vw 40px;
+  }
+  .eyebrow{
+    display:inline-block; font-size:13px; font-weight:600; letter-spacing:0.08em;
+    text-transform:uppercase; color:var(--teal-dark); background:rgba(47,111,99,0.08);
+    padding:6px 14px; border-radius:999px; margin-bottom:22px;
+  }
+  .hero h1{
+    font-size:clamp(34px,5vw,54px); line-height:1.08; font-weight:600;
+    letter-spacing:-0.01em; margin:0 0 16px;
+  }
+  .hero h1 em{ font-style:italic; color:var(--teal); }
+  .hero p{ font-size:17px; color:var(--ink-soft); line-height:1.6; margin:0 0 40px; }
+
+  .search-wrap{ position:relative; max-width:560px; margin:0 auto 18px; }
+  .search-wrap svg.mag{
+    position:absolute; left:20px; top:50%; transform:translateY(-50%);
+    width:18px; height:18px; color:var(--muted);
+  }
+  #search-input{
+    width:100%; padding:18px 20px 18px 52px; font-size:16px; font-family:inherit;
+    border:1.5px solid var(--line); border-radius:14px; background:var(--card);
+    box-shadow:var(--shadow); outline:none; color:var(--ink);
+    transition:border-color .15s ease;
+  }
+  #search-input:focus{ border-color:var(--teal); }
+  .search-hint{ font-size:13px; color:var(--muted); margin-bottom:36px; }
+  .search-hint kbd{
+    font-family:inherit; background:var(--card); border:1px solid var(--line);
+    border-bottom-width:2px; padding:1px 7px; border-radius:5px; font-size:12px;
+  }
+
+  .chips{ display:flex; flex-wrap:wrap; gap:10px; justify-content:center; }
+  .chip{
+    border:1px solid var(--line); background:var(--card); color:var(--ink-soft);
+    padding:9px 16px; border-radius:999px; font-size:14px; font-weight:500;
+    transition:all .15s ease;
+  }
+  .chip:hover{ border-color:var(--teal); color:var(--teal-dark); }
+  .chip.active{ background:var(--ink); color:#fff; border-color:var(--ink); }
+
+  /* ---------- TRUST / STATS ---------- */
+  .trust{
+    display:flex; justify-content:center; gap:56px; flex-wrap:wrap;
+    padding:56px 6vw; border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+    margin-top:70px;
+  }
+  .stat{ text-align:center; }
+  .stat .num{ font-family:'Fraunces',serif; font-size:32px; font-weight:600; color:var(--ink); }
+  .stat .label{ font-size:13px; color:var(--muted); margin-top:2px; }
+
+  /* ---------- CATEGORIES ---------- */
+  .section-head{ max-width:900px; margin:80px auto 30px; padding:0 6vw; }
+  .section-head h2{ font-size:28px; font-weight:600; margin:0 0 6px; }
+  .section-head p{ color:var(--ink-soft); margin:0; font-size:15px; }
+  .cat-grid{
+    max-width:900px; margin:0 auto 90px; padding:0 6vw;
+    display:grid; grid-template-columns:repeat(auto-fill,minmax(190px,1fr)); gap:16px;
+  }
+  .cat-card{
+    background:var(--card); border:1px solid var(--line); border-radius:16px;
+    padding:22px; display:flex; flex-direction:column; gap:10px;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .cat-card:hover{ transform:translateY(-3px); box-shadow:var(--shadow); }
+  .cat-card .emoji{ font-size:26px; }
+  .cat-card .name{ font-weight:600; font-size:15px; }
+  .cat-card .count{ font-size:13px; color:var(--muted); }
+
+  footer{
+    text-align:center; padding:40px 6vw 60px; color:var(--muted); font-size:13px;
+    border-top:1px solid var(--line);
+  }
+
+  /* ================= PROFILE / RESULT PAGE ================= */
+  .marquee{
+    background:var(--ink); color:var(--free); overflow:hidden; white-space:nowrap;
+    font-family:'Archivo Black',sans-serif; font-size:13px; letter-spacing:0.04em;
+    padding:8px 0; border-bottom:2px solid var(--free);
+  }
+  .marquee-track{
+    display:inline-block; padding-left:100%;
+    animation:scrollLeft 16s linear infinite;
+  }
+  @keyframes scrollLeft{ from{ transform:translateX(0);} to{ transform:translateX(-100%);} }
+
+  .back-row{ max-width:1240px; margin:22px auto 0; padding:0 4vw; }
+  .back-btn{
+    display:inline-flex; align-items:center; gap:6px; background:none; border:none;
+    color:var(--ink-soft); font-size:14px; font-weight:500; padding:6px 0;
+  }
+  .back-btn:hover{ color:var(--teal-dark); }
+
+  .profile-wrap{ max-width:1240px; margin:14px auto 60px; padding:0 4vw; position:relative; }
+
+  .profile-card{
+    background:var(--card); border:1px solid var(--line); border-radius:22px;
+    padding:44px 48px; box-shadow:var(--shadow); position:relative; overflow:hidden;
+  }
+
+  .profile-top{ display:flex; gap:26px; align-items:flex-start; flex-wrap:wrap; }
+  .avatar{
+    width:104px; height:104px; border-radius:50%; background:#DDE3EA;
+    display:flex; align-items:center; justify-content:center; flex-shrink:0;
+    border:1px solid var(--line);
+  }
+  .avatar svg{ width:60px; height:60px; color:#9AA5B4; }
+
+  .id-block{ flex:1; min-width:220px; }
+  .id-block .name-row{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+  .id-block h1{ font-size:30px; font-weight:600; margin:0; }
+  .id-block .role{ color:var(--ink-soft); font-size:15px; margin:4px 0 10px; }
+
+  .stars{ display:flex; align-items:center; gap:6px; font-size:14px; color:var(--muted); }
+  .stars .star-icons{ letter-spacing:2px; color:#D8DEE6; font-size:16px; }
+  .stars .zero{ font-weight:600; color:var(--ink); }
+
+  .sticker{
+    display:inline-block; background:var(--free); color:var(--free-ink);
+    font-family:'Archivo Black',sans-serif; font-size:12px; letter-spacing:0.03em;
+    padding:6px 12px; border-radius:5px; transform:rotate(-4deg);
+    box-shadow:0 3px 0 rgba(0,0,0,0.08);
+    border:1px solid rgba(0,0,0,0.05);
+  }
+  .sticker.small{ font-size:10px; padding:4px 9px; transform:rotate(3deg); }
+  .sticker.red{ background:var(--free-red); color:#fff; }
+
+  .profile-card .ribbon{
+    position:absolute; top:18px; right:-46px; width:180px; text-align:center;
+    background:var(--free); color:var(--free-ink); font-family:'Archivo Black',sans-serif;
+    font-size:13px; padding:7px 0; transform:rotate(40deg); box-shadow:0 3px 8px rgba(0,0,0,0.15);
+    z-index:2;
+  }
+
+  .price-block{
+    margin-top:26px; padding:20px; background:#FFFCF2; border:1.5px dashed var(--free);
+    border-radius:14px; display:flex; align-items:center; justify-content:space-between;
+    flex-wrap:wrap; gap:16px;
+  }
+  .price-left .was{ font-size:14px; color:var(--muted); text-decoration:line-through; }
+  .price-left .now{ font-family:'Archivo Black',sans-serif; font-size:30px; color:var(--free-red); }
+  .book-btn{
+    background:var(--teal); color:#fff; border:none; padding:14px 26px;
+    border-radius:12px; font-weight:700; font-size:15px;
+    box-shadow:0 6px 16px rgba(47,111,99,0.3);
+  }
+  .book-btn:hover{ background:var(--teal-dark); }
+
+  .toast{
+    position:fixed; bottom:26px; left:50%; transform:translateX(-50%) translateY(20px);
+    background:var(--ink); color:#fff; padding:12px 20px; border-radius:10px;
+    font-size:14px; opacity:0; pointer-events:none; transition:all .25s ease; z-index:50;
+  }
+  .toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+
+  .two-col{ display:grid; grid-template-columns:1.4fr 1fr; gap:22px; margin-top:26px; }
+  @media (max-width:720px){ .two-col{ grid-template-columns:1fr; } }
+
+  .panel{
+    background:var(--card); border:1px solid var(--line); border-radius:18px; padding:26px;
+  }
+  .panel h3{ font-size:16px; margin:0 0 14px; }
+  .panel p{ font-size:14.5px; line-height:1.65; color:var(--ink-soft); margin:0 0 10px; }
+
+  .details-list{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:12px; }
+  .details-list li{ display:flex; justify-content:space-between; font-size:14px; border-bottom:1px dashed var(--line); padding-bottom:10px; }
+  .details-list li:last-child{ border-bottom:none; }
+  .details-list .k{ color:var(--muted); }
+  .details-list .v{ font-weight:600; text-align:right; }
+
+  .reviews-panel{ margin-top:22px; text-align:center; padding:44px 26px; }
+  .reviews-panel .big-star{ font-size:34px; color:#D8DEE6; letter-spacing:6px; }
+  .reviews-panel h3{ margin:14px 0 6px; }
+  .reviews-panel p{ color:var(--muted); font-size:14px; margin:0; }
+
+  .profile-card .bg-free{
+    position:absolute; inset:0; pointer-events:none; opacity:0.05; z-index:0;
+    font-family:'Archivo Black',sans-serif; font-size:70px; color:var(--free-red);
+    display:flex; flex-wrap:wrap; gap:20px; padding:20px; overflow:hidden;
+    transform:rotate(-8deg) scale(1.3);
+  }
+  .profile-card > *{ position:relative; z-index:1; }
+  .profile-card > .bg-free{ position:absolute; z-index:0; }
+  .profile-card > .ribbon{ position:absolute; z-index:2; }
+
+  @media (prefers-reduced-motion: reduce){
+    .marquee-track{ animation:none; }
+    html{ scroll-behavior:auto; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- ============= NAV (shared) ============= -->
+  <nav class="nav">
+    <div class="brand"><span class="dot"></span>CoachHive</div>
+    <div class="nav-links">
+      <a href="#">Categories</a>
+      <a href="#">How it works</a>
+      <a href="#">Become a coach</a>
+    </div>
+    <button class="nav-cta">Sign in</button>
+  </nav>
+
+  <!-- ============= HOME VIEW ============= -->
+  <main id="home-view">
+    <section class="hero">
+      <span class="eyebrow">2,400+ verified coaches</span>
+      <h1>Find a coach who gets you <em>there</em>.</h1>
+      <p>Search any skill — chess, tennis, piano, public speaking — and get matched with someone who can actually teach it.</p>
+
+      <div class="search-wrap">
+        <svg class="mag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input id="search-input" type="text" placeholder="Try “chess coach near me”" autocomplete="off">
+      </div>
+      <div class="search-hint">Press <kbd>Enter ↵</kbd> to search</div>
+
+      <div class="chips">
+        <span class="chip">♟ Chess</span>
+        <span class="chip">🎾 Tennis</span>
+        <span class="chip">🎹 Piano</span>
+        <span class="chip">💻 Coding</span>
+        <span class="chip">🎤 Public Speaking</span>
+        <span class="chip">🧘 Yoga</span>
+      </div>
+    </section>
+
+    <section class="trust">
+      <div class="stat"><div class="num">2,438</div><div class="label">Coaches on the platform</div></div>
+      <div class="stat"><div class="num">98%</div><div class="label">Verified credentials</div></div>
+      <div class="stat"><div class="num">4.9★</div><div class="label">Average coach rating</div></div>
+    </section>
+
+    <div class="section-head">
+      <h2>Browse popular categories</h2>
+      <p>Every coach is reviewed by real students. Except, apparently, one of them.</p>
+    </div>
+    <div class="cat-grid">
+      <div class="cat-card"><div class="emoji">♟</div><div class="name">Chess</div><div class="count">112 coaches</div></div>
+      <div class="cat-card"><div class="emoji">🎾</div><div class="name">Tennis</div><div class="count">340 coaches</div></div>
+      <div class="cat-card"><div class="emoji">🎹</div><div class="name">Piano</div><div class="count">288 coaches</div></div>
+      <div class="cat-card"><div class="emoji">💻</div><div class="name">Coding</div><div class="count">401 coaches</div></div>
+      <div class="cat-card"><div class="emoji">🎤</div><div class="name">Public Speaking</div><div class="count">96 coaches</div></div>
+      <div class="cat-card"><div class="emoji">🧘</div><div class="name">Yoga</div><div class="count">177 coaches</div></div>
+      <div class="cat-card"><div class="emoji">🎨</div><div class="name">Art</div><div class="count">142 coaches</div></div>
+      <div class="cat-card"><div class="emoji">🗣</div><div class="name">Languages</div><div class="count">263 coaches</div></div>
+    </div>
+
+    <footer>© 2026 CoachHive, Inc. Every coach is background checked.* (*results may vary)</footer>
+  </main>
+
+  <!-- ============= PROFILE / RESULT VIEW ============= -->
+  <div id="profile-view" class="hidden">
+    <div class="marquee"><div class="marquee-track">FREE &nbsp;•&nbsp; NO CATCH &nbsp;•&nbsp; FREE &nbsp;•&nbsp; 100% FREE &nbsp;•&nbsp; FREE &nbsp;•&nbsp; FIRST LESSON FREE &nbsp;•&nbsp; FREE &nbsp;•&nbsp; FREE &nbsp;•&nbsp; NO CATCH &nbsp;•&nbsp; FREE &nbsp;•&nbsp;</div></div>
+
+    <div class="back-row">
+      <button class="back-btn" id="back-btn">← Back to search</button>
+    </div>
+
+    <div class="profile-wrap">
+      <div class="profile-card">
+        <div class="bg-free" aria-hidden="true">
+          <span>FREE</span><span>FREE</span><span>FREE</span><span>FREE</span>
+          <span>FREE</span><span>FREE</span><span>FREE</span><span>FREE</span>
+        </div>
+
+        <div class="ribbon">FREE</div>
+
+        <div class="profile-top">
+          <div class="avatar">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.7 0 4.9-2.2 4.9-4.9S14.7 2.2 12 2.2 7.1 4.4 7.1 7.1 9.3 12 12 12Zm0 2.5c-3.5 0-10.5 1.8-10.5 5.3V22h21v-2.2c0-3.5-7-5.3-10.5-5.3Z"/></svg>
+          </div>
+          <div class="id-block">
+            <div class="name-row">
+              <h1>Dr. Marlsen</h1>
+              <span class="sticker">100% FREE</span>
+            </div>
+            <div class="role">Chess Coach · Joined today · Responds immediately</div>
+            <div class="stars">
+              <span class="star-icons">★★★★★</span>
+              <span class="zero">0.0</span>
+              <span>(0 reviews)</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="price-block">
+          <div class="price-left">
+            <div class="was">Usually $150/hr</div>
+            <div class="now">FREE</div>
+          </div>
+          <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+            <span class="sticker small red">FREE TRIAL</span>
+            <span class="sticker small">$0 ALWAYS</span>
+            <button class="book-btn" id="book-btn">Book FREE Session</button>
+          </div>
+        </div>
+
+        <div class="two-col">
+          <div class="panel">
+            <h3>About Dr. Marlsen</h3>
+            <p>Once I teach you, you will <i><b>never</b></i> forget.</p>
+            <p style="margin-bottom:0;"><span class="sticker small">STILL FREE</span></p>
+          </div>
+          <div class="panel">
+            <h3>Details</h3>
+            <ul class="details-list">
+              <li><span class="k">Price</span><span class="v" style="color:var(--free-red);">FREE</span></li>
+              <li><span class="k">Location</span><span class="v">Any Chess Table</span></li>
+              <li><span class="k">Availability</span><span class="v">Early Mornings Preferred</span></li>
+              <li><span class="k">Payment</span><span class="v">None</span></li>
+              <li><span class="k">Certifications</span><span class="v">None</span></li>
+              <li><span class="k">Background check</span><span class="v">Pending</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="panel reviews-panel">
+          <div class="big-star">★ ★ ★ ★ ★</div>
+          <h3>No reviews yet</h3>
+          <p>Steve hasn't been reviewed by anyone. You'd be the first.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">Request sent to Steve. He says come by anytime.</div>
+
+<script>
+  const homeView = document.getElementById('home-view');
+  const profileView = document.getElementById('profile-view');
+  const searchInput = document.getElementById('search-input');
+  const backBtn = document.getElementById('back-btn');
+  const bookBtn = document.getElementById('book-btn');
+  const toast = document.getElementById('toast');
+  const chips = document.querySelectorAll('.chip');
+
+  function showProfile(){
+    homeView.classList.add('hidden');
+    profileView.classList.remove('hidden');
+    window.scrollTo({ top:0, behavior:'instant' in window ? 'instant' : 'auto' });
+    document.title = 'Steve K. — Chess Coach (FREE) · CoachHive';
+  }
+
+  function showHome(){
+    profileView.classList.add('hidden');
+    homeView.classList.remove('hidden');
+    window.scrollTo({ top:0 });
+    document.title = 'CoachHive — Find your coach';
+    searchInput.focus();
+  }
+
+  searchInput.addEventListener('keydown', (e) => {
+    if(e.key === 'Enter'){
+      e.preventDefault();
+      showProfile();
+    }
+  });
+
+  chips.forEach(chip => {
+    chip.addEventListener('click', () => {
+      searchInput.value = chip.textContent.trim().replace(/^[^\w]+/, '');
+      searchInput.focus();
+    });
+  });
+
+  backBtn.addEventListener('click', showHome);
+
+  bookBtn.addEventListener('click', () => {
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3200);
+  });
+</script>
+</body>
+</html>
