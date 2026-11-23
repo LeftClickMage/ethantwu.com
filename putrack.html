@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" type="image/jpeg" href="public/logos/lcm-logo.png">
+    <title>Pushup Tracker</title>
+    <link rel="stylesheet" href="public/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/public/fonts/ubuntu.css?version=1.0.1">
+    <style>
+      :root { --accent: #50C878; --bg: #0f1115; --card: #1a1d24; --muted: #8a909c; --text: #f2f3f5; }
+      html, body { font-family: 'Ubuntu', sans-serif; background: var(--bg); color: var(--text); }
+      .wrap { max-width: 720px; margin: 0 auto; padding: 24px 16px 48px; }
+      .card-dark { background: var(--card); border-radius: 16px; padding: 20px; margin-bottom: 16px; }
+      .stat-num { font-size: 2rem; font-weight: 700; line-height: 1.1; }
+      .stat-label { color: var(--muted); font-size: .85rem; }
+      #pushInput {
+        font-size: 2.5rem; text-align: center; background: #0f1115; color: var(--text);
+        border: 2px solid #2c313b; border-radius: 12px; width: 100%; padding: 10px;
+      }
+      #pushInput:focus { outline: none; border-color: var(--accent); }
+      .btn-accent { background: var(--accent); color: #0f1115; font-weight: 700; font-size: 1.25rem; border-radius: 12px; }
+      .btn-accent:hover { background: #45b56b; color: #0f1115; }
+      #msg { min-height: 1.5em; }
+      table { width: 100%; }
+      th { color: var(--muted); font-weight: 400; font-size: .85rem; }
+      td, th { padding: 6px 4px; border-bottom: 1px solid #2c313b; }
+      svg text { fill: var(--muted); font-size: 11px; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <h1 class="fw-bold mb-1">Pushup Tracker</h1>
+      <p class="stat-label mb-4" id="beginLabel">Loading…</p>
+
+      <div class="card-dark">
+        <form id="pushForm" autocomplete="off">
+          <label for="pushInput" class="stat-label mb-2">Pushups today</label>
+          <input id="pushInput" type="number" inputmode="numeric" pattern="[0-9]*" min="0" step="1" placeholder="0" required>
+          <button class="btn btn-accent w-100 mt-3 py-2" type="submit" id="submitBtn">Log it</button>
+          <p id="msg" class="mt-2 mb-0 text-center"></p>
+        </form>
+      </div>
+
+      <div class="row g-3 mb-3">
+        <div class="col-4"><div class="card-dark h-100 mb-0"><div class="stat-num" id="sTotal">–</div><div class="stat-label">Total</div></div></div>
+        <div class="col-4"><div class="card-dark h-100 mb-0"><div class="stat-num" id="sBest">–</div><div class="stat-label">Best day</div></div></div>
+        <div class="col-4"><div class="card-dark h-100 mb-0"><div class="stat-num" id="sDay">–</div><div class="stat-label">Day #</div></div></div>
+      </div>
+
+      <div class="card-dark">
+        <div class="stat-label mb-2">Pushups by day</div>
+        <svg id="chart" viewBox="0 0 640 240" width="100%" preserveAspectRatio="none"></svg>
+      </div>
+
+      <div class="card-dark">
+        <table>
+          <thead><tr><th>Day</th><th>Date</th><th class="text-end">Pushups</th></tr></thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script>
+      const SHEET_ID = '1TQ7lCmWCzQYbhm0iTkVxlLq8uD1b1Xhi5RJp2WUQWGI';
+      // Public OAuth Web Client ID from Google Cloud Console (not a secret)
+      const CLIENT_ID = '76599874565-cf0j8fktpbq9t4cosdnt34q4jsbjlv1t.apps.googleusercontent.com';
+      const API = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values`;
+
+      const $ = id => document.getElementById(id);
+      let beginDate = null;
+      let token = null, tokenExpiry = 0, tokenClient = null;
+
+      function parseCSV(text) {
+        const rows = [];
+        for (const line of text.trim().split(/\r?\n/)) {
+          const cells = [];
+          line.replace(/"((?:[^"]|"")*)"|([^,]+)|,(?=,|$)/g, (m, q, plain) => {
+            if (q !== undefined) cells.push(q.replace(/""/g, '"'));
+            else if (plain !== undefined) cells.push(plain);
+          });
+          rows.push(cells);
+        }
+        return rows;
+      }
+
+      function fmtDate(d) {
+        return d.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
+      }
+
+      function midnight(d) { const m = new Date(d); m.setHours(0, 0, 0, 0); return m; }
+
+      function daysSinceBegin() {
+        return Math.round((midnight(new Date()) - midnight(beginDate)) / 86400000);
+      }
+
+      // Rows as arrays of strings: [pushups, day, '', beginDate]
+      async function fetchRows() {
+        if (token && Date.now() < tokenExpiry) {
+          const res = await fetch(`${API}/A:D`, { headers: { Authorization: `Bearer ${token}` } });
+          if (res.ok) return (await res.json()).values || [];
+        }
+        const res = await fetch(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&_=${Date.now()}`);
+        return parseCSV(await res.text());
+      }
+
+      async function load() {
+        try {
+          const rows = await fetchRows();
+          beginDate = rows[1] && rows[1][3] ? new Date(rows[1][3]) : null;
+          const data = rows.slice(1)
+            .filter(r => r[0] !== '' && r[0] !== undefined && r[1] !== '' && r[1] !== undefined)
+            .map(r => ({ pushups: Number(r[0]), day: Number(r[1]) }))
+            .filter(r => Number.isFinite(r.pushups) && Number.isFinite(r.day));
+          render(data);
+          return rows;
+        } catch (e) {
+          $('beginLabel').textContent = 'Could not load the sheet.';
+          throw e;
+        }
+      }
+
+      function dateForDay(day) {
+        if (!beginDate || isNaN(beginDate)) return '';
+        const d = new Date(beginDate); d.setDate(d.getDate() + day);
+        return fmtDate(d);
+      }
+
+      function render(data) {
+        $('beginLabel').textContent = beginDate && !isNaN(beginDate) ? `Started ${fmtDate(beginDate)}` : '';
+        const total = data.reduce((s, r) => s + r.pushups, 0);
+        $('sTotal').textContent = total.toLocaleString();
+        $('sBest').textContent = data.length ? Math.max(...data.map(r => r.pushups)) : '–';
+        $('sDay').textContent = data.length ? data[data.length - 1].day : '–';
+
+        $('tbody').innerHTML = data.slice().reverse().map(r =>
+          `<tr><td>${r.day}</td><td>${dateForDay(r.day)}</td><td class="text-end fw-bold">${r.pushups}</td></tr>`
+        ).join('');
+
+        drawChart(data);
+      }
+
+      function drawChart(data) {
+        const svg = $('chart');
+        const W = 640, H = 240, pl = 32, pr = 8, pt = 10, pb = 22;
+        if (!data.length) { svg.innerHTML = ''; return; }
+        const maxY = Math.max(...data.map(r => r.pushups), 1);
+        const maxX = Math.max(data[data.length - 1].day, 1);
+        const x = d => pl + (d / maxX) * (W - pl - pr);
+        const y = v => pt + (1 - v / maxY) * (H - pt - pb);
+        const pts = data.map(r => `${x(r.day)},${y(r.pushups)}`).join(' ');
+        const area = `${x(data[0].day)},${y(0)} ${pts} ${x(data[data.length - 1].day)},${y(0)}`;
+        svg.innerHTML = `
+          <line x1="${pl}" y1="${y(0)}" x2="${W - pr}" y2="${y(0)}" stroke="#2c313b"/>
+          <line x1="${pl}" y1="${y(maxY)}" x2="${W - pr}" y2="${y(maxY)}" stroke="#2c313b" stroke-dasharray="3 4"/>
+          <text x="${pl - 6}" y="${y(maxY) + 4}" text-anchor="end">${maxY}</text>
+          <text x="${pl - 6}" y="${y(0) + 4}" text-anchor="end">0</text>
+          <text x="${pl}" y="${H - 4}">Day 0</text>
+          <text x="${W - pr}" y="${H - 4}" text-anchor="end">Day ${maxX}</text>
+          <polygon points="${area}" fill="#50C878" fill-opacity=".15"/>
+          <polyline points="${pts}" fill="none" stroke="#50C878" stroke-width="2.5" stroke-linejoin="round"/>
+          ${data.map(r => `<circle cx="${x(r.day)}" cy="${y(r.pushups)}" r="3.5" fill="#50C878"><title>Day ${r.day}: ${r.pushups}</title></circle>`).join('')}`;
+      }
+
+      // Google sign-in: returns an access token, prompting only when needed
+      function getToken() {
+        if (token && Date.now() < tokenExpiry) return Promise.resolve(token);
+        return new Promise((resolve, reject) => {
+          if (!window.google || !google.accounts) return reject(new Error('Google sign-in not loaded yet'));
+          tokenClient = tokenClient || google.accounts.oauth2.initTokenClient({
+            client_id: CLIENT_ID,
+            scope: 'https://www.googleapis.com/auth/spreadsheets'
+          });
+          tokenClient.callback = resp => {
+            if (resp.error) return reject(new Error(resp.error));
+            token = resp.access_token;
+            tokenExpiry = Date.now() + (resp.expires_in - 60) * 1000;
+            resolve(token);
+          };
+          tokenClient.error_callback = err => reject(new Error(err.message || err.type || 'Sign-in cancelled'));
+          tokenClient.requestAccessToken({ prompt: token ? '' : undefined });
+        });
+      }
+
+      async function sheetsCall(path, method, values) {
+        const res = await fetch(`${API}/${path}`, {
+          method,
+          headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+          body: JSON.stringify({ values })
+        });
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({}));
+          throw new Error((err.error && err.error.message) || res.statusText);
+        }
+      }
+
+      function setMsg(text, color) { $('msg').style.color = color; $('msg').textContent = text; }
+
+      $('pushForm').addEventListener('submit', async e => {
+        e.preventDefault();
+        const n = parseInt($('pushInput').value, 10);
+        if (!Number.isFinite(n) || n < 0) return;
+        if (CLIENT_ID.startsWith('PASTE')) return setMsg('Set CLIENT_ID in putrack.html first.', '#ff6b6b');
+
+        $('submitBtn').disabled = true;
+        setMsg('Saving…', 'var(--muted)');
+        try {
+          await getToken();
+          const rows = await load(); // fresh copy, read with the token
+          if (!beginDate || isNaN(beginDate)) throw new Error('No beginning date in D2');
+          const day = daysSinceBegin();
+
+          // Same day logged already? Overwrite it; otherwise append a new row.
+          let lastRow = rows.length;
+          while (lastRow > 1 && !(rows[lastRow - 1][0] || rows[lastRow - 1][1])) lastRow--;
+          const last = rows[lastRow - 1];
+          if (lastRow > 1 && Number(last[1]) === day) {
+            await sheetsCall(`A${lastRow}:B${lastRow}?valueInputOption=USER_ENTERED`, 'PUT', [[n, day]]);
+          } else {
+            await sheetsCall(`A${lastRow + 1}:B${lastRow + 1}?valueInputOption=USER_ENTERED`, 'PUT', [[n, day]]);
+          }
+
+          setMsg(`Logged ${n} pushups for day ${day} 💪`, 'var(--accent)');
+          $('pushInput').value = '';
+          await load();
+        } catch (err) {
+          setMsg('Error: ' + err.message, '#ff6b6b');
+        } finally {
+          $('submitBtn').disabled = false;
+        }
+      });
+
+      load();
+    </script>
+  </body>
+</html>
