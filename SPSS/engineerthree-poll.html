@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SPSS — ENG 3 · Guidance &amp; Gravity — POLL</title>
+<link rel="stylesheet" href="spss.css">
+<style>
+  .adi { flex: 1; min-height: 0; display: grid; grid-template-columns: 1fr 11rem; gap: 1rem; }
+  .adi canvas { height: 100%; }
+  .adi .rows { display: flex; flex-direction: column; justify-content: center; }
+  .split.gc { grid-template-columns: 1fr 9rem; }
+</style>
+</head>
+<body>
+<div class="screen">
+  <header class="top" data-station="3" data-call="GNC" data-title="GUIDANCE &amp; GRAVITY"></header>
+
+  <div class="ebody">
+    <section class="panel span2">
+      <h2>GROUND TRACK <b><span data-t="latStr"></span>&nbsp;&nbsp;<span data-t="lonStr"></span></b></h2>
+      <canvas data-track></canvas>
+    </section>
+
+    <section class="panel">
+      <h2>ORBIT</h2>
+      <div class="row big"><span class="k">ALTITUDE</span><span><span class="v" data-t="alt" data-d="1"></span><span class="u">KM</span></span></div>
+      <div class="row"><span class="k">VELOCITY</span><span><span class="v" data-t="vel"></span><span class="u">KM/H</span></span></div>
+      <div class="row"><span class="k">ORBIT</span><span class="v" data-t="orbitStr"></span></div>
+      <div class="row"><span class="k">APOGEE / PERIGEE</span><span><span class="v" data-t="apogee" data-d="1"></span><span class="u">/</span> <span class="v" data-t="perigee" data-d="1"></span><span class="u">KM</span></span></div>
+      <div class="row"><span class="k">INCLINATION</span><span><span class="v" data-t="incl" data-d="2"></span><span class="u">DEG</span></span></div>
+      <div class="row"><span class="k">PERIOD</span><span><span class="v" data-t="periodMin" data-d="1"></span><span class="u">MIN</span></span></div>
+      <div class="row"><span class="k">NEXT ORBIT IN</span><span class="v" data-t="nextOrbit"></span></div>
+    </section>
+
+    <section class="panel">
+      <h2>ATTITUDE <b>LOCKED · REMOTE</b></h2>
+      <div class="adi">
+        <canvas data-adi></canvas>
+        <div class="rows">
+          <div class="row"><span class="k">PITCH</span><span class="v" data-t="pitch" data-d="1"></span></div>
+          <div class="row"><span class="k">ROLL</span><span class="v" data-t="roll" data-d="1"></span></div>
+          <div class="row"><span class="k">YAW</span><span class="v" data-t="yaw" data-d="1"></span></div>
+          <div class="row"><span class="k">ACCEL</span><span class="v" data-t="accel" data-d="2"></span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>GRAVITY COIL <b data-t="coilSt" data-st></b></h2>
+      <div class="split gc">
+        <div>
+          <div class="row big"><span class="k">FIELD</span><span><span class="v" data-t="gField" data-d="3"></span><span class="u">G</span></span></div>
+          <div class="row"><span class="k">CURRENT</span><span><span class="v" data-t="coilAmps"></span><span class="u">A</span></span></div>
+          <div class="row"><span class="k">COIL TEMP</span><span><span class="v" data-t="coilTemp" data-d="1"></span><span class="u">°C</span></span></div>
+          <div class="legend" style="margin-top:0.8rem"><span><i style="background:var(--accent)"></i>FIELD G · 90 S</span></div>
+          <canvas data-chart="gField" data-span="90" data-min="0" data-max="1.2"></canvas>
+        </div>
+        <div class="tankcol">
+          <div class="k">BACKUP TANK</div>
+          <div class="tankwrap"><svg class="tanksvg" viewBox="0 0 60 172" data-tank="backupFuel"><defs><clipPath id="tankclip"><path d="M22 2H38V12C50 13 56 22 56 34V128C56 142 46 150 30 150C14 150 4 142 4 128V34C4 22 10 13 22 12Z"/></clipPath></defs><g clip-path="url(#tankclip)"><rect class="liq" x="0" y="2" width="60" height="148"/><line class="surf" x1="0" x2="60" y1="2" y2="2"/></g><path class="ticks" d="M44 135.2H50M44 120.4H50M44 105.6H50M44 90.8H50M44 76.0H50M44 61.2H50M44 46.4H50M44 31.6H50"/><path class="shell" d="M22 2H38V12C50 13 56 22 56 34V128C56 142 46 150 30 150C14 150 4 142 4 128V34C4 22 10 13 22 12Z"/><path class="stand" d="M15 146L11 170M45 146L49 170M6 170H54"/></svg></div>
+          <div class="tv"><span class="v" data-t="backupFuel" data-d="1" data-lo="25"></span><span class="u">%</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel log">
+      <h2>EVENT LOG <b>GNC</b></h2>
+      <ol data-log="3" data-n="10"></ol>
+    </section>
+  </div>
+
+  <footer class="strip"><span><span class="k">STATUS</span><span data-t="status"></span></span><span><span class="k">ENG 3</span>GNC</span></footer>
+</div>
+<script>window.SPSS_LOCK = 'poll';</script>
+<script src="spss.js"></script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SPSS — ENG 1 · Boosters &amp; Vehicle — ENDING</title>
+<link rel="stylesheet" href="spss.css">
+<script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
+<style>
+  .fueltanks { flex: 1; min-height: 0; display: grid; grid-template-columns: 7.5rem 7.5rem 1fr; gap: 1rem; }
+  .fueltanks .rates { display: flex; flex-direction: column; justify-content: center; }
+  .fueltanks .tankcol .tv .v { font-size: 1.45rem; }
+</style>
+</head>
+<body>
+<div class="screen">
+  <header class="top" data-station="1" data-call="FUEL" data-title="BOOSTERS &amp; VEHICLE"></header>
+
+  <div class="ebody">
+    <section class="panel">
+      <h2>FUEL <b>LOX / RP-2</b></h2>
+      <div class="fueltanks">
+        <div class="tankcol"><div class="k">MAIN TANK</div><div class="tankwrap"><svg class="tanksvg" viewBox="0 0 60 172" data-tank="mainFuel"><defs><clipPath id="tankclip-main"><path d="M22 2H38V12C50 13 56 22 56 34V128C56 142 46 150 30 150C14 150 4 142 4 128V34C4 22 10 13 22 12Z"/></clipPath></defs><g clip-path="url(#tankclip-main)"><rect class="liq" x="0" y="2" width="60" height="148"/><line class="surf" x1="0" x2="60" y1="2" y2="2"/></g><path class="ticks" d="M44 135.2H50M44 120.4H50M44 105.6H50M44 90.8H50M44 76.0H50M44 61.2H50M44 46.4H50M44 31.6H50"/><path class="shell" d="M22 2H38V12C50 13 56 22 56 34V128C56 142 46 150 30 150C14 150 4 142 4 128V34C4 22 10 13 22 12Z"/><path class="stand" d="M15 146L11 170M45 146L49 170M6 170H54"/></svg></div><div class="tv"><span class="v" data-t="mainFuel" data-d="2" data-lo="10"></span><span class="u">%</span></div></div>
+        <div class="tankcol"><div class="k">BACKUP TANK</div><div class="tankwrap"><svg class="tanksvg" viewBox="0 0 60 172" data-tank="backupFuel"><defs><clipPath id="tankclip-backup"><path d="M22 2H38V12C50 13 56 22 56 34V128C56 142 46 150 30 150C14 150 4 142 4 128V34C4 22 10 13 22 12Z"/></clipPath></defs><g clip-path="url(#tankclip-backup)"><rect class="liq" x="0" y="2" width="60" height="148"/><line class="surf" x1="0" x2="60" y1="2" y2="2"/></g><path class="ticks" d="M44 135.2H50M44 120.4H50M44 105.6H50M44 90.8H50M44 76.0H50M44 61.2H50M44 46.4H50M44 31.6H50"/><path class="shell" d="M22 2H38V12C50 13 56 22 56 34V128C56 142 46 150 30 150C14 150 4 142 4 128V34C4 22 10 13 22 12Z"/><path class="stand" d="M15 146L11 170M45 146L49 170M6 170H54"/></svg></div><div class="tv"><span class="v" data-t="backupFuel" data-d="2" data-lo="25"></span><span class="u">%</span></div></div>
+        <div class="rates">
+          <div class="row"><span class="k">MAIN Δ / MIN</span><span><span class="v" data-t="mainRate" data-d="3"></span><span class="u">%</span></span></div>
+          <div class="row"><span class="k">BACKUP Δ / MIN</span><span><span class="v" data-t="backupRate" data-d="3"></span><span class="u">%</span></span></div>
+          <div class="row"><span class="k">MAIN PRESS</span><span><span class="v" data-t="mainPress" data-d="2"></span><span class="u">BAR</span></span></div>
+          <div class="row"><span class="k">BACKUP PRESS</span><span><span class="v" data-t="backupPress" data-d="2"></span><span class="u">BAR</span></span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>SPSS.C9 <b>MODEL 9 · REMOTE</b></h2>
+      <div class="miniholo">
+        <div class="reticle"></div>
+        <model-viewer id="ship" src="spaceship-web.glb" alt="SPSS Model 9"
+          auto-rotate auto-rotate-delay="0" rotation-per-second="7deg"
+          camera-orbit="30deg 72deg 88%" field-of-view="30deg"
+          interaction-prompt="none" disable-zoom disable-pan
+          environment-image="neutral" exposure="1.3" shadow-intensity="0" loading="eager"></model-viewer>
+        <div class="mload" id="mload">LOADING MODEL</div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>ENGINES <b>2 MAIN · 2 NACELLE</b></h2>
+      <div class="tiles">
+        <div class="tile"><div class="k">MAIN L</div><div class="v" data-t="mainSt" data-st></div></div>
+        <div class="tile"><div class="k">MAIN R</div><div class="v" data-t="mainSt" data-st></div></div>
+        <div class="tile"><div class="k">RCS</div><div class="v" data-t="rcsSt" data-st></div></div>
+        <div class="tile"><div class="k">NACELLE L</div><div class="v" data-t="nacSt" data-st></div></div>
+        <div class="tile"><div class="k">NACELLE R</div><div class="v" data-t="nacSt" data-st></div></div>
+        <div class="tile"><div class="k">GRAVITY COIL</div><div class="v" data-t="coilSt" data-st></div></div>
+      </div>
+      <div class="row"><span class="k">THRUST</span><span><span class="v" data-t="thrust"></span><span class="u">%</span></span></div>
+      <div class="row"><span class="k">CHAMBER PRESS</span><span><span class="v" data-t="chamber" data-d="1" data-hi="105"></span><span class="u">BAR</span></span></div>
+      <div class="row"><span class="k">ACCEL</span><span><span class="v" data-t="accel" data-d="2"></span><span class="u">G</span></span></div>
+    </section>
+
+    <section class="panel">
+      <h2>VEHICLE</h2>
+      <div class="row"><span class="k">HEAT TILES</span><span><span class="v" data-t="heat"></span><span class="u">°C</span></span></div>
+      <div class="row"><span class="k">MAIN BUS</span><span><span class="v" data-t="bus" data-d="2"></span><span class="u">V</span></span></div>
+      <div class="row"><span class="k">AVIONICS</span><span><span class="v" data-t="avionics" data-d="1"></span><span class="u">°C</span></span></div>
+      <div class="row"><span class="k">CABIN CONTROLS</span><span class="v" data-t="controls" data-st></span></div>
+      <div class="row"><span class="k">CONTROL MODE</span><span class="v ok">REMOTE</span></div>
+      <div class="row"><span class="k">ALTITUDE</span><span><span class="v" data-t="alt" data-d="1"></span><span class="u">KM</span></span></div>
+      <div class="row"><span class="k">VELOCITY</span><span><span class="v" data-t="vel"></span><span class="u">KM/H</span></span></div>
+    </section>
+
+    <section class="panel">
+      <h2>THRUST / CHAMBER PRESSURE <b>LAST 90 S</b></h2>
+      <div class="legend"><span><i style="background:var(--accent)"></i>THRUST %</span><span><i style="background:var(--text)"></i>CHAMBER BAR</span></div>
+      <canvas data-chart="thrust|chamber" data-span="90" data-min="0" data-max="140"></canvas>
+    </section>
+
+    <section class="panel log">
+      <h2>EVENT LOG <b>FUEL</b></h2>
+      <ol data-log="1" data-n="10"></ol>
+    </section>
+  </div>
+
+  <footer class="strip"><span><span class="k">STATUS</span><span data-t="status"></span></span><span><span class="k">ENG 1</span>FUEL</span></footer>
+</div>
+<script>window.SPSS_LOCK = 'ending';</script>
+<script src="spss.js"></script>
+<script>
+  // mini hologram: same fix as the main TV (Blender exported the hull as transparent, which glitches) + hide loader
+  const mv = document.getElementById('ship');
+  mv.addEventListener('load', () => {
+    for (const m of mv.model.materials) { m.setAlphaMode('OPAQUE'); m.setDoubleSided(true); }
+    document.getElementById('mload').remove();
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,228 @@
+/* SPSS Mission Control — shared look for the main TV and engineer consoles.
+   Everything is sized in rem, and 1rem scales with the screen, so a layout built for 1920x1080
+   fills a 4K TV or a 1440x900 laptop the same way. */
+@import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Oxanium:wght@400;500;600;700&display=swap');
+
+:root {
+  --bg: #04060a;
+  --panel: #080c12;
+  --line: rgba(255, 255, 255, 0.13);
+  --line-soft: rgba(255, 255, 255, 0.06);
+  --text: #e9eef3;
+  --muted: #c3ccd5;   /* silver: secondary text (labels, units, timestamps) */
+  --accent: #5ab8ff;
+  --go: #3fdc8a;
+  --warn: #ffb21f;
+  --alarm: #ff3d3d;
+}
+
+* { box-sizing: border-box; }
+html { font-size: min(0.8333vw, 1.4815vh); }
+html, body { margin: 0; height: 100%; background: var(--bg); }
+body {
+  color: var(--text);
+  font-family: 'Oxanium', 'Segoe UI', sans-serif;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  font-size: 1rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+body.nocursor, body.nocursor * { cursor: none !important; }
+
+.screen { display: grid; grid-template-rows: 5rem 1fr auto; gap: 1rem; height: 100vh; padding: 1rem 1.25rem 1.1rem; }
+
+/* ---------- header ---------- */
+.top { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; border-bottom: 1px solid var(--line); padding-bottom: 0.8rem; }
+.brand { display: flex; align-items: center; gap: 1.1rem; }
+.logo { border: 2px solid var(--text); padding: 0.35rem 0.4rem 0.35rem 0.7rem; font-size: 1.9rem; letter-spacing: 0.32em; line-height: 1; }
+.sub { color: var(--muted); font-size: 0.82rem; line-height: 1.35; letter-spacing: 0.14em; }
+.sub div:first-child { color: var(--text); }
+.clock { text-align: center; }
+.clock .lbl { color: var(--muted); font-size: 0.78rem; letter-spacing: 0.34em; }
+.clock .big { font-size: 2.9rem; line-height: 1.05; letter-spacing: 0.08em; }
+body.hold .clock .lbl { color: var(--warn); }
+.right { justify-self: end; text-align: right; display: flex; flex-direction: column; gap: 0.45rem; align-items: flex-end; }
+.utc { font-size: 1.15rem; letter-spacing: 0.12em; }
+.chips { display: flex; gap: 0.6rem; }
+.pill, .pollchip { border: 1px solid var(--accent); color: var(--accent); padding: 0.22rem 0.65rem; font-size: 0.85rem; letter-spacing: 0.22em; }
+.pollchip { border-color: var(--line); color: var(--muted); }
+body.alarm .pill { border-color: var(--alarm); color: var(--alarm); }
+body.los .pill { background: var(--alarm); border-color: var(--alarm); color: #000; }
+
+/* ---------- panels ---------- */
+.panel { position: relative; min-height: 0; overflow: hidden; border: 1px solid var(--line); background: var(--panel); padding: 2.7rem 1.1rem 0.9rem; display: flex; flex-direction: column; }
+.panel > h2 { position: absolute; inset: 0 0 auto 0; margin: 0; padding: 0.6rem 1.1rem; display: flex; justify-content: space-between; gap: 1rem;
+  font-weight: normal; font-size: 0.78rem; letter-spacing: 0.28em; color: var(--muted); border-bottom: 1px solid var(--line); }
+.panel > h2 b { font-weight: normal; color: var(--text); }
+.grow { flex: 1; }
+
+.row { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; padding: 0.42rem 0; border-bottom: 1px solid var(--line-soft); }
+.row:last-child { border-bottom: 0; }
+.row .k { color: var(--muted); font-size: 0.86rem; letter-spacing: 0.14em; white-space: nowrap; }
+.row .v { font-size: 1.35rem; white-space: nowrap; }
+.u { color: var(--muted); font-size: 0.78rem; margin-left: 0.35rem; letter-spacing: 0.1em; }
+.row.big { padding: 0.55rem 0 0.6rem; }
+.row.big .v { font-size: 2.35rem; line-height: 1; }
+
+.ok { color: var(--go); }
+.warn { color: var(--warn); }
+.crit { color: var(--alarm); }
+
+.bar { position: relative; height: 1.25rem; border: 1px solid var(--line); margin: 0.3rem 0 0.85rem; }
+.bar i { position: absolute; inset: 0 auto 0 0; background: var(--text); transition: width 0.25s linear; }
+.bar::after { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(90deg, transparent 0 calc(10% - 2px), var(--panel) calc(10% - 2px) 10%); }
+.bar.crit { border-color: var(--alarm); }
+.bar.crit i { background: var(--alarm); animation: blink 1s linear infinite; }
+
+.legend { display: flex; gap: 1.2rem; font-size: 0.78rem; color: var(--muted); letter-spacing: 0.16em; margin-bottom: 0.4rem; }
+.legend i { display: inline-block; width: 1.1rem; height: 3px; vertical-align: middle; margin-right: 0.45rem; }
+canvas { display: block; width: 100%; flex: 1; min-height: 0; }
+
+/* ---------- event log ---------- */
+.log ol { list-style: none; margin: 0; padding: 0; }
+.log li { display: grid; grid-template-columns: 9.2rem 1fr; gap: 0.8rem; padding: 0.32rem 0; font-size: 0.95rem; border-bottom: 1px solid var(--line-soft); }
+.log li time { color: var(--muted); }
+.log li.g span { color: var(--go); }
+.log li.w span { color: var(--warn); }
+.log li.a span { color: var(--alarm); }
+.log li.fresh { animation: fresh 1.6s ease-out; }
+@keyframes fresh { from { background: rgba(90, 184, 255, 0.25); } to { background: transparent; } }
+
+/* ---------- status strip / alarms ---------- */
+.strip { display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--line); padding: 0.55rem 1.1rem; font-size: 1.05rem; letter-spacing: 0.24em; }
+.strip .k { color: var(--muted); font-size: 0.8rem; margin-right: 1rem; }
+body.alarm .strip { background: var(--alarm); color: #000; border-color: var(--alarm); animation: blinkbg 1s linear infinite; }
+body.alarm .strip .k { color: inherit; }
+/* hard on/off flashes (no in-between colors, which read as mud on camera) */
+@keyframes blink { 0%, 49.9% { opacity: 1; } 50%, 100% { opacity: 0.35; } }
+@keyframes blinkbg { 0%, 49.9% { background: var(--alarm); color: #000; } 50%, 100% { background: #4a0909; color: var(--alarm); } }
+
+/* ---------- loss of signal ---------- */
+.losbox { display: none; position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 20; text-align: center;
+  background: rgba(4, 6, 10, 0.92); border: 2px solid var(--alarm); color: var(--alarm); padding: 2.2rem 4rem; }
+.losbox .l1 { font-size: 4.2rem; letter-spacing: 0.3em; line-height: 1.1; animation: blink 1.2s linear infinite; }
+.losbox .l2 { font-size: 1.8rem; letter-spacing: 0.2em; margin-top: 0.6rem; }
+.losbox .l3 { font-size: 0.95rem; letter-spacing: 0.3em; margin-top: 0.7rem; color: var(--muted); }
+body.los .losbox { display: block; }
+body.los .panel, body.los .stage { border-color: rgba(255, 61, 61, 0.45); }
+
+/* ---------- controls overlay ---------- */
+.help { display: none; position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 30; width: 58rem;
+  background: #05080d; border: 1px solid var(--accent); padding: 1.6rem 2rem; font-size: 1rem; box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.6); }
+.help h3 { margin: 0 0 1rem; font-weight: normal; letter-spacing: 0.3em; color: var(--accent); }
+.help .phases, .help .keys { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.55rem 1.5rem; margin-bottom: 1.2rem; }
+.help .keys { grid-template-columns: 1fr 1fr; }
+.help p { color: var(--muted); font-size: 0.85rem; margin: 0; }
+.help kbd { display: inline-block; min-width: 1.7rem; text-align: center; border: 1px solid var(--line); padding: 0.05rem 0.4rem; margin-right: 0.35rem; font-family: inherit; color: var(--text); }
+body.show-help .help { display: block; }
+/* sound-enable popup (main TV): fills the middle of the screen until clicked / any key */
+.soundgate { display: none; position: fixed; inset: 0; z-index: 60; place-items: center; background: rgba(0, 0, 0, 0.72); cursor: pointer; }
+.soundgate.on { display: grid; }
+.soundgate .box { width: 70%; padding: 4.5rem 3rem; text-align: center; background: #05080d; border: 3px solid var(--warn); box-shadow: 0 0 0 0.6rem rgba(255, 178, 31, 0.15); }
+.soundgate .t1 { font-family: var(--title); font-size: 4.4rem; letter-spacing: 0.14em; color: var(--warn); line-height: 1.1; }
+.soundgate .t2 { margin-top: 1.4rem; font-size: 1.6rem; letter-spacing: 0.24em; color: var(--text); }
+
+/* ---------- engineer console grid ---------- */
+.ebody { display: grid; grid-template-columns: 1fr 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 1rem; min-height: 0; }
+.span2 { grid-column: span 2; }
+.tiles { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.6rem; margin-bottom: 0.7rem; }
+.tile { border: 1px solid var(--line); padding: 0.5rem 0.6rem; }
+.tile .k { color: var(--muted); font-size: 0.75rem; letter-spacing: 0.16em; }
+.tile .v { font-size: 1.15rem; margin-top: 0.2rem; }
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; flex: 1; min-height: 0; }
+.split > div { display: flex; flex-direction: column; min-height: 0; }
+
+/* ---------- hidden scene switcher (hover the bottom-left corner) ---------- */
+.scenenav .hot { position: fixed; left: 0; bottom: 0; width: 4rem; height: 4rem; z-index: 40; }
+.scenenav .tray { position: fixed; left: 0; top: 0; bottom: 0; width: 24rem; z-index: 41; display: flex; flex-direction: column; justify-content: flex-end; gap: 0.6rem;
+  padding: 1.5rem; background: #05080d; border-right: 1px solid var(--accent); transform: translateX(-101%); transition: transform 0.18s ease-out; }
+.scenenav:hover .tray { transform: none; }
+.scenenav .ttl { color: var(--muted); font-size: 0.8rem; letter-spacing: 0.3em; margin-bottom: 0.4rem; }
+.scenenav a { position: relative; display: block; color: var(--text); text-decoration: none; border: 1px solid var(--line); padding: 0.9rem 1rem; font-size: 1.3rem; letter-spacing: 0.24em; }
+.scenenav a small { display: block; color: var(--muted); font-size: 0.72rem; letter-spacing: 0.12em; margin-top: 0.35rem; }
+.scenenav a:hover { border-color: var(--accent); color: var(--accent); }
+.scenenav a.cur { border-color: var(--accent); background: rgba(90, 184, 255, 0.12); }
+.scenenav a.cur::after { content: '●'; position: absolute; right: 1rem; top: 0.95rem; font-size: 0.9rem; color: var(--accent); }
+
+/* ---------- alarm: the whole page flashes red (same 1s on/off beat as the banner and status strip) ---------- */
+body.alarm { animation: alarm-page 1s linear infinite; }
+body.alarm .panel, body.alarm .tile { animation: alarm-panel 1s linear infinite; }
+body.alarm .stage { animation: alarm-stage 1s linear infinite; }
+body.alarm .bar::after { background: none; }
+@keyframes alarm-page  { 0%, 49.9% { background: #3a0505; } 50%, 100% { background: var(--bg); } }
+@keyframes alarm-panel { 0%, 49.9% { background: #5c0a0a; border-color: var(--alarm); } 50%, 100% { background: var(--panel); border-color: rgba(255, 61, 61, 0.45); } }
+@keyframes alarm-stage { 0%, 49.9% { background: radial-gradient(ellipse 55% 60% at 50% 52%, #8a1212 0%, #4a0707 60%, #2a0404 100%); }
+                         50%, 100% { background: radial-gradient(ellipse 55% 60% at 50% 52%, #0f1a28 0%, #070b11 55%, var(--bg) 100%); } }
+.scenenav .screens { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; margin-bottom: 1.2rem; }
+.scenenav .screens a { font-size: 1.1rem; padding: 0.75rem 0.9rem; }
+
+/* ---------- titles: Black Ops One (stencil, matches the ship's hull lettering). Data stays monospace. ---------- */
+:root { --title: 'Black Ops One', 'Oxanium', sans-serif; }
+.logo, .panel > h2, .clock .lbl, .strip, .status, .alarmbanner, .tl-name, .pill, .pollchip,
+.losbox .l1, .losbox .l3, .help h3, .scenenav .ttl, .scenenav a, .legend, .sub div:first-child { font-family: var(--title); }
+.panel > h2 { font-size: 0.92rem; letter-spacing: 0.18em; padding-top: 0.5rem; }
+.panel > h2 b { font-family: 'Oxanium', sans-serif; font-size: 0.85rem; }
+.logo { letter-spacing: 0.22em; }
+.clock .lbl { font-size: 0.85rem; letter-spacing: 0.26em; }
+.status { letter-spacing: 0.22em; }
+.strip { letter-spacing: 0.16em; }
+.strip .k { font-size: 0.85rem; }
+.tl-name { font-size: 0.86rem; letter-spacing: 0.12em; }
+.losbox .l1 { letter-spacing: 0.2em; }
+.scenenav a small { font-family: 'Oxanium', sans-serif; }
+
+/* ---------- Oxanium text tuning ---------- */
+.row .v, .row.big .v, .clock .big, .utc, .tile .v { font-weight: 600; }
+.clock .big { letter-spacing: 0.04em; }
+.row .k, .tile .k, .u, .sub, .log li time { font-weight: 500; letter-spacing: 0.1em; }
+.log li { font-weight: 500; }
+
+/* ---------- vertical fuel tank gauge (capsule tank that drains from the top) ---------- */
+.tankcol { display: flex; flex-direction: column; align-items: center; gap: 0.45rem; min-height: 0; }
+.tankcol > .k { color: var(--muted); font-size: 0.75rem; letter-spacing: 0.16em; text-align: center; }
+.tankwrap { flex: 1; min-height: 0; display: flex; justify-content: center; }
+.tanksvg { height: 100%; width: auto; max-width: 100%; overflow: visible; }      /* one continuous tank shape */
+.tanksvg .shell, .tanksvg .stand { fill: none; stroke: var(--text); stroke-width: 2; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+.tanksvg .liq { fill: rgba(200, 206, 212, 0.72); }                                   /* fuel: neutral grey */
+.tanksvg .surf { stroke: #eef1f4; stroke-width: 2; vector-effect: non-scaling-stroke; }
+.tanksvg .ticks { stroke: rgba(255, 255, 255, 0.55); stroke-width: 1.5; vector-effect: non-scaling-stroke; }
+.tankcol .tv .v { font-size: 1.7rem; font-weight: 600; }
+
+/* ---------- all title text white (grey was hard to read on camera); status colors still win ---------- */
+.panel > h2, .clock .lbl, .legend, .timeline .tl-name, .scenenav .ttl, .strip .k, .pollchip, .losbox .l3, .tankcol > .k { color: var(--text); }
+body.hold .clock .lbl { color: var(--warn); }
+.timeline .tl-node.now .tl-name { color: var(--accent); }
+.timeline .tl-node.lost .tl-name { color: var(--alarm); }
+body.alarm .strip .k { color: inherit; }
+
+/* ---------- mini hologram (engineer screens): same look as the main TV hologram ---------- */
+.miniholo { position: relative; flex: 1; min-height: 0; overflow: hidden; }
+.miniholo model-viewer { position: absolute; inset: 0; width: 100%; height: 100%; background: transparent; --poster-color: transparent; --progress-bar-height: 0;
+  filter: grayscale(1) contrast(1.3) brightness(1.2) sepia(1) hue-rotate(155deg) saturate(4) drop-shadow(0 0 0.5rem rgba(90, 200, 255, 0.6));
+  mix-blend-mode: screen;
+  -webkit-mask-image: repeating-linear-gradient(0deg, #000 0 0.22rem, rgba(0, 0, 0, 0.45) 0.22rem 0.36rem);
+          mask-image: repeating-linear-gradient(0deg, #000 0 0.22rem, rgba(0, 0, 0, 0.45) 0.22rem 0.36rem);
+  animation: holo-flicker 5s linear infinite; }
+body.alarm .miniholo model-viewer { filter: grayscale(1) contrast(1.3) brightness(1.1) sepia(1) hue-rotate(-52deg) saturate(6) drop-shadow(0 0 0.5rem rgba(255, 70, 70, 0.7)); }
+body.los .miniholo model-viewer { filter: grayscale(1) sepia(1) hue-rotate(-50deg) saturate(5) brightness(0.45) contrast(1.3); animation: none; }
+.miniholo .reticle { position: absolute; left: 50%; top: 50%; height: 78%; aspect-ratio: 1; transform: translate(-50%, -50%);
+  border: 1px solid rgba(255, 255, 255, 0.07); border-radius: 50%; pointer-events: none; }
+.miniholo .reticle::before, .miniholo .reticle::after { content: ''; position: absolute; background: rgba(255, 255, 255, 0.1); }
+.miniholo .reticle::before { left: 50%; top: -1rem; bottom: -1rem; width: 1px; }
+.miniholo .reticle::after { top: 50%; left: -1rem; right: -1rem; height: 1px; }
+.miniholo .mload { position: absolute; inset: 0; display: grid; place-items: center; color: var(--muted); font-size: 0.85rem; letter-spacing: 0.3em; }
+@keyframes holo-flicker {
+  0%, 46%, 49%, 52%, 80%, 83%, 100% { opacity: 0.92; }
+  47% { opacity: 0.55; } 48% { opacity: 0.85; } 50% { opacity: 0.68; }
+  81% { opacity: 0.74; } 82% { opacity: 0.9; }
+}
+
+/* ---------- boxes: thin white border on every box (no corner brackets) ---------- */
+.panel, .screen .stage, .strip, .tile, .pollchip, .bar { border: 1px solid var(--text); }
+
+/* ---------- nothing on the consoles can be highlighted / selected / dragged ---------- */
+html, body, body * { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
+img, canvas, svg, model-viewer { -webkit-user-drag: none; }

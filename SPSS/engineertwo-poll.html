@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SPSS — ENG 2 · Weather &amp; Range — POLL</title>
+<link rel="stylesheet" href="spss.css">
+</head>
+<body>
+<div class="screen">
+  <header class="top" data-station="2" data-call="RANGE" data-title="WEATHER &amp; RANGE"></header>
+
+  <div class="ebody">
+    <section class="panel">
+      <h2>WEATHER <b>HQ PAD 1</b></h2>
+      <div class="row big"><span class="k">SURFACE WIND</span><span><span class="v" data-t="wind" data-d="1"></span><span class="u">KT</span></span></div>
+      <div class="row"><span class="k">GUSTS</span><span><span class="v" data-t="gust" data-d="1" data-hi="25"></span><span class="u">KT</span></span></div>
+      <div class="row"><span class="k">DIRECTION</span><span><span class="v" data-t="windDir"></span><span class="u">DEG</span></span></div>
+      <div class="row"><span class="k">AIR TEMP</span><span><span class="v" data-t="airTemp" data-d="1"></span><span class="u">°C</span></span></div>
+      <div class="row"><span class="k">CEILING / VIS</span><span><span class="v">9,000</span><span class="u">FT /</span> <span class="v">10</span><span class="u">SM</span></span></div>
+      <div class="row"><span class="k">LIGHTNING</span><span><span class="v">&gt;40</span><span class="u">NM</span></span></div>
+      <div class="row"><span class="k">UPPER SHEAR</span><span class="v" data-t="shear" data-st></span></div>
+    </section>
+
+    <section class="panel">
+      <h2>WIND <b>LAST 120 S</b></h2>
+      <div class="legend"><span><i style="background:var(--accent)"></i>SUSTAINED</span><span><i style="background:var(--text)"></i>GUST</span></div>
+      <canvas data-chart="wind|gust" data-span="120" data-min="0" data-max="25"></canvas>
+    </section>
+
+    <section class="panel">
+      <h2>RANGE SAFETY</h2>
+      <div class="row"><span class="k">LAUNCH PAD</span><span class="v" data-t="padSt" data-st></span></div>
+      <div class="row"><span class="k">AIRSPACE</span><span class="v ok">CLEAR</span></div>
+      <div class="row"><span class="k">MARITIME</span><span class="v ok">CLEAR</span></div>
+      <div class="row"><span class="k">FLIGHT TERM SYS</span><span class="v" data-t="fts" data-st></span></div>
+      <div class="row"><span class="k">TRACKING</span><span class="v" data-t="tracking" data-st></span></div>
+      <div class="row"><span class="k">DOWNRANGE</span><span><span class="v" data-t="downrange"></span><span class="u">KM</span></span></div>
+      <div class="row"><span class="k">POSITION</span><span class="v" style="font-size:1.1rem"><span data-t="latStr"></span>&nbsp;&nbsp;<span data-t="lonStr"></span></span></div>
+    </section>
+
+    <section class="panel">
+      <h2>COMMS / LINK</h2>
+      <div class="row big"><span class="k">S-BAND</span><span><span class="v" data-t="signal" data-d="1"></span><span class="u">DBM</span></span></div>
+      <div class="row"><span class="k">X-BAND</span><span><span class="v" data-t="xband" data-d="1"></span><span class="u">DBM</span></span></div>
+      <div class="row"><span class="k">GROUND STATION</span><span class="v" data-t="station"></span></div>
+      <div class="row"><span class="k">LATENCY</span><span><span class="v" data-t="latency"></span><span class="u">MS</span></span></div>
+      <div class="row"><span class="k">DOWNLINK</span><span><span class="v" data-t="datarate" data-d="1"></span><span class="u">MBPS</span></span></div>
+      <div class="row"><span class="k">WINDOWS</span><span class="v" data-t="windows" data-st></span></div>
+      <div class="row"><span class="k">GRAVITY COIL</span><span class="v" data-t="coilSt" data-st></span></div>
+    </section>
+
+    <section class="panel">
+      <h2>SIGNAL STRENGTH <b>LAST 120 S</b></h2>
+      <div class="legend"><span><i style="background:var(--accent)"></i>S-BAND</span><span><i style="background:var(--text)"></i>X-BAND</span></div>
+      <canvas data-chart="signal|xband" data-span="120" data-min="-90" data-max="-40"></canvas>
+    </section>
+
+    <section class="panel log">
+      <h2>EVENT LOG <b>RANGE</b></h2>
+      <ol data-log="2" data-n="10"></ol>
+    </section>
+  </div>
+
+  <footer class="strip"><span><span class="k">STATUS</span><span data-t="status"></span></span><span><span class="k">ENG 2</span>RANGE</span></footer>
+</div>
+<script>window.SPSS_LOCK = 'poll';</script>
+<script src="spss.js"></script>
+</body>
+</html>

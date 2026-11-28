@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SPSS Mission Control — Main Display — ENDING</title>
+<link rel="stylesheet" href="spss.css">
+<script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
+<style>
+  .mbody { display: grid; grid-template-columns: 27rem 1fr 27rem; gap: 1rem; min-height: 0; }
+  .col { display: flex; flex-direction: column; gap: 1rem; min-height: 0; }
+  .col > .panel { flex: none; }
+  .col > .grow { flex: 1; }
+
+  /* center stage */
+  .stage { position: relative; flex: 1; min-height: 0; border: 1px solid var(--line); overflow: hidden;
+    background: radial-gradient(ellipse 55% 60% at 50% 52%, #0f1a28 0%, #070b11 55%, var(--bg) 100%); }
+  .stage model-viewer { position: absolute; inset: 0; width: 100%; height: 100%; background: transparent; --poster-color: transparent; --progress-bar-height: 0; }
+  .ov { position: absolute; z-index: 2; font-size: 0.85rem; letter-spacing: 0.2em; color: var(--muted); line-height: 1.5; pointer-events: none; }
+  .ov b { color: var(--text); font-weight: normal; }
+  .ov.tl { top: 1.5rem; left: 2rem; }
+  .ov.tr { top: 1.5rem; right: 2rem; text-align: right; }
+  .ov.bl { bottom: 4.6rem; left: 2rem; }
+  .ov.br { bottom: 4.6rem; right: 2rem; text-align: right; }
+  .status { position: absolute; z-index: 2; left: 0; right: 0; bottom: 1.6rem; text-align: center; font-size: 1.55rem; letter-spacing: 0.32em; }
+  .loader { position: absolute; z-index: 3; left: 50%; top: 50%; transform: translate(-50%, -50%); text-align: center; width: 30rem; }
+  .loader .t { letter-spacing: 0.3em; color: var(--muted); font-size: 0.9rem; margin-bottom: 0.7rem; }
+  .loader .bar { margin: 0; }
+  .loader.done { display: none; }
+  .loader.err .t { color: var(--alarm); }
+  .alarmbanner { display: none; position: absolute; z-index: 4; top: 0; left: 0; right: 0; background: var(--alarm); color: #000;
+    text-align: center; font-size: 1.25rem; letter-spacing: 0.26em; padding: 0.55rem 1rem; animation: blinkbg 1s linear infinite; }
+  body.alarm .alarmbanner { display: block; }
+  body.alarm .stage { border-color: var(--alarm); }
+  body.alarm .status { color: var(--alarm); }
+  /* ---- hologram: tint the textured model one color, let dark areas go see-through (screen blend),
+     cut it into scanlines with a mask, add glow + flicker. The model itself stays opaque, so no sorting glitches. ---- */
+  .stage model-viewer {
+    filter: grayscale(1) contrast(1.3) brightness(1.2) sepia(1) hue-rotate(155deg) saturate(4) drop-shadow(0 0 0.6rem rgba(90, 200, 255, 0.6));
+    mix-blend-mode: screen;
+    -webkit-mask-image: repeating-linear-gradient(0deg, #000 0 0.22rem, rgba(0, 0, 0, 0.45) 0.22rem 0.36rem);
+            mask-image: repeating-linear-gradient(0deg, #000 0 0.22rem, rgba(0, 0, 0, 0.45) 0.22rem 0.36rem);
+    animation: holo-flicker 5s linear infinite;
+  }
+  body.alarm .stage model-viewer { filter: grayscale(1) contrast(1.3) brightness(1.1) sepia(1) hue-rotate(-52deg) saturate(6) drop-shadow(0 0 0.6rem rgba(255, 70, 70, 0.7)); }
+  body.los .stage model-viewer { filter: grayscale(1) sepia(1) hue-rotate(-50deg) saturate(5) brightness(0.45) contrast(1.3); animation: none; }
+  @keyframes holo-flicker {
+    0%, 46%, 49%, 52%, 80%, 83%, 100% { opacity: 0.92; }
+    47% { opacity: 0.55; } 48% { opacity: 0.85; } 50% { opacity: 0.68; }
+    81% { opacity: 0.74; } 82% { opacity: 0.9; }
+  }
+  /* targeting reticle: faint circle + crosshair behind the ship */
+  .reticle { position: absolute; z-index: 1; left: 50%; top: 50%; width: 46%; aspect-ratio: 1; transform: translate(-50%, -50%);
+    border: 1px solid rgba(255, 255, 255, 0.07); border-radius: 50%; pointer-events: none; }
+  .reticle::before, .reticle::after { content: ''; position: absolute; background: rgba(255, 255, 255, 0.1); }
+  .reticle::before { left: 50%; top: -1.2rem; bottom: -1.2rem; width: 1px; }
+  .reticle::after { top: 50%; left: -1.2rem; right: -1.2rem; height: 1px; }
+  #static { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; opacity: 0; image-rendering: pixelated; pointer-events: none; transition: opacity 0.3s; }
+  body.los #static { opacity: 0.22; }
+  body.los .status { color: var(--alarm); }
+
+  .log { flex: none; height: 12.6rem; }
+
+  /* poll */
+  .poll .row .v { font-size: 1.2rem; }
+  .poll .row .k { color: var(--text); }
+  .poll .row .k small { display: block; color: var(--muted); font-size: 0.72rem; letter-spacing: 0.16em; margin-top: 0.15rem; }
+
+  /* timeline */
+  .timeline { position: relative; display: flex; justify-content: space-between; height: 7rem; padding: 0 2.5rem; border-top: 1px solid var(--line); }
+  .tl-line { position: absolute; left: 4.5rem; right: 4.5rem; top: 3.4rem; height: 2px; background: rgba(255, 255, 255, 0.18); }
+  .tl-line i { position: absolute; inset: 0 auto 0 0; background: var(--text); transition: width 0.6s; }
+  .tl-node { position: relative; width: 4rem; display: flex; flex-direction: column; align-items: center; }
+  .tl-name { position: absolute; top: 1.1rem; white-space: nowrap; font-size: 0.82rem; letter-spacing: 0.16em; color: var(--muted); }
+  .tl-dot { position: absolute; top: 2.85rem; width: 1.1rem; height: 1.1rem; border: 2px solid rgba(255, 255, 255, 0.4); background: var(--bg); border-radius: 50%; }
+  .tl-time { position: absolute; top: 4.6rem; white-space: nowrap; font-size: 0.78rem; color: var(--muted); letter-spacing: 0.08em; }
+  .tl-node.done .tl-dot { background: var(--text); border-color: var(--text); }
+  .tl-node.done .tl-name { color: var(--text); }
+  .tl-node.now .tl-dot { border-color: var(--accent); box-shadow: 0 0 0 0.35rem rgba(90, 184, 255, 0.18); animation: blink 1.4s ease-in-out infinite; }
+  .tl-node.now .tl-name { color: var(--accent); }
+  .tl-node.lost .tl-dot { border-color: var(--alarm); }
+  .tl-node.lost .tl-name, .tl-node.lost .tl-time { color: var(--alarm); text-decoration: line-through; }
+</style>
+</head>
+<body class="main">
+<div class="screen">
+  <header class="top" data-station="0"></header>
+
+  <div class="mbody">
+    <!-- LEFT -->
+    <div class="col">
+      <section class="panel">
+        <h2>TRAJECTORY <b data-t="phaseName"></b></h2>
+        <div class="row big"><span class="k">ALTITUDE</span><span><span class="v" data-t="alt" data-d="1"></span><span class="u">KM</span></span></div>
+        <div class="row big"><span class="k">VELOCITY</span><span><span class="v" data-t="vel"></span><span class="u">KM/H</span></span></div>
+        <div class="row"><span class="k">DOWNRANGE</span><span><span class="v" data-t="downrange"></span><span class="u">KM</span></span></div>
+        <div class="row"><span class="k">ORBIT</span><span class="v" data-t="orbitStr"></span></div>
+        <div class="row"><span class="k">APOGEE / PERIGEE</span><span><span class="v" data-t="apogee" data-d="1"></span><span class="u">/</span> <span class="v" data-t="perigee" data-d="1"></span><span class="u">KM</span></span></div>
+        <div class="row"><span class="k">INCLINATION</span><span><span class="v" data-t="incl" data-d="2"></span><span class="u">DEG</span></span></div>
+        <div class="row"><span class="k">POSITION</span><span class="v" style="font-size:1.1rem"><span data-t="latStr"></span>&nbsp;&nbsp;<span data-t="lonStr"></span></span></div>
+      </section>
+      <section class="panel grow poll">
+        <h2>GO / NO-GO POLL <b>FLIGHT 001</b></h2>
+        <div class="row"><span class="k">BOOSTERS &amp; VEHICLE<small>ENG 1 · FUEL</small></span><span class="v" data-pollv="0"></span></div>
+        <div class="row"><span class="k">WEATHER &amp; RANGE<small>ENG 2 · RANGE</small></span><span class="v" data-pollv="1"></span></div>
+        <div class="row"><span class="k">GUIDANCE &amp; GRAVITY<small>ENG 3 · GNC</small></span><span class="v" data-pollv="2"></span></div>
+        <div class="row"><span class="k">GO FOR LAUNCH<small>FLIGHT DIRECTOR</small></span><span class="v" data-pollv="3"></span></div>
+      </section>
+    </div>
+
+    <!-- CENTER -->
+    <div class="col">
+      <div class="stage">
+        <div class="alarmbanner" data-t="alarmText"></div>
+        <canvas id="static" width="192" height="108"></canvas>
+        <div class="reticle"></div>
+        <model-viewer id="ship" src="spaceship-web.glb" alt="SPSS Model 9"
+          auto-rotate auto-rotate-delay="0" rotation-per-second="7deg"
+          camera-orbit="30deg 72deg auto" field-of-view="28deg"
+          interaction-prompt="none" disable-zoom disable-pan
+          environment-image="neutral" exposure="1.3" shadow-intensity="0" loading="eager"></model-viewer>
+        <div class="loader" id="loader"><div class="t" id="loadtxt">LOADING VEHICLE MODEL — 0%</div><div class="bar"><i id="loadbar" style="width:0"></i></div></div>
+        <div class="ov tl"><b>SPSS MODEL 9</b><br>SPSS.C9 · 2-SEAT + CARGO<br>CREW <b>2</b></div>
+        <div class="ov tr">CONTROL <b>REMOTE</b><br>CABIN CONTROLS <b data-t="controls" data-st></b><br>GRAVITY COIL <b data-t="coilSt" data-st></b></div>
+        <div class="ov bl">PITCH <b data-t="pitch" data-d="1"></b>°<br>ROLL&nbsp; <b data-t="roll" data-d="1"></b>°<br>YAW&nbsp;&nbsp; <b data-t="yaw" data-d="1"></b>°</div>
+        <div class="ov br">LINK <b data-t="station"></b><br>S-BAND <b data-t="signal" data-d="1"></b> DBM<br>TRACK <b data-t="tracking" data-st></b></div>
+        <div class="status" data-t="status"></div>
+      </div>
+      <section class="panel log">
+        <h2>EVENT LOG <b>ALL STATIONS</b></h2>
+        <ol data-log="0" data-n="5"></ol>
+      </section>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="col">
+      <section class="panel">
+        <h2>FUEL <b>LOX / RP-2</b></h2>
+        <div class="row big"><span class="k">MAIN TANK</span><span><span class="v" data-t="mainFuel" data-d="1" data-lo="10"></span><span class="u">%</span></span></div>
+        <div class="bar"><i data-bar="mainFuel" data-lo="10"></i></div>
+        <div class="row big"><span class="k">BACKUP TANK</span><span><span class="v" data-t="backupFuel" data-d="1" data-lo="25"></span><span class="u">%</span></span></div>
+        <div class="bar"><i data-bar="backupFuel" data-lo="25"></i></div>
+        <div class="row"><span class="k">MAIN Δ / MIN</span><span><span class="v" data-t="mainRate" data-d="2"></span><span class="u">%</span></span></div>
+        <div class="row"><span class="k">BACKUP Δ / MIN</span><span><span class="v" data-t="backupRate" data-d="2"></span><span class="u">%</span></span></div>
+      </section>
+      <section class="panel grow">
+        <h2>VEHICLE SYSTEMS</h2>
+        <div class="row"><span class="k">GRAVITY COIL</span><span><span class="v" data-t="gField" data-d="3"></span><span class="u">G</span></span></div>
+        <div class="row"><span class="k">CABIN PRESSURE</span><span><span class="v" data-t="cabinP" data-d="1"></span><span class="u">KPA</span></span></div>
+        <div class="row"><span class="k">CABIN TEMP</span><span><span class="v" data-t="cabinT" data-d="1"></span><span class="u">°C</span></span></div>
+        <div class="row"><span class="k">CABIN O2</span><span><span class="v" data-t="o2" data-d="1"></span><span class="u">%</span></span></div>
+        <div class="row"><span class="k">HEAT TILES</span><span><span class="v" data-t="heat"></span><span class="u">°C</span></span></div>
+        <div class="row"><span class="k">THRUST</span><span><span class="v" data-t="thrust"></span><span class="u">%</span></span></div>
+        <div class="row"><span class="k">WINDOWS</span><span class="v" data-t="windows" data-st></span></div>
+      </section>
+    </div>
+  </div>
+
+  <footer class="timeline" id="timeline"></footer>
+</div>
+
+<script>window.SPSS_LOCK = 'ending';</script>
+<script src="spss.js"></script>
+<script>
+  // model loading progress + freeze the spin on loss of signal
+  const mv = document.getElementById('ship'), loader = document.getElementById('loader');
+  mv.addEventListener('progress', (e) => {
+    const p = Math.round(e.detail.totalProgress * 100);
+    document.getElementById('loadtxt').textContent = 'LOADING VEHICLE MODEL — ' + p + '%';
+    document.getElementById('loadbar').style.width = p + '%';
+  });
+  mv.addEventListener('load', () => {
+    // The Blender export marks the Exterior/Interior/Dashboard materials as alpha BLEND, which makes the
+    // hull see-through and flicker while spinning (transparent surfaces aren't depth-sorted). Force solid.
+    for (const m of mv.model.materials) { m.setAlphaMode('OPAQUE'); m.setDoubleSided(true); }
+    loader.classList.add('done');
+  });
+  mv.addEventListener('error', () => {
+    loader.classList.add('err');
+    document.getElementById('loadtxt').textContent = 'MODEL FAILED TO LOAD — OPEN VIA A LOCAL SERVER, NOT FILE://';
+  });
+
+  const st = document.getElementById('static'), sg = st.getContext('2d'), img = sg.createImageData(192, 108);
+  window.SPSS_onFrame = (T) => {
+    if (mv.autoRotate === T.los) mv.autoRotate = !T.los;
+    if (T.los) {
+      for (let i = 0; i < img.data.length; i += 4) {
+        const v = Math.random() * 255;
+        img.data[i] = v; img.data[i + 1] = v * 0.35; img.data[i + 2] = v * 0.35; img.data[i + 3] = 255;
+      }
+      sg.putImageData(img, 0, 0);
+    }
+  };
+
+  // ---- master alarm sound: one low beep at the start of every red flash (main TV only). M mutes. ----
+  // Browsers block sound until the page is clicked or a key is pressed. On pages that can sound the alarm,
+  // a big centered popup asks for that click up front so a take can't start silent by accident.
+  let muted = false;
+  const actx = new (window.AudioContext || window.webkitAudioContext)();   // starts "suspended" until a click/key
+  const gate = document.createElement('div');
+  gate.className = 'soundgate';
+  gate.innerHTML = '<div class="box"><div class="t1">ENABLE ALARM SOUND</div><div class="t2">CLICK ANYWHERE OR PRESS ANY KEY</div></div>';
+  document.body.appendChild(gate);
+  const pageHasAlarm = !window.SPSS_LOCK || window.SPSS_LOCK === 'ending';
+  const showGate = () => gate.classList.toggle('on', actx.state !== 'running');
+  if (pageHasAlarm) setTimeout(showGate, 150);   // skipped if the browser already allows sound
+  function unlockAudio() {
+    if (actx.state === 'suspended') actx.resume();
+    gate.classList.remove('on');
+  }
+  addEventListener('pointerdown', unlockAudio);
+  addEventListener('keydown', (e) => {
+    unlockAudio();
+    if ((e.key === 'm' || e.key === 'M') && !e.metaKey && !e.ctrlKey) muted = !muted;
+  });
+  function alarmBeep() {
+    if (muted) return;
+    if (actx.state !== 'running') { showGate(); return; }
+    const t = actx.currentTime;
+    const out = actx.createGain(); out.gain.value = 0.22;
+    const lp = actx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 1800;
+    lp.connect(out); out.connect(actx.destination);
+    for (const start of [0]) {                     // one 0.4 s low square-wave beep inside the 0.5 s red half
+      const o = actx.createOscillator(); o.type = 'square'; o.frequency.value = 440;
+      const g = actx.createGain();
+      g.gain.setValueAtTime(0, t + start);
+      g.gain.linearRampToValueAtTime(1, t + start + 0.01);
+      g.gain.setValueAtTime(1, t + start + 0.37);
+      g.gain.linearRampToValueAtTime(0, t + start + 0.40);
+      o.connect(g); g.connect(lp);
+      o.start(t + start); o.stop(t + start + 0.42);
+    }
+  }
+  // the page-wide red flash is the body's 'alarm-page' animation; each cycle starts on the red half
+  const onFlash = (e) => { if (e.target === document.body && e.animationName === 'alarm-page') alarmBeep(); };
+  document.body.addEventListener('animationstart', onFlash);
+  document.body.addEventListener('animationiteration', onFlash);
+</script>
+</body>
+</html>
